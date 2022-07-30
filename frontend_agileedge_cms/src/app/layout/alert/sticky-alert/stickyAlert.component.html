@@ -1,0 +1,5 @@
+<div class="alert  text-center  alert-dismissible m0" role="alert" [ngClass]="model.sticky.class" *ngIf="model.stickyAlert" >
+  <button type="button" class="close text-white" (click)="model.stickyAlert=false" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+{{model.sticky.text}}
+<!-- <a class="text-white" *ngIf="model.stickyAlert.text" style="text-decoration: underline;">Retry</a> -->
+</div>

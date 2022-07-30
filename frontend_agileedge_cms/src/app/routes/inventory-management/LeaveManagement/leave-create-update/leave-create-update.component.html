@@ -1,0 +1,33 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Leave Type</h4>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="border-0">
+      <div class="card-body">
+        <form [formGroup]="leaveForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" formControlName="name" value="System" class="form-control" placeholder="leave..">
+                <span *ngIf="leaveForm.get('name').hasError('required') && leaveForm.get('name').touched"
+                  class="text-danger text-12">Name is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 mb-2">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button class="btn btn-primary px-4 py-2" *ngIf="!prevId" (click)="addInventory(leaveForm.value)"
+                [disabled]="clicked">Create New</button>
+              <button *ngIf="prevId" class="btn btn-primary px-4 py-2" (click)="updateSystem(leaveForm.value)">Save &
+                continue</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

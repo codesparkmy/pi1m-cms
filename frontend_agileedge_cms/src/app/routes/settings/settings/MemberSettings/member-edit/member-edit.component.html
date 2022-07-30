@@ -1,0 +1,85 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Member Edit</h4>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="border-0">
+      <div class="card-body">
+        <form [formGroup]="memberForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Registration Fee</label>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">RM</span>
+                  </div>
+                  <input type="number" formControlName="registrationfees" value="System" class="form-control"
+                    placeholder="registrationfees..">
+                </div>
+                <span
+                  *ngIf="memberForm.get('registrationfees').hasError('required') && memberForm.get('registrationfees').touched"
+                  class="text-danger text-12">Registration fee is required</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Renewal Fee</label>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">RM</span>
+                  </div>
+                  <input type="number" formControlName="renewalfees" value="System" class="form-control"
+                    placeholder="renewal fee...">
+                </div>
+                <span
+                  *ngIf="memberForm.get('renewalfees').hasError('required') && memberForm.get('renewalfees').touched"
+                  class="text-danger text-12">Renewal fee is required</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Charges per Hour</label>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">RM</span>
+                  </div>
+                  <input type="number" formControlName="browsePerhours" value="System" class="form-control"
+                    placeholder="browsing charges..">
+                </div>
+                <span
+                  *ngIf="memberForm.get('browsePerhours').hasError('required') && memberForm.get('browsePerhours').touched"
+                  class="text-danger text-12">Charges per hour is required</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Service Charges</label>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">RM</span>
+                  </div>
+                  <input type="number" formControlName="serviceCharge" value="System" class="form-control"
+                    placeholder="service charge..">
+                </div>
+                <span
+                  *ngIf="memberForm.get('serviceCharge').hasError('required') && memberForm.get('serviceCharge').touched"
+                  class="text-danger text-12">Service Charges required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 mb-2">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button *ngIf="prevId" class="btn btn-primary px-4 py-2" (click)="updateMember(memberForm.value)">Update &
+                continue</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>

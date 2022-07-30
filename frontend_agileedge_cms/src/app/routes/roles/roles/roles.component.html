@@ -1,0 +1,263 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Roles and Permission</h4>
+  </div>
+  <!-- <div class="col-md-6 col-sm-12 text-right">
+    <button type="button" class="btn btn-transparent"> <img src="../../assets/icon/filter.svg"
+        ></button>
+    <button type="button" routerLink="/employeeManagement/employee" class="btn btn-primary">New Employee</button>
+  </div> -->
+</div>
+
+
+
+<div class="row">
+  <div class="col-md-12 col-xs-12 ">
+    <table class="table  table-borderless app-table table-striped">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Employee</th>
+          <th>Location</th>
+          <th>Contact number</th>
+          <th>Branch</th>
+          <th>Roles and Permission</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr (click)="visitorDetailModal.show()">
+          <td>01</td>
+          <td>Carter Dias</td>
+          <td>shah alam</td>
+          <td>984357894</td>
+          <td>George town</td>
+          <td>Head of the branch</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no" type="button"
+                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Delete</a>
+                <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>02</td>
+          <td>CF002</td>
+          <td>Talan Vetrovs</td>
+          <td>9876543210</td>
+          <td>Jan 1st</td>
+          <td>George town</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no" type="button"
+                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Delete</a>
+                <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <tr>
+          <td>03</td>
+          <td>CF003</td>
+          <td>Roger Gouse</td>
+          <td>9876543210</td>
+          <td>Jan 1st</td>
+          <td>George town</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no" type="button"
+                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Delete</a>
+                <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+              </div>
+            </div>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td>04</td>
+          <td>CF004</td>
+          <td>Charlie Bergson</td>
+          <td>9876543210</td>
+          <td>Jan 1st</td>
+          <td>George town</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no" type="button"
+                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Delete</a>
+                <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+              </div>
+            </div>
+          </td>
+        </tr>
+
+
+        <tr>
+          <td>05</td>
+          <td>CF005</td>
+          <td>Omar Carder</td>
+          <td>9876543210</td>
+          <td>Jan 1st</td>
+          <td>George town</td>
+          <td>
+            <div class="dropdown">
+              <button class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no" type="button"
+                id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Edit</a>
+                <a class="dropdown-item" href="#">Delete</a>
+                <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+              </div>
+            </div>
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <!-- <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of 65 entries</label> -->
+  </div>
+
+  <div class="col-md-6 col-xs-12 text-right">
+    <div aria-label="Page navigation example " class="float-right app-pagination">
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade user-detai" bsModal #visitorDetailModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <button type="button" class="close"(click)="visitorDetailModal.hide()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="shadow-sm card border-0">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <div class="media">
+                  <img class="mr-3" src="./assets/images/user.jpg"
+                    >
+                  <div class="media-body">
+                    <h5 class="mt-0">Carter Dias</h5>
+
+                    <label class="detals">carter dias@gmail.com</label>
+                    <label class="detals">9876522345</label>
+                    <label class="detals">Location</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xs-12 text-right">
+                <div class="form-group py-3">
+                  <select class="custom-select role-select" id="inputGroupSelect03">
+                    <option selected>Admin</option>
+                    <option value="1">Manager</option>
+                    <option value="2">Content</option>
+                    <option value="3">Creator</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12">
+                <hr>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <table class="table table-borderless detail-tabele">
+                  <tbody>
+                    <tr>
+                      <td>Subscription ID:</td>
+                      <td>CF00010</td>
+                    </tr>
+                    <tr>
+                      <td>Memeber code:</td>
+                      <td>IP00CF1</td>
+                    </tr>
+                    <tr>
+                      <td>NRCI no :</td>
+                      <td>1908765456788</td>
+                    </tr>
+                    <tr>
+                      <td>DOB:</td>
+                      <td>13/03/1994</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <table class="table table-borderless detail-tabele">
+                  <tbody>
+                    <tr>
+                      <td>IsBumi :</td>
+                      <td>Lorem ipsum</td>
+                    </tr>
+                    <tr>
+                      <td>Gender:</td>
+                      <td>Male</td>
+                    </tr>
+                    <tr>
+                      <td>Income Level: </td>
+                      <td>Lorem Ipsum</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-xs-12 text-right">
+                <button class="btn btn-primary"> Save Changes</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

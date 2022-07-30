@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-3">
+    <label for="inputPassword" class="col-form-label">Role Name</label>
+  </div>
+  <div class="col-4">
+    <form [formGroup]="roleForm">
+      <div class="form-group row">
+        <input type="text" class="form-control" id="inputPassword" formControlName="roleName" placeholder="role name"
+          [readonly]="isReadOnly">
+        <span *ngIf="roleForm.get('roleName').hasError('required') && roleForm.get('roleName').touched"
+          class="text-danger text-12">Name required</span>
+      </div>
+    </form>
+  </div>
+  <div class="col-5 text-right">
+    <button type="button" class="btn btn-primary" (click)="saveData()">
+      {{isUpdate == false ?'Save':'Update'}}</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-md-12 col-xs-12 ">
+    <table class="table rounded-top table-borderless app-table table-striped">
+      <thead>
+        <tr>
+          <th class="txtAln">Report</th>
+          <th class="txtAln">View</th>
+          <th class="txtAln">Add</th>
+          <th class="txtAln">Edit</th>
+          <th class="txtAln">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of reportsData;index as i">
+          <td>{{item?.name}}</td>
+          <td>
+            <div class="form-check">
+              <mat-checkbox class="example-margin" [(ngModel)]="item.viewPermission" id="invalidView_{{i}}" (click)="getEvent(item, i+1)">
+              </mat-checkbox>
+            </div>
+          </td>
+          <td>
+            <div class="form-check">
+              <mat-checkbox class="example-margin" [(ngModel)]="item.addPermission" id="invalidAdd_{{i}}" (click)="getEvent(item, i+1)">
+              </mat-checkbox>
+            </div>
+          </td>
+          <td>
+            <div class="form-check">
+              <mat-checkbox class="example-margin" [(ngModel)]="item.editPermission" id="invalidEdit_{{i}}" (click)="getEvent(item, i+1)">
+              </mat-checkbox>
+            </div>
+          </td>
+          <td>
+            <div class="form-check">
+              <mat-checkbox class="example-margin" [(ngModel)]="item.deletePermission" id="invalidDelete_{{i}}" (click)="getEvent(item, i+1)">
+              </mat-checkbox>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

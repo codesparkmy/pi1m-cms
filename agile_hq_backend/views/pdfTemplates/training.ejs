@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Training List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid;
+        }
+        
+        table th,
+        table thead tr {
+            background: #dedede;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <table border="1" cellspacing="5" cellpadding="4">
+            <tr>
+                <th>Course Name</th>
+                <th>Training Duration</th>
+                <th>Fee</th>
+                <th>Enrolled</th>
+                <th>Maximum Subscription </th>
+                <th>Trainer</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each getreport}}
+                <tr>
+                    <td> {{this.course}}</td>
+                    <td> {{this.courseDuration}}</td>
+                    <td> {{this.fee}}</td>
+                    <td> {{this.enrolled}}</td>
+                    <td> {{this.maximumSubscription}}</td>
+                    <td> {{this.trainer.fullName}}</td>
+                    <td> {{this.location.location}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+</body>
+
+</html>

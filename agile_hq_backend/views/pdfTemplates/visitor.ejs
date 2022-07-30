@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Visitor List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid;
+        }
+        
+        table th,
+        table thead tr {
+            background: #dedede;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <table border="1" cellspacing="5" cellpadding="4">
+            <tr>
+                <th>Visitor ID</th>
+                <th>Name</th>
+                <th>Contact Number</th>
+                <th>Membership since</th>
+                <th>Location</th>
+                <th>Subscription ID</th>
+                <th>Memeber code</th>
+                <th>NRCI no</th>
+                <th>DOB</th>
+                <th>Bumi</th>
+                <th>Gender</th>
+                <th>Income Level</th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each getreport}}
+                <tr>
+                    <td> {{this.memeberCode}}</td>
+                    <td> {{this.name}}</td>
+                    <td> {{this.contactNo}}</td>
+                    <td> {{this.memebershipSince}}</td>
+                    <td> {{this.location}}</td>
+                    <td> {{this.subscriptionId}}</td>
+                    <td> {{this.memeberCode}}</td>
+                    <td> {{this.nrciNo}}</td>
+                    <td> {{this.dob}}</td>
+                    <td> {{this.isBumi}}</td>
+                    <td> {{this.gender}}</td>
+                    <td> {{this.incomeLevel}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+</body>
+
+</html>

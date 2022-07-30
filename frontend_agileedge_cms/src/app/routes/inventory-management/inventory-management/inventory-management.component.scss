@@ -1,0 +1,19 @@
+@import'../../../shared/styles/abstracts/abstracts-dir.scss';
+ul{
+    list-style: none;
+    padding: 0;
+    li{
+        // background-color: #eeeeee;
+        border:none;
+        &.active {
+            background-color: $primary-bg !important;
+            color:$white;
+            border-radius: 4px
+        }
+     }
+}
+.align-center{
+  display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

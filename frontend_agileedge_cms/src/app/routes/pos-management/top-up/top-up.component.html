@@ -1,0 +1,57 @@
+<div class="modal fade assign-pc" bsModal #topUpModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="hideModalWindow()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-md-12 col-xs-12 text-center">
+            <img src="./assets/images/logo-colour.svg" class="img-fluid" alt="Responsive image">
+          </div>
+        </div>
+        <h5 class="mb-3">Add Top Up</h5>
+        <form [formGroup]="durationForm">
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="row">
+                <div class="col-md-6 col-xs-6">
+                  <div class="form-group">
+                    <select formControlName="hours" class="form-control">
+                      <option value="" selected>Choose Hours</option>
+                      <option *ngFor="let hour of hoursList" [value]="hour?.id" [selected]="hours == hour.id?hour:null">
+                        {{hour.value}}
+                      </option>
+                    </select>
+                    <span *ngIf="durationForm.get('hours').hasError('required') && durationForm.get('hours').touched"
+                      class="text-danger text-12">Hours required</span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                  <div class="form-group">
+                    <select formControlName="minutes" class="form-control">
+                      <option value="" selected>Choose Minutes</option>
+                      <option *ngFor="let minute of minutesList" [value]="minute?.id"
+                        [selected]="minutes == minute.id?minute:null">
+                        {{minute.value}}
+                      </option>
+                    </select>
+                    <span
+                      *ngIf="durationForm.get('minutes').hasError('required') && durationForm.get('minutes').touched"
+                      class="text-danger text-12">Minutes required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button class="btn btn-primary px-4 py-2" (click)="updateDuration(durationForm.value)">Top Up</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

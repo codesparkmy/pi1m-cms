@@ -1,0 +1,111 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+      <h4 class=" header-titel mx-2 px-3">New Branch</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+
+
+<div class="row mb-5 mx-2">
+  <div class="col-md-12 col-xs-12">
+      <div class="shadow card border-0">
+          <div class="card-body p-4 py-5    ">
+              <form [formGroup]="branchForm" >
+              <div class="row">
+                  <div class="col-md-6 col-xs-6">
+                      <div class="form-group"  >
+                          <label>Branch ID</label>
+                          <input type="text" class="form-control" formControlName="branchId" (keypress)="numberOnly($event)">
+                          <span *ngIf="branchForm.get('branchId').hasError('required') && branchForm.get('branchId').touched" class="text-danger text-12">Branch ID required</span>
+
+                      </div>
+                  </div>
+                  <div class="col-md-6 col-xs-6">
+                      <div class="form-group">
+                          <label>Location</label>
+                          <input type="text" class="form-control" formControlName="location" >
+                          <span *ngIf="branchForm.get('location').hasError('required') && branchForm.get('location').touched" class="text-danger text-12">Location Field required</span>
+
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-6 col-xs-6">
+                      <div class="form-group">
+                          <label>Branch</label>
+                          <input type="email" class="form-control" formControlName="branchName" >
+                          <span *ngIf="branchForm.get('branchName').hasError('required') && branchForm.get('branchName').touched" class="text-danger text-12">Branch Name Field required</span>
+
+                      </div>
+                  </div>
+                  <div class="col-md-6 col-xs-6">
+                      <div class="form-group">
+                          <label>Contact Number</label>
+                          <div class="input-group mb-3">
+
+                            <div class="input-group-prepend">
+                              <span class="input-group-text" id="basic-addon1">+60
+                              </span>
+                            </div>
+                            <input type="phone" class="form-control" formControlName="contactNumber" (keypress)="numberOnly($event)" minlength="10" maxlength="10">
+
+                          </div>
+                          <span *ngIf="branchForm.get('contactNumber').hasError('required') && branchForm.get('contactNumber').touched" class="text-danger text-12">Contact Number Field required</span>
+
+                      </div>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-6 col-xs-6">
+                      <div class="form-group">
+                          <label>Branch Head</label>
+                          <input type="text" class="form-control" formControlName="branchHead" >
+                          <span *ngIf="branchForm.get('branchHead').hasError('required') && branchForm.get('branchHead').touched" class="text-danger text-12">Branch Head Field required</span>
+
+                      </div>
+                  </div>
+                  <div class="col-md-6 col-xs-6">
+                      <div class="form-group">
+                          <label>Capacity of the branch</label>
+                          <input type="text" class="form-control" formControlName="capacityOfBranch" >
+                          <span *ngIf="branchForm.get('capacityOfBranch').hasError('required') && branchForm.get('capacityOfBranch').touched" class="text-danger text-12">Capacity Of Branch Field required</span>
+
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 col-xs-6">
+                    <div class="form-group">
+                        <label>GST Number</label>
+                        <input type="number" value="System" class="form-control" formControlName="gstNumber" min="0" maxlength="25">
+                        <span *ngIf="branchForm.get('gstNumber').hasError('required') && branchForm.get('gstNumber').touched" class="text-danger text-12">GST Number Field required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                    <div class="form-group">
+                        <label>Assit Branch Head</label>
+                        <input type="text" class="form-control" formControlName="assitbranchHead" >
+                        <span *ngIf="branchForm.get('assitbranchHead').hasError('required') && branchForm.get('assitbranchHead').touched" class="text-danger text-12">Assit Branch Head Branch Field required</span>
+
+                    </div>
+                </div>
+            </div>
+              <div class="row mt-3">
+                  <div class="col-md-12 col-xs-12 text-right">
+                      <button class="btn py-2 px-4 btn-primary" *ngIf="!itemid" [disabled]="!branchForm.valid" (click)="addBranch(branchForm.value)">Create Branch</button>
+                      <button class="btn py-2 px-4 btn-primary" *ngIf="itemid" [disabled]="!branchForm.valid" (click)="updateBranch(branchForm.value)">Save & Continue</button>
+
+                    </div>
+              </div>
+
+          </form>
+          </div>
+      </div>
+  </div>
+
+
+</div>

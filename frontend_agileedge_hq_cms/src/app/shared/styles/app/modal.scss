@@ -1,0 +1,42 @@
+
+
+.modal .modal-body .media .media-body h5,.modal .modal-body  .days-ago{
+    font-size: 24px;
+    font-weight: 600;
+}
+
+
+
+   .modal.user-detai .modal-body  .recent-act{
+    font-size: 16px;
+    font-weight: 600;
+   }
+   .modal.user-detai .modal-body  .detail-tabele tbody tr td{
+    font-size: 18px;
+    padding: .4rem;
+   }
+
+
+   .modal.poc-detai .total-hous{
+    font-size: 24px;
+    font-weight: 600;
+   }
+   .modal.poc-detai .hours{
+   font-size: 36px;
+   font-weight: bold;
+}
+
+/* assign-pc */
+
+.modal.assign-pc .modal-body .pc-list  .page-link{
+  background-color: #EEECF2;
+  color: black;
+  font-size: 16px;
+  border-radius: 2px;
+  padding: .65rem 1rem;
+  text-align: center;
+   }
+   .modal.assign-pc .modal-body .pc-list  .page-item+.page-item{
+   margin-left: 10px;
+   min-width: 51.25px;
+     }

@@ -1,0 +1,193 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Leave Management</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+    <input type="text" placeholder="Search" class="search-field" name="search" ngModel
+      (ngModelChange)="searchFilter($event)">
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+
+    <table class="table table-borderless app-table table-striped">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Employee</th>
+          <th>Location</th>
+          <th>Contact number</th>
+          <th>Branch</th>
+          <th class="text-center">Allocated leave</th>
+          <th class="text-center">Leave taken</th>
+          <th>Appove leave</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of filterList | paginate: { itemsPerPage: 10, currentPage: p }; let i = index"
+          (click)="openLeaveDetail(item.id);LeaveDetModal.show()">
+          <td>{{ 10 * (p - 1) + i +1}}</td>
+          <td>
+            <ng-container *ngIf="leaveListDetail.userId != 'null'">{{item.userId?.fullName}}</ng-container>
+          </td>
+          <td>{{item.location?.location}}</td>
+          <td>
+            <ng-container *ngIf="leaveListDetail.userId != 'null'">{{item.userId?.phoneNumber}}</ng-container>
+          </td>
+
+          <td>{{item.location?.branchName}}</td>
+          <td class="text-center">{{item?.remainingLeave}}</td>
+          <td class="text-center">{{item?.takenLeave}}</td>
+
+          <td class="text-bold"><span *ngIf="item.leaveStatus=='Pending'"
+              class="text-warning">{{item?.leaveStatus}}</span><span *ngIf="item.leaveStatus=='Accepted'"
+              class="text-success">{{item?.leaveStatus}}</span>
+              <span *ngIf="item.leaveStatus=='Rejected'"
+              style="color: #dc3545;">{{item?.leaveStatus}}</span></td>
+
+          <td>
+            <div class="btn-group edit-button" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                aria-controls="dropdown-basic">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <!-- <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right"
+                      role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem" (click)="editTraining(item.id)">Edit</li>
+                    <li role="menuitem" (click)="deleteTraining(item.id)">Delete</li>
+                  </ul> -->
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-center col-md-12 col-xs-12">
+    <div class="row">
+      <div class="text-center col-md-12 col-xs-12">
+        <div *ngIf="!!loader">
+          <div class="spinner-box my-0 mx-auto">
+            <div class="pulse-container">
+              <div class="pulse-bubble pulse-bubble-1"></div>
+              <div class="pulse-bubble pulse-bubble-2"></div>
+              <div class="pulse-bubble pulse-bubble-3"></div>
+            </div>
+          </div>
+          <p class="text-loader text-bold">Loading</p>
+        </div>
+        <h4 *ngIf="filterList?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterList?.length}} entries</label>
+  </div>
+
+  <div class="col-md-6 col-xs-12 text-right" *ngIf="filterList?.length !==0">
+    <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="Previous" nextLabel="Next">
+    </pagination-controls>
+  </div>
+
+
+</div>
+
+
+
+<div class="modal fade user-detai" bsModal #LeaveDetModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name" id="myModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="LeaveDetModal.hide()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="shadow-sm card border-0">
+          <div class="card-body">
+            <div class="imng-size">
+              <div *ngIf="leaveListDetail.userId != 'null'"><img src="/assets/images/user.jpg"
+                  alt="Generic placeholder image" *ngIf="leaveListDetail.userId?.profilePicture == '' || leaveListDetail.userId?.profilePicture == null">
+                <img [src]="leaveListDetail.userId?.profilePicture" class="image-size"
+                  *ngIf="leaveListDetail.userId?.profilePicture != ''"></div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="media-body">
+                    <h5 class="mt-0" *ngIf="leaveListDetail.userId != 'null'">{{leaveListDetail.userId?.fullName}}</h5>
+                    <p class="detals mb-0" *ngIf="leaveListDetail.userId != 'null'">{{leaveListDetail.userId?.email}}
+                    </p>
+                    <p class="detals mb-0" *ngIf="leaveListDetail.userId != 'null'">
+                      {{leaveListDetail.userId?.phoneNumber}}</p>
+                    <!-- <p class="detals mb-0">Location</p> -->
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-6 text-right ">
+                  <p class="sub-title mb-0 text-right">Requested for Leave</p>
+                  <p class="text-bold">{{leaveListDetail.fromDate |slice:0:10}} to
+                    {{leaveListDetail.toDate | slice:0:10}}</p>
+                 
+                      <button type="button" class="btn px-3 py-2 btn-primary " 
+                        (click)="leaveStatus(leaveListDetail.id, 'Accepted');LeaveDetModal.hide()" style="margin-right:10px" >Approve Leave</button>
+                        <button type="button" class="btn px-4 py-2 btn-primary"
+                        (click)="leaveStatus(leaveListDetail.id, 'Rejected');LeaveDetModal.hide()" style="background-color: #dc3545;border-color:#dc3545">Reject Leave</button>
+                  
+
+                </div>
+                <div class="col-md-12 col-xs-12">
+                  <hr>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <p>Login ID: {{leaveListDetail.userId?.id}}</p>
+                <div class="d-flex">
+                  <p>Subscription ID:</p><span class="px-2">{{leaveListDetail.userId?.subscriptionId}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Employee ID:</p><span class="px-2">{{leaveListDetail.userId?.employeeId}}</span>
+                </div>
+
+                <div class="d-flex">
+                  <p>DOB :</p><span class="px-2">{{leaveListDetail.userId?.dob | slice:0:10}}</span>
+                </div>
+
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <div class="d-flex">
+                  <p>Gender</p><span class="px-2">
+                    <ng-container *ngIf="leaveListDetail.userId?.gender == '1'">Male</ng-container>
+                    <ng-container *ngIf="leaveListDetail.userId?.gender == '2'">Female</ng-container>
+                  </span>
+                </div>
+
+                <div class="d-flex">
+                  <p>Branch:</p><span class="px-2"
+                    *ngIf="leaveListDetail.location != '' || leaveListDetail.location != 'null'">{{leaveListDetail.location?.branchName}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Role of the employee:</p><span class="px-2">{{leaveListDetail.userId?.positionId}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Location:</p><span class="px-2"
+                    *ngIf="leaveListDetail.location != '' || leaveListDetail.location != 'null'">{{leaveListDetail.location?.location}}</span>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

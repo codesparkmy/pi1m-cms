@@ -1,0 +1,50 @@
+<div class="login-container">
+  <div class="alert alert-danger" role="alert" *ngIf="invalidLogin">
+    Incorrect username/password
+    <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button> -->
+  </div>
+  <div class="row">
+      <div class="col-md-6 login-form-1 ">
+        <div class="text-center">
+            <img class="img-center webe-img" src="./assets/images/webe-logo.png">
+        </div>
+        <div class="text-center">
+         <img class="img-center desk-img" src="./assets/images/webe-desktop.png">
+        </div>
+      </div>
+      <div class="col-md-6 login-form-2 ">
+          <h5 class="title">Login into your HQ <br> CMS Account</h5>
+          <form [formGroup]="loginForm">
+
+              <div class="form-group">
+                  <label class="lb"> Email</label>
+                  <input type="text"  [(ngModel)]="loginObject.email"  class="form-control bg-light" formControlName="email"
+                  required  placeholder="Enter user ID" />
+                  <!-- <small class="form-text text-muted"
+                        *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.required">
+                          Please enter email address.!
+                      </small> -->
+                      <small class="form-text text-white"
+                        *ngIf="loginForm.controls['email'].hasError('required') && loginForm.get('email').touched"> Please enter email address.!</small>
+                        <small class="form-text text-white"
+                        *ngIf="loginForm.controls['email'].hasError('pattern') && loginForm.get('email').touched">Email must be a valid email address</small>
+              </div>
+              <div class="form-group">
+                  <label class="lb"> Password</label>
+                  <input type="password" class="form-control bg-light" [(ngModel)]="loginObject.password" formControlName="password"
+                  required  placeholder="Enter Password "  />
+                  <small class="form-text text-white" *ngIf="loginForm.controls['password'].hasError('required') && loginForm.get('password').touched">Password field is required</small>
+              </div>
+              <div class="form-group forgot-text">
+                  <a class=""  class="ForgetPwd" value="Login" routerLink="/forgotPassword">Forgot Password?</a>
+              </div>
+              <div class="form-group text-center">
+                  <button type="submit" class="btn btnSubmit" [disabled]="!loginForm.valid" (click)="onSubmit(loginForm.value)">Login</button>
+              </div>
+
+          </form>
+      </div>
+  </div>
+</div>

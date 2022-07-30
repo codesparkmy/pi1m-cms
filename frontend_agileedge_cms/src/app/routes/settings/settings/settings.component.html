@@ -1,0 +1,138 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Settings</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="shadow card border-0">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 col-xs-6">
+            <div class="form-group">
+              <label class="text-bold">Account</label>
+              <div class="acount-details">
+                <div class="media">
+                  <img class="rounded-circle profile mx-2"
+                    *ngIf="employeeData?.profilePicture == '' || employeeData?.profilePicture==undefined"
+                    src="./assets/images/user.jpg" />
+                  <img class="rounded-circle profile mx-2" *ngIf="employeeData?.profilePicture !== ''"
+                    [src]="employeeData?.profilePicture" />
+
+                  <div class="media-body">
+                    <h5 class="mb-0 mt-2">{{employeeData?.email}}</h5>
+                    <span>{{employeeData?.role}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between" (click)="visitorDetailModal.show();billingForm.reset();
+            ">
+              <!-- <p class="mb-0 text-bold">Password Reset</p> -->
+              <p class="mb-0 text-bold"><a>Change Password</a></p>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-6">
+
+          </div>
+        </div>
+        <ul class="nav nav-tabs">
+          <li class="nav-item" [class.active]="showGst == true">
+            <a class="nav-link" (click)="showPage('gst')">GST/SST</a>
+          </li>
+          <li class="nav-item" [class.active]="showMember == true">
+            <a class="nav-link" (click)="showPage('member')">Member</a>
+          </li>
+          <li class="nav-item" [class.active]="showNonMember == true">
+            <a class="nav-link" (click)="showPage('nonmember')">Non Member</a>
+          </li>
+          <li class="nav-item" [class.active]="showmemberRegistration == true">
+            <a class="nav-link" (click)="showPage('memberRegistration')">Member Registration</a>
+          </li>
+        </ul>
+        <div *ngIf="showGst == true">
+          <div class="float-right m-3">
+            <button type="button" class="btn btn-sm btn-primary" (click)="editGst()">Edit</button>
+          </div>
+          <br>
+          <div class="row mt-3">
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group row">
+                <label for="staticEmail" class="col-sm-6 col-form-label">GST</label>
+                <div class="col-sm-6">
+                  {{billList?.GstRate}}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+              <div class="form-group row">
+                <label for="staticEmail" class="col-sm-6 col-form-label">SST</label>
+                <div class="col-sm-6">
+                  {{billList?.SgstRate}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="showMember == true">
+          <app-member-landing></app-member-landing>
+        </div>
+        <div *ngIf="showNonMember == true">
+          <app-nonmember-landing></app-nonmember-landing>
+        </div>
+        <div *ngIf="showmemberRegistration == true">
+       <app-registration-landing></app-registration-landing>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade user-detai" bsModal #visitorDetailModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="visitorDetailModal.hide()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-header bg-primary">
+        <p class="text-bold text-white mb-0">Change password</p>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="ResetForm">
+          <div class="d-flex justify-content-between">
+            <!-- <p class="mb-0 text-bold">Password Reset</p> -->
+            <!-- <p class="mb-0 text-bold"><u>Change Password</u></p> -->
+          </div>
+          <div class="form-group mt-4">
+            <label>New password</label>
+            <input type="password" formControlName="newpassword" class="form-control">
+            <span *ngIf="ResetForm.get('newpassword').hasError('required') && ResetForm.get('newpassword').touched"
+              class="text-danger text-12">New Password field required</span>
+
+          </div>
+          <div class="form-group">
+            <div class=" mb-0 form-group">
+              <label>Confirm password</label>
+              <input type="password" formControlName="password" class="form-control">
+              <span *ngIf="ResetForm.get('password').hasError('required') && ResetForm.get('password').touched"
+                class="text-danger text-12">Confirm Password field required</span>
+              <div class="invalid-feedback"
+                *ngIf="ResetForm.errors?.mismatch && (ResetForm.controls['password'].dirty || ResetForm.controls['password'].touched)">
+                <span class="text-danger text-12"> Passwords don't match.
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary px-2 py-2  m-2" [disabled]="!ResetForm.valid"
+              (click)="updatePassword(ResetForm.value);visitorDetailModal.hide()">Change Password</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

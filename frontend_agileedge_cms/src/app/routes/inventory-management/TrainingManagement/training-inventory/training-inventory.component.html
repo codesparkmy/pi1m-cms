@@ -1,0 +1,166 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="tab-slider-nav active d-flex justify-content-between align-items-center px-0">
+      <ul class="d-flex align-items-center pt-2">
+        <li class="tab-slider  py-3 cursor px-4 " [class.active]="viewMode == 'training'" rel="tab1"
+          (click)="viewMode ='training';getData()">
+          Training Category
+        </li>
+        <li class="tab-slider  py-3 cursor px-4 " [class.active]="viewMode == 'trainingTarget'" rel="tab2"
+          (click)="viewMode ='trainingTarget';getData()">
+          Training Target
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-4 text-right align-center">
+    <ng-container *ngIf="viewMode=='training'">
+      <input type="text" placeholder="Search" class="search-field" name="search" ngModel
+        (ngModelChange)="searchFilter($event)">
+      <button type="button" class="btn btn-primary" routerLink="/inventoryManagement/createTraining">Add New
+      </button>
+    </ng-container>
+    <ng-container *ngIf="viewMode=='trainingTarget'">
+      <input type="text" placeholder="Search" class="search-field" name="search" ngModel
+        (ngModelChange)="searchFilter($event)">
+      <button type="button" class="btn btn-primary" routerLink="/inventoryManagement/createTarget">Add New
+      </button>
+    </ng-container>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <div class="tab-slider--container slideBox" [ngSwitch]="viewMode">
+      <div id="tab1" class="tab-slider--body tab-overflow " *ngSwitchCase="'training'">
+        <table class="table table-borderless app-table table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th class="text-center">Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of filterTrainingType  | paginate: { itemsPerPage: 10, currentPage: p };let i = index">
+              <td>{{ 10 * (p - 1) + i +1}}</td>
+              <td class="cursor-pointer text-center" (click)="viewTraining(item.id);">{{item?.name}}</td>
+              <td>
+                <div class="btn-group edit-button" dropdown>
+                  <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                    aria-controls="dropdown-basic">
+                    <span class="material-icons">
+                      more_horiz
+                    </span>
+                  </button>
+                  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                    aria-labelledby="button-basic">
+                    <li role=" px-2 cursor">
+                      <button class="bg-transparent border-0" (click)="editTraining(item.id)">Edit</button>
+                    </li>
+                    <li class="divider"></li>
+                    <li role=" px-2 cursor"><button class="bg-transparent border-0"
+                        (click)="deleteTraining(item.id)">Delete</button>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center col-md-12 col-xs-12">
+          <div class="row">
+            <div class="text-center col-md-12 col-xs-12" *ngIf="!!loader">
+              <div>
+                <div class="spinner-box my-0 mx-auto">
+                  <div class="pulse-container">
+                    <div class="pulse-bubble pulse-bubble-1"></div>
+                    <div class="pulse-bubble pulse-bubble-2"></div>
+                    <div class="pulse-bubble pulse-bubble-3"></div>
+                  </div>
+                </div>
+                <p class="text-loader text-bold">Loading</p>
+              </div>
+            </div>
+          </div>
+          <h4 *ngIf="filterList?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-xs-12">
+            <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterList?.length}} entries</label>
+          </div>
+
+          <div class="col-md-6 col-xs-12 text-right" *ngIf="filterList?.length !== 0">
+            <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="Previous" nextLabel="Next">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="tab2" class="tab-slider--body tab-overflow " *ngSwitchCase="'trainingTarget'">
+        <table class="table table-borderless app-table table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th class="text-center">Name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of filterTargetList  | paginate: { itemsPerPage: 10, currentPage: p };let i = index">
+              <td>{{ 10 * (p - 1) + i +1}}</td>
+              <td class="cursor-pointer text-center" (click)="viewTraining(item.id);">{{item?.name}}</td>
+              <td>
+                <div class="btn-group edit-button" dropdown>
+                  <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                    aria-controls="dropdown-basic">
+                    <span class="material-icons">
+                      more_horiz
+                    </span>
+                  </button>
+                  <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                    aria-labelledby="button-basic">
+                    <li role=" px-2 cursor">
+                      <button class="bg-transparent border-0" (click)="editTarget(item.id)">Edit</button>
+                    </li>
+                    <li class="divider"></li>
+                    <li role=" px-2 cursor"><button class="bg-transparent border-0"
+                        (click)="deleteTarget(item.id)">Delete</button>
+                    </li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center col-md-12 col-xs-12">
+          <div class="row">
+            <div class="text-center col-md-12 col-xs-12" *ngIf="!!loader">
+              <div>
+                <div class="spinner-box my-0 mx-auto">
+                  <div class="pulse-container">
+                    <div class="pulse-bubble pulse-bubble-1"></div>
+                    <div class="pulse-bubble pulse-bubble-2"></div>
+                    <div class="pulse-bubble pulse-bubble-3"></div>
+                  </div>
+                </div>
+                <p class="text-loader text-bold">Loading</p>
+              </div>
+            </div>
+          </div>
+          <h4 *ngIf="filterList?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-xs-12">
+            <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterList?.length}} entries</label>
+          </div>
+
+          <div class="col-md-6 col-xs-12 text-right" *ngIf="filterList?.length !== 0">
+            <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="Previous" nextLabel="Next">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

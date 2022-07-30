@@ -1,0 +1,125 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">POS Management</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+    <!-- <button type="button" class="btn btn-transparent"> <img src="./assets/icon/filter.svg"
+        ></button> -->
+    <input type="text" placeholder="Search" class="search-field" name="search" ngModel
+      (ngModelChange)="searchFilter($event)">
+
+    <button type="button" class="btn px-4 btn-primary" (click)="assignPcModelOpen();">Assign PC
+    </button>
+    
+  </div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <table class="table table-borderless app-table table-striped">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th class="text-center">System ID</th>
+          <th class="text-center">User ID</th>
+          <th class="text-center">Availability</th>
+          <th>Start time</th>
+          <th>End time</th>
+          <th>Time Left</th>
+          <th>Fee (RM)</th>
+          <th class="text-center">End session</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filterList | paginate: { itemsPerPage: 10, currentPage: p };let i = index">
+          <td>{{ 10 * (p - 1) + i +1}}</td>
+          <td class="text-center" ><span *ngIf="item.pcNo">{{item.pcNo?.systemId}}</span></td>
+          <td class="text-center"><span *ngIf="item.pcNo">{{item.assignTo?.name}}</span></td>
+          <td class="text-center">
+            <p *ngIf="item.pcNo">
+              <ng-container *ngIf="item.status == '1'"><span class="text-success">Active</span></ng-container>
+              <ng-container *ngIf="item.status == '2'"><span class="text-danger">InActive</span></ng-container>
+            </p>
+          </td>
+          <!-- <td>{{item.startTime | slice: 11:13}} Hour(s) {{item.startTime | slice: 14:16}} Minute(s)</td>
+          <td>{{item.endTime | slice: 11:16}}</td> -->
+          <td>{{item.startTime | date:'shortTime'}}</td>
+          <td>{{item.endTime | date:'shortTime'}}</td>
+          <!-- <td>{{item.timeLeft}}</td> -->
+          <td>
+            <app-timer [value]="item.timeLeft" [id]="i" (onComplete)="timerCompleted($event)"></app-timer>
+          </td>
+          <td>{{item.fee | number:'1.2-2'}}</td>
+          <td class="text-center">
+            <label class="switch pos-Toggle">
+              <input [disabled]="item.status == '2'" [checked]="item.status == '2'" type="checkbox"
+                (click)="posDetailsModelOpen(item.id);" name="{{item.id}}" id={{item.id}}>
+              <span class="slider round"></span>
+            </label>
+          </td>
+          <td>
+            <div class="btn-group edit-button" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                aria-controls="dropdown-basic">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                aria-labelledby="button-basic">
+                <li *ngIf="item.status == '1'" role=" px-2 cursor" (click)="editpos(item.id);">Edit</li>
+                <!-- <li class="divider"></li>
+                <li role=" px-2 cursor" (click)="deletepos(item.id)">Delete</li> -->
+              </ul>
+            </div>
+          </td>
+          <td><button type="button" class="btn btn-primary btn-sm" (click)="openTopUpModal(item.id)">Top Up</button>
+          </td>
+          <td><button type="button" class="btn btn-primary btn-sm" (click)="openChangePc(item['id'], item['pcNo']['id'])">Change Pc</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="text-center col-md-12 col-xs-12">
+      <div class="row">
+        <div class="text-center col-md-12 col-xs-12" *ngIf="!!loader">
+          <div>
+            <div class="spinner-box my-0 mx-auto">
+              <div class="pulse-container">
+                <div class="pulse-bubble pulse-bubble-1"></div>
+                <div class="pulse-bubble pulse-bubble-2"></div>
+                <div class="pulse-bubble pulse-bubble-3"></div>
+              </div>
+            </div>
+            <p class="text-loader text-bold">Loading</p>
+          </div>
+        </div>
+      </div>
+      <h4 *ngIf="filterList?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+    </div>
+
+  </div>
+  <div class="d-flex justify-content-center">
+  </div>
+
+  <div class="col-md-6 col-xs-12">
+    <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterList?.length}} entries</label>
+  </div>
+
+  <div class="col-md-6 col-xs-12 text-right" *ngIf="filterList?.length !== 0">
+    <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="Previous" nextLabel="Next">
+    </pagination-controls>
+  </div>
+</div>
+
+
+<app-assign-pc *ngIf='isassignPcModel' (hide)='assignPcModelOpen()'  [editOption]="editOption"></app-assign-pc>
+<app-pos-details *ngIf='isposDetailsModel' (hide)='posDetailsModelClose()'></app-pos-details>
+<app-top-up *ngIf='istopupmodal == true' (hide)='topupmodalclose()'></app-top-up>
+<app-change-pc *ngIf="isChangePc == true" (hide)='changePcmodalclose()'></app-change-pc>

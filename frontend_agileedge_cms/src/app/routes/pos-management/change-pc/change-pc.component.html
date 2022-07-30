@@ -1,0 +1,33 @@
+<div class="modal fade assign-pc" bsModal #changePcModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="hideModalWindow()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-md-12 col-xs-12 text-center">
+            <img src="./assets/images/logo-colour.svg" class="img-fluid" alt="Responsive image">
+          </div>
+        </div>
+        <div class="col-md-12 col-xs-12">
+          <div class="form-group">
+            <label class="sub-head">Select PC</label>
+            <div class="d-flex flex-wrap pc-list">
+              <div *ngFor="let item of systemList index as i">
+                <button class="mx-2 my-2 border-0 rounded " name="{{item.id}}" type="button"
+                  [class.active]="i==selectedBox" rel="tab1" (click)="onSystem(i,item)">{{item.systemId}}</button>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-12 col-xs-12 text-right">
+                <button class="btn btn-primary px-4 py-2" (click)="changePc()">Change Pc</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Profile Setting</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+
+
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="shadow card border-0">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group text-center">
+              <label class="p-2 img-upload rounded-circle bg-light text-center position-relative">
+
+                <img *ngIf="employeeData.profilePicture == '' && !isImgUploaded" class="upload-img  rounded-circle" src="/assets/images/user.jpg"
+                  width="50px" height="50px" />
+                <img  *ngIf="isImgUploaded" class="upload-img  rounded-circle" [src]="profilePhoto"
+                  width="50px" height="50px" />
+                 <img width="50px" height="50px" *ngIf="employeeData.profilePicture != '' && !isImgUploaded"  [src]="employeeData.profilePicture" class="upload-img  rounded-circle">
+                <form [formGroup]="fileUploadForm">
+                  <input type="file" name="pic" (change)="onFileChange($event)" accept="image/*" class="d-none" />
+
+                </form>
+
+              </label>
+              <!-- <input type="file" name="profile" (change)="onFileSelect($event)" /> -->
+            </div>
+          </div>
+        </div>
+        <form [formGroup]="profileForm">
+
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" formControlName="fullName" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Email ID</label>
+                <input type="email" formControlName="email" class="form-control" disabled>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Contact</label>
+                <div class="input-group mb-3">
+
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">+60
+                      <!-- <img src="/assets/images/iconfinder_phone_326545.svg" /> -->
+                    </span>
+                  </div>
+                  <input type="text" formControlName="phoneNumber" class="form-control" disabled>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Employee ID</label>
+                <input type="text" formControlName="employeeId" class="form-control" disabled>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row my-3 ">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button class="btn btn-primary" (click)="ProfileView(profileForm.value)"><ng-container *ngIf="!isloading">Save & Continue</ng-container><ng-container *ngIf="isloading">Saving..</ng-container></button>
+              <!-- (click)="ProfileView(profileForm.value)" -->
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>

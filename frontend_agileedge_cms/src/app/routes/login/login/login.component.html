@@ -1,0 +1,50 @@
+<div class="login-container">
+  <div class="alert alert-danger" role="alert" *ngIf="invalidLogin">
+    Incorrect username/password
+
+  </div>
+  <div class="row">
+      <div class="col-md-6 login-form-1">
+        <div class="text-center">
+            <img class="img-center webe-img" src="./assets/images/webe-logo.png">
+        </div>
+        <div class="text-center">
+         <img class="img-center desk-img" src="./assets/images/webe-desktop.svg">
+        </div>
+      </div>
+      <div class="col-md-6 login-form-2">
+
+          <h5 class="title">Login into your CMS<br>account</h5>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+
+              <div class="form-group">
+                  <label class="lb"> Email</label>
+                  <input type="text"  [(ngModel)]="loginObject.email"  class="form-control bg-light" formControlName="email"
+                  required  placeholder="Enter user ID" />
+                  <!-- <small class="form-text text-muted"
+                        *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.required">
+                          Please enter email address.!
+                      </small> -->
+                      <small class="form-text text-white"
+                        *ngIf="loginForm.get('email').hasError('required') && loginForm.get('email').touched"> Please enter email address.!</small>
+                        <span *ngIf="loginForm.get('email').hasError('pattern') && loginForm.get('email').touched" class="form-text text-white">Email must be a valid email address</span>
+
+              </div>
+              <div class="form-group">
+                  <label class="lb"> Password</label>
+                  <input type="password" class="form-control bg-light" [(ngModel)]="loginObject.password" formControlName="password"
+                  required  placeholder="Enter Password "  />
+                  <small class="form-text text-white" *ngIf="loginForm.get('password').hasError('required') && loginForm.get('password').touched">Please enter the password</small>
+
+              </div>
+              <div class="form-group forgot-text">
+                  <a class=""  class="ForgetPwd" value="Login" routerLink="/forgotPassword">Forgot Password?</a>
+              </div>
+              <div class="form-group text-center">
+                  <button type="submit" class="btn btnSubmit" [disabled]="!loginForm.valid" value=""><ng-container *ngIf="!loadingText">Login</ng-container><ng-container *ngIf="loadingText">Loading..</ng-container></button>
+              </div>
+
+          </form>
+      </div>
+  </div>
+</div>

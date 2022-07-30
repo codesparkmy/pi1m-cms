@@ -1,0 +1,91 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">{{prevId==undefined?'New Purchase':'Update Purchase'}}</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="shadow card border-0">
+      <div class="card-body">
+        <form [formGroup]="purchaseForm" #f="ngForm">
+          <span formArrayName="details">
+            <!-- loop throught units -->
+            <span *ngFor="let member of purchaseForm['controls']['details']['controls']; let i=index">
+              <div class="row" [formGroupName]="i">
+                <div class="col-md-5 col-sm-12">
+                  <label for="startTimeId">Item</label>
+                  <div class="input-group form-group">
+                    <select formControlName="expenseId" class="form-control"
+                      [ngClass]="{ 'is-invalid': f.submitted && f?.form?.controls?.details?.controls[i]?.controls?.expenseId?.invalid }">
+                      <option value="" selected>Choose Items</option>
+                      <option *ngFor="let val of itemList" [value]="val?.id"
+                        [selected]="expenseId == val.id ? val:null">
+                        {{val.name}}
+                      </option>
+                    </select>
+                    <div *ngIf="f.submitted && f?.form?.controls?.details?.controls[i]?.controls?.expenseId?.invalid"
+                      class="invalid-feedback">
+                      <div *ngIf="f?.form?.controls?.details?.controls[i]?.controls?.expenseId?.errors?.required">
+                        Item is required </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5 col-sm-12">
+                  <label for="startTimeId">Amount</label>
+                  <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">RM
+                      </span>
+                    </div>
+                    <input type="number" class="form-control" name="startTimeId" formControlName="amount"
+                      [ngClass]="{ 'is-invalid': f.submitted && f?.form?.controls?.details?.controls[i]?.controls?.amount?.invalid }"
+                      required>
+                    <div *ngIf="f.submitted && f?.form?.controls?.details?.controls[i]?.controls?.amount?.invalid"
+                      class="invalid-feedback">
+                      <div *ngIf="f?.form?.controls?.details?.controls[i]?.controls?.amount?.errors?.required">
+                        Amount is required </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                  <div class="form-group mt-4 pt-1">
+                    <button class="btn btn-sm btn-danger mr-2" *ngIf="purchaseForm.controls.details.controls.length> 1"
+                      (click)="removeUnit(i)">
+                      <i class="feather icon-minus"></i>Remove
+                    </button>
+
+                    <button class="btn btn-sm btn-primary" *ngIf="i ===
+                    purchaseForm.controls.details.controls.length-1" (click)="addUnit()">
+                      <i class="feather icon-plus"></i>Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </span>
+          </span>
+          <span class="amountClass">
+            <h6>Total Amount(RM): &nbsp;&nbsp; {{totalAmount}}</h6>
+          </span>
+          <hr>
+          <div class="row mt-2 mb-2">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button class="btn btn-primary px-4 py-2" *ngIf="!prevId" type="submit"
+                [disabled]="!purchaseForm.valid||!isClicked" (click)="addPurchaseItems(purchaseForm.value)">Create
+                New</button>
+              <button *ngIf="prevId" class="btn btn-primary px-4 py-2" type="button"
+                (click)="updatePurchase(purchaseForm.value)">Update &
+                continue</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>

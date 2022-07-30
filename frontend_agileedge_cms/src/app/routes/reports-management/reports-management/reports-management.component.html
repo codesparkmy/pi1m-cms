@@ -1,0 +1,823 @@
+<form [formGroup]="reportForm" #f="ngForm">
+  <div class="row mt-4 form-group">
+    <div class="col-md-12 col-sm-12">
+      <h4 class=" header-titel">Reports</h4>
+    </div>
+    <div [ngClass]="getClass()">
+      <div class="form-group">
+        <label>Choose Report</label>
+        <select class=" form-control" formControlName="summaryType" (change)="getEvent($event.target.value)">
+          <option selected value="">Choose Summary</option>
+          <option *ngFor="let item of reportsArray" [value]="item?.id">
+            {{item?.name}}
+          </option>
+        </select>
+        <span *ngIf="reportForm.get('summaryType').hasError('required') && reportForm.get('summaryType').touched"
+          class="text-danger text-12">Report Type Field required</span>
+      </div>
+    </div>
+    <div class="col-md-6" *ngIf="f.form.value.summaryType == '4'">
+      <div class="form-group">
+        <label>Choose Training</label>
+        <select class="form-control" formControlName="courseId">
+          <option selected value="">Choose Training</option>
+          <option *ngFor="let item of trainingList" [value]="item?.id">
+            {{item?.course}}
+          </option>
+        </select>
+        <span *ngIf="reportForm.get('courseId').hasError('required') && reportForm.get('courseId').touched"
+          class="text-danger text-12">Course is Required</span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3 col-xs-12"
+      *ngIf="!(f.form.value.summaryType == '4' || f.form.value.summaryType == '5' || f.form.value.summaryType == '12' )">
+      <div class="form-group">
+        <label>Period</label>
+        <select formControlName="period" class="form-control">
+          <option value="" selected>Choose type</option>
+          <option value="daily">Daily</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+        <span *ngIf="reportForm.get('period').hasError('required') && reportForm.get('period').touched"
+          class="text-danger text-12">Select Type
+        </span>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-12" *ngIf="(f.form.value.summaryType == '5' || f.form.value.summaryType == '12')">
+      <div class="form-group">
+        <label>Type</label>
+        <select formControlName="incomeType" class="form-control" (change)="getSelectedType($event)">
+          <option value="" selected>Choose type</option>
+          <option value="both">All</option>
+          <option value="income">Income</option>
+          <option value="expense">Expense</option>
+        </select>
+        <span *ngIf="reportForm.get('incomeType').hasError('required') && reportForm.get('incomeType').touched"
+          class="text-danger text-12">Select Type
+        </span>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-12" *ngIf="f.form.value.summaryType != '4'">
+      <div class="form-group">
+        <label>From date</label>
+        <input type="date" formControlName="fromdate" class="form-control">
+        <span *ngIf="reportForm.get('fromdate').hasError('required') && reportForm.get('fromdate').touched"
+          class="text-danger text-12">From date required</span>
+      </div>
+    </div>
+    <div class="col-md-3 col-xs-12" *ngIf="f.form.value.summaryType != '4'">
+      <div class="form-group">
+        <label>To date</label>
+        <input type="date" formControlName="todate" class="form-control">
+        <span *ngIf="reportForm.get('todate').hasError('required') && reportForm.get('todate').touched"
+          class="text-danger text-12">To date required</span>
+      </div>
+      <span *ngIf="error.isError" class="text-danger text-12">{{ error.errorMessage }}</span>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <button style="margin-top:38px !important;" type="button" class="btn px-4 mt-2 btn-primary"
+          [disabled]="!reportForm.valid" (click)="searchReport(reportForm.value)">Search
+        </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<div class="container">
+
+  <div class="row" *ngIf="reportsArray[0]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeUserCafe.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary of Active Users at Cafe</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary of Active Users at Cafe','activeUserCafe-report')">Download</button>
+        </div>
+      </div>
+
+      <table class="table rounded table-borderless bg-light app-table" id="activeUserCafe-report">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Period</th>
+            <th>Member frequency</th>
+            <th>Non-Member frequency</th>
+            <th>Total Login frequency</th>
+            <th>Total usage</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of activeUserCafe; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.period}}</td>
+            <td>{{user.memberFrequency}}</td>
+            <td>{{user.memberNonfrequency}}</td>
+            <td>{{user.totalLoginFrequency}}</td>
+            <td>{{user.totalUsage}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeUserCafe.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[1]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="cafeDetails?.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Cafe Usage Details</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary Of Cafe Usage Details','cafeUsage-report')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table" id="cafeUsage-report">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Date</th>
+            <th>Start time</th>
+            <th>Work station</th>
+            <th>Name</th>
+            <th>Nric</th>
+            <th>Member</th>
+            <th>Usage(Hrs)</th>
+            <th>Amount (RM)</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of cafeDetails; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.date}}</td>
+            <td>{{user.startTime}}</td>
+            <td>{{user.workstation}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.nric}}</td>
+            <td>{{user.isMember == true?'Yes':'No'}}</td>
+            <td>{{user.usage}}</td>
+            <td>{{user.amount}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="cafeDetails?.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[2]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="courseDetails.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Training Course Details</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary Of Training Course Details','courseDetail-report')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table" id="courseDetail-report">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Course date</th>
+            <th>Category</th>
+            <th>Course name</th>
+            <th>Duration</th>
+            <th>Target group</th>
+            <th>Trainer</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of courseDetails; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.courseDate}}</td>
+            <td>{{user.category}}</td>
+            <td>{{user.courseName}}</td>
+            <td>{{user.duration}}</td>
+            <td>{{user.targetGroup}}</td>
+            <td>{{user.trainer}}</td>
+            <td>{{user.location}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="courseDetails.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[3]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="attendanceList.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Total Attendance</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary Of Total Attendance','attendance-report')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table" id="attendance-report">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Nric</th>
+            <th>Age</th>
+            <th>Bumi Status</th>
+            <th>Occupation</th>
+            <th>Member</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of attendanceList; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.nric}}</td>
+            <td>{{user.age}}</td>
+            <td>{{user.bumiStatus == true?'Yes':'No'}}</td>
+            <td>{{user.occupation}}</td>
+            <td>{{user.member == true?'Yes':'No'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="attendanceList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[4]['show'] == true">
+    <ng-container *ngIf="incomeListReport.length">
+      <div class="col-md-12 col-xs-12">
+        <div class="row">
+          <div class="col-6">
+            <h5>Summary Of Income Report</h5>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-sm btn-primary m-2 sec"
+              (click)="exportReportasCsv('Summary Of Income Report','income-report')">Download</button>
+          </div>
+        </div>
+        <table class="table rounded table-borderless bg-light app-table" id="income-report">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Item</th>
+              <th>Amount (RM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of incomeListReport; index as i">
+              <td>{{i+1}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.amount === null ? 0 : user.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="incomeListReport.length == 0">
+        <h4>No records found for the search criteria</h4>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="expenseList.length">
+      <div class="col-md-12 col-xs-12">
+        <div class="row">
+          <div class="col-6">
+            <h5>Summary Of Expense Report</h5>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-sm btn-primary m-2 sec"
+              (click)="exportReportasCsv('Summary Of Expense Report','expense-report')">Download</button>
+          </div>
+        </div>
+        <table class="table rounded table-borderless bg-light app-table" id="expense-report">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Item</th>
+              <th>Amount (RM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of expenseList; index as i">
+              <td>{{i+1}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.amount === null ? 0 : item.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="expenseList.length == 0">
+        <h4>No records found for the search criteria</h4>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[5]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberReport.length">
+      <div class="row">
+        <div class="col-6">
+          <h5> Summary Of Active Member</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary Of Active Member','activeMember-report')">Download</button>
+        </div>
+      </div>
+
+      <table class="table rounded table-borderless bg-light app-table" id="activeMember-report">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Period</th>
+            <th>Member</th>
+            <th>Expired</th>
+            <th>Active Member</th>
+            <th>Active NonMember</th>
+            <th>Total Active Users</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of activeMemberReport; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.period}}</td>
+            <td>{{user.registeredMember}}</td>
+            <td>{{user.memberExpired}}</td>
+            <td>{{user.activeMember}}</td>
+            <td>{{user.activeNonMember}}</td>
+            <td>{{user.totalActiveUser}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeMemberReport.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[6]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberGenderList.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Active Member By Gender</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary Of Active Member By Gender','gender-report')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table" id="gender-report">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th colspan="2">Active Member</th>
+            <th colspan="2">NonActive Member</th>
+            <th colspan="2">Total Active Users</th>
+            <th colspan="2">Total Trained</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Male</th>
+            <th>Female</th>
+            <th>Male</th>
+            <th>Female</th>
+            <th>Male</th>
+            <th>Female</th>
+            <th>Male</th>
+            <th>Female</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of activeMemberGenderList; index as i">
+            <td style="text-align: left !important;">{{user?.period}}</td>
+            <td>{{user?.activeMale}}</td>
+            <td>{{user?.activeFemale}}</td>
+            <td>{{user?.NonactiveMale}}</td>
+            <td>{{user?.NonactiveFemale}}</td>
+            <td>{{user?.totalActiveUserMale}}</td>
+            <td>{{user?.totalActiveUserFemale}}</td>
+            <td>{{user?.totalTrainedMale}}</td>
+            <td>{{user?.totalTrainedFemale}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeMemberGenderList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[7]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberBumiList.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Active Member By Bumi</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary Of Active Member By Bumi','bumi-report')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table" id="bumi-report">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th colspan="2">Active Member</th>
+            <th colspan="2">NonActive Member</th>
+            <th colspan="2">Total Active Users</th>
+            <th colspan="2">Total Trained</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Bumi</th>
+            <th>Non Bumi</th>
+            <th>Bumi</th>
+            <th>Non Bumi</th>
+            <th>Bumi</th>
+            <th>Non Bumi</th>
+            <th>Bumi</th>
+            <th>Non Bumi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of activeMemberBumiList; index as i">
+            <td style="text-align: left !important;">{{user?.period}}</td>
+            <td>{{user?.memberBumi}}</td>
+            <td>{{user?.memberNonBumi}}</td>
+            <td>{{user?.nonMemberBumi}}</td>
+            <td>{{user?.nonMemberNonBumi}}</td>
+            <td>{{user?.totalActiveUserBumi}}</td>
+            <td>{{user?.totalActiveUserNonBumi}}</td>
+            <td>{{user?.totalTrainedBumi}}</td>
+            <td>{{user?.totalTrainedNonBumi}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeMemberBumiList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[8]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberAgeList.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Active Member By Age Group</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary Of Active Member By Age Group','age-report')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table" id="age-report">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th colspan="4">Active Member</th>
+            <th colspan="4">NonActive Member</th>
+            <th colspan="4">Total Active Users</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>less than 18 years old </th>
+            <th>18-35 years old</th>
+            <th>36-55 years old</th>
+            <th>>55 years old</th>
+            <th>less than 18 years old </th>
+            <th>18-35 years old</th>
+            <th>36-55 years old</th>
+            <th>>55 years old</th>
+            <th>less than 18 years old </th>
+            <th>18-35 years old</th>
+            <th>36-55 years old</th>
+            <th>>55 years old</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of activeMemberAgeList; index as i">
+            <td style="text-align: left !important;">{{user?.period}}</td>
+            <td>{{user?.activeeighteen}}</td>
+            <td>{{user?.activethirtyFive}}</td>
+            <td>{{user?.activefiftyFive}}</td>
+            <td>{{user?.activeaboveFiftyFive}}</td>
+            <td>{{user?.nonactiveeighteen}}</td>
+            <td>{{user?.nonactivethirtyFive}}</td>
+            <td>{{user?.nonactivefiftyFive}}</td>
+            <td>{{user?.nonactiveaboveFiftyFive}}</td>
+            <td>{{user?.totalusereighteen}}</td>
+            <td>{{user?.totaluserthirtyFive}}</td>
+            <td>{{user?.totaluserfiftyFive}}</td>
+            <td>{{user?.totaluseraboveFiftyFive}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeMemberAgeList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[9]['show'] == true">
+    <div class="col-md-12 col-xs-12">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Occupation</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary Of Active Member By Occupation','occupation-report')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table" id="occupation-report">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th [attr.colspan]="occupationList.length">Active Member</th>
+            <th [attr.colspan]="occupationList.length">NonActive Member</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th *ngFor="let data of occupationList">{{data}}</th>
+            <th *ngFor="let data of occupationList">{{data}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of activeMemberOccupation">
+            <td style="text-align: left !important;">{{item?.period}}</td>
+            <td *ngFor="let activesubItem of item.activeUser.totalCount">{{activesubItem?activesubItem:0}}</td>
+            <td *ngFor="let nonActivesubItem of item.nonActiveUser.totalCount">{{nonActivesubItem?nonActivesubItem:0}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- <div *ngIf="activeMemberOccupation.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div> -->
+  </div>
+
+  <!-- <div class="row ">
+    <div class="col-md-12 col-xs-12">
+
+      <table class="table rounded table-borderless bg-light app-table" *ngIf="CafeDiv">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Member ID</th>
+            <th>Location</th>
+            <th>Name</th>
+            <th>Contact Number</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of cafeList; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.memeberCode}}</td>
+            <td>{{user.location}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.contactNo}}</td>
+            <td>{{user.emailId}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+  <div class="row ">
+    <div class="col-md-12 col-xs-12">
+
+      <table class="table rounded table-borderless bg-light app-table" *ngIf="TainingDiv">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Course</th>
+            <th>CourseCode</th>
+            <th>CourseType</th>
+            <th>Duration</th>
+            <th>DurationType</th>
+            <th>Fee</th>
+            <th>Enrolled</th>
+            <th>Maximum Subscription</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of tainingList; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.course}}</td>
+            <td>{{user.courseCode}}</td>
+            <td>
+              <ng-container *ngIf="user?.courseType == '1'">Daily</ng-container>
+              <ng-container *ngIf="user?.courseType == '2'">Weekly</ng-container>
+            </td>
+            <td>{{user.duration}}</td>
+            <td>{{user.durationType}}</td>
+            <td>RM {{user.fee}}</td>
+            <td>{{user.enrolled}}</td>
+            <td>{{user.maximumSubscription}}</td>
+            <td>{{user.status}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+  <div class="row ">
+    <div class="col-md-12 col-xs-12">
+      <div *ngIf="incomeDiv">
+
+        <table class="table rounded table-borderless bg-light app-table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>User ID</th>
+              <th>Total Income</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let income of incomeList; index as i">
+              <td>{{i+1}}</td>
+              <td>{{income.id}}</td>
+              <td *ngIf="income.totalAmount!=0">{{income.totalAmount}}</td>
+              <td *ngIf="income.totalAmount==0">
+                {{income.browesUsage + income.gst+income.serviceCharge+income.printUsage+income.foodUsage}}</td>
+
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div> -->
+
+  <div class="row" *ngIf="reportsArray[10]['show'] == true">
+    <div class="col-md-12 col-xs-12">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary of Clock In Clock Out</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="exportReportasCsv('Summary of Clock In Clock Out','ClockInClockOut-report')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table" id="ClockInClockOut-report">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Date</th>
+            <th>Attendance</th>
+            <th>Clock In</th>
+            <th>Clock Out</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of clockInClockOutReportList; index as i">
+            <td>{{i+1}}</td>
+            <td>{{item.fullName}}</td>
+            <td>{{item.date | date:'dd/MM/yyyy'}}</td>
+            <!-- <th>{{item.attendance}}</th> -->
+            <th>1</th>
+            <td>{{item.clockin | date:'h:mm a'}}</td>
+            <td>{{item.clockout | date:'h:mm a'}}</td> 
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="clockInClockOutReportList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[11]['show'] == true">
+    <div class="col-md-12 col-xs-12">
+      <div class="row">
+        <div class="col-6">
+          <h5>From Date : {{ summaryDetailReport.fromDate | date:'dd/MM/yyyy' }}</h5>
+        </div>
+        <div class="col-6">
+          <h5>Printed On : {{ summaryDetailReport.printDate | date:'dd/MM/yyyy' }}</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <h5>To Date : {{ summaryDetailReport.toDate | date:'dd/MM/yyyy' }}</h5>
+        </div>
+        <!-- <div class="col-6">
+          <h5>Printed By : Admin</h5>
+        </div> -->
+      </div>
+    </div>
+    <br>
+    <br>
+    <ng-container *ngIf="incomeDetailReport.length">
+      <div class="col-md-12 col-xs-12">
+        <div class="row">
+          <div class="col-6">
+            <h5>Income</h5>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-sm btn-primary m-2 sec"
+              (click)="exportReportasCsv('Income Detail','income-detail')">Download</button>
+          </div>
+        </div>
+        <table class="table rounded table-borderless bg-light app-table" id="income-detail">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Date</th>
+              <th>Transaction No</th>
+              <th>By</th>
+              <th>Item</th>
+              <th>Amount (RM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let income of incomeDetailReport; index as i">
+              <td>{{i+1}}</td>
+              <td>{{income.date | date:'dd/MM/yyyy'}}</td>
+              <td>{{income.transactionId}}</td>
+              <td>{{income.by}}</td>
+              <td>{{income.item}}</td>
+              <td>{{income.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="incomeDetailReport.length == 0">
+        <h4>No records found for the income in search criteria</h4>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="expenseDetailReport.length">
+      <div class="col-md-12 col-xs-12">
+        <div class="row">
+          <div class="col-6">
+            <h5>Expense</h5>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-sm btn-primary m-2 sec"
+              (click)="exportReportasCsv('Expense Detail','expense-detail')">Download</button>
+          </div>
+        </div>
+        <table class="table rounded table-borderless bg-light app-table" id="expense-detail">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Date</th>
+              <th>Transaction No</th>
+              <th>By</th>
+              <th>Item</th>
+              <th>Amount (RM)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let expense of expenseDetailReport; index as i">
+              <td>{{i+1}}</td>
+              <td>{{expense.date | date:'dd/MM/yyyy'}}</td>
+              <td>{{expense.transactionId}}</td>
+              <td>{{expense.by}}</td>
+              <td>{{expense.item}}</td>
+              <td>{{expense.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="expenseDetailReport.length == 0">
+        <h4>No records found for the expense in search criteria</h4>
+      </div>
+    </ng-container>
+
+  </div>
+
+</div>

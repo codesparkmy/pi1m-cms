@@ -1,0 +1,746 @@
+<form [formGroup]="reportForm" #f="ngForm">
+  <div class="row mt-4 form-group">
+    <div class="col-md-12 col-sm-12">
+      <h4 class=" header-titel">Reports</h4>
+    </div>
+    <div [ngClass]="getClass()">
+      <div class="form-group">
+        <label>Select Report Type</label>
+        <select class=" form-control" formControlName="summaryType" (change)="getEvent($event.target.value)">
+          <option selected value="">Choose Summary</option>
+          <option *ngFor="let item of reportsArray" [value]="item?.id">
+            {{item?.name}}
+          </option>
+        </select>
+        <span *ngIf="reportForm.get('summaryType').hasError('required') && reportForm.get('summaryType').touched"
+          class="text-danger text-12">Report Type Field required</span>
+      </div>
+    </div>
+    <div class="col-md-6" *ngIf="f.form.value.summaryType == '4'">
+      <div class="form-group">
+        <label>Course</label>
+        <select class="form-control" formControlName="courseId">
+          <option selected value="">Choose Training</option>
+          <option *ngFor="let item of trainingList" [value]="item?.id">
+            {{item?.course}}
+          </option>
+        </select>
+        <span *ngIf="reportForm.get('courseId').hasError('required') && reportForm.get('courseId').touched"
+          class="text-danger text-12">Course is Required</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="row align-items-end">
+      <div class="col-md-3 col-xs-6" *ngIf="!(f.form.value.summaryType == '4' || f.form.value.summaryType == '5' )">
+        <div class="form-group">
+          <label>Period</label>
+          <select formControlName="period" class="form-control">
+            <option value="" selected>Choose type</option>
+            <option value="daily">Daily</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+          <span *ngIf="reportForm.get('period').hasError('required') && reportForm.get('period').touched"
+            class="text-danger text-12">Select Type
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3 col-xs-12" *ngIf="f.form.value.summaryType == '5'">
+        <div class="form-group">
+          <label>Type</label>
+          <select formControlName="incomeType" class="form-control">
+            <option value="" selected>Choose type</option>
+            <option value="all">All</option>
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+          </select>
+          <span *ngIf="reportForm.get('incomeType').hasError('required') && reportForm.get('incomeType').touched"
+            class="text-danger text-12">Select Type
+          </span>
+        </div>
+      </div>
+      <div class="col-md-3 col-xs-6" *ngIf="f.form.value.summaryType != '4'">
+        <div class="form-group">
+          <label>From date</label>
+          <input type="date" formControlName="fromdate" class="form-control">
+          <span *ngIf="reportForm.get('fromdate').hasError('required') && reportForm.get('fromdate').touched"
+            class="text-danger text-12">From date required</span>
+        </div>
+      </div>
+      <div class="col-md-3 col-xs-6" *ngIf="f.form.value.summaryType != '4'">
+        <div class="form-group">
+          <label>To date</label>
+          <input type="date" formControlName="todate" class="form-control">
+          <span *ngIf="reportForm.get('todate').hasError('required') && reportForm.get('todate').touched"
+            class="text-danger text-12">To date required</span>
+        </div>
+        <span *ngIf="error.isError" class="text-danger text-12">{{ error.errorMessage }}</span>
+      </div>
+      <div class="col-md-3 col-xs-6">
+        <div class="form-group">
+          <label>Location</label>
+          <select class=" form-control" formControlName="location" (click)="clearDiv()">
+            <option selected value="">Choose Location</option>
+            <option *ngFor="let item of locationList index as i" value={{item.id}}>{{item?.branchName}}</option>
+          </select>
+          <span *ngIf="reportForm.get('summaryType').hasError('required') && reportForm.get('summaryType').touched"
+            class="text-danger text-12">Location required</span>
+        </div>
+      </div>
+      <!-- <div class="col">
+          <div class="form-group input-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">From</span>
+              </div>
+              <input type="text" class="form-control" (click)="from.open()" #fromInput
+                (dateInput)="addStartDate('input', $event)" (dateChange)="addStartDate('change', $event)" matInput
+                [matDatepicker]="from">
+              <mat-datepicker #from></mat-datepicker>
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2" (click)="from.open()"><img
+                    src="./assets/icon/calendar.svg" /></span>
+              </div>
+            </div>
+            <span *ngIf="showError" class="text-danger text-12">Start Date Field required</span>
+
+            <span *ngIf="error.isError" class="text-danger text-12">{{ error.errorMessage }}</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-group input-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">To</span>
+              </div>
+              <input type="text" class="form-control" #toInput (click)="to.open()"
+                (dateInput)="addStartDate('input', $event)" (dateChange)="addStartDate('change', $event)" matInput
+                [matDatepicker]="to">
+              <mat-datepicker #to></mat-datepicker>
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2" (click)="to.open()"><img
+                    src="./assets/icon/calendar.svg" /></span>
+              </div>
+
+            </div>
+            <span *ngIf="showError" class="text-danger text-12">To Date Field required</span>
+
+            </div>
+        </div> -->
+    </div>
+  </div>
+  <div class="float-right">
+    <button type="button" class="btn px-4 form-group btn-primary" [disabled]="!reportForm.valid"
+      (click)="searchReport(reportForm.value)">Search
+    </button>
+  </div>
+</form>
+
+<div class="marg">
+  <div class="row" *ngIf="reportsArray[0]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeUserCafe.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary of Active Users at Cafe</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(activeUserCafe,'Summary of Active Users at Cafe')">Download</button>
+        </div>
+      </div>
+
+      <table class="table rounded table-borderless bg-light app-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Period</th>
+            <th>Member frequency</th>
+            <th>Non-Member frequency</th>
+            <th>Total usage frquency</th>
+            <th>Total Login frequency</th>
+            <th>Total usage</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of activeUserCafe; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.period}}</td>
+            <td>{{user.memberFrequency}}</td>
+            <td>{{user.memberNonfrequency}}</td>
+            <td>{{user.totalUsageFrequency}}</td>
+            <td>{{user.totalLoginFrequency}}</td>
+            <td>{{user.totalUsage}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeUserCafe.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[1]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="cafeDetails?.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Cafe Usage Details</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(cafeDetails,'Summary Of Cafe Usage Details')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Date</th>
+            <th>Start time</th>
+            <th>Work station</th>
+            <th>Name</th>
+            <th>Nric</th>
+            <th>Member</th>
+            <th>Usage(Hrs)</th>
+            <th>Amount(RM)</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of cafeDetails; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.date}}</td>
+            <td>{{user.startTime}}</td>
+            <td>{{user.workstation}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.nric}}</td>
+            <td>{{user.isMember == true?'Yes':'No'}}</td>
+            <td>{{user.usage}}</td>
+            <td>{{user.amount}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="cafeDetails?.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[2]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="courseDetails.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Training Course Details</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(courseDetails,'Summary Of Training Course Details')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Course date</th>
+            <th>Category</th>
+            <th>Course name</th>
+            <th>Duration</th>
+            <th>Target group</th>
+            <th>Trainer</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of courseDetails; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.courseDate}}</td>
+            <td>{{user.category}}</td>
+            <td>{{user.courseName}}</td>
+            <td>{{user.duration}}</td>
+            <td>{{user.targetGroup}}</td>
+            <td>{{user.trainer}}</td>
+            <td>{{user.location}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="courseDetails.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[3]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="attendanceList.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Total Attendance</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(attendanceList,'Summary Of Total Attendance')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Name</th>
+            <th>Nric</th>
+            <th>Age</th>
+            <th>Bumi Status</th>
+            <th>Occupation</th>
+            <th>Member</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of attendanceList; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.nric}}</td>
+            <td>{{user.age}}</td>
+            <td>{{user.bumiStatus == true?'Yes':'No'}}</td>
+            <td>{{user.occupation}}</td>
+            <td>{{user.member == true?'Yes':'No'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="attendanceList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[4]['show'] == true">
+    <ng-container *ngIf="incomeListReport.length">
+      <div class="col-md-12 col-xs-12">
+        <div class="row">
+          <div class="col-6">
+            <h5>Summary Of Income Report</h5>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-sm btn-primary m-2 sec"
+              (click)="downloadActiveMemberReport(incomeListReport,'Summary Of Income Report')">Download</button>
+          </div>
+        </div>
+        <table class="table rounded table-borderless bg-light app-table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Item</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of incomeListReport; index as i">
+              <td>{{i+1}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="incomeListReport.length == 0">
+        <h4>No records found for the search criteria</h4>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="expenseList.length">
+      <div class="col-md-12 col-xs-12">
+        <div class="row">
+          <div class="col-6">
+            <h5>Summary Of Expense Report</h5>
+          </div>
+          <div class="col-6">
+            <button type="button" class="btn btn-sm btn-primary m-2 sec"
+              (click)="downloadActiveMemberReport(expenseList,'Summary Of Expense Report')">Download</button>
+          </div>
+        </div>
+        <table class="table rounded table-borderless bg-light app-table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Item</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of expenseList; index as i">
+              <td>{{i+1}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.amount}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="expenseList.length == 0">
+        <h4>No records found for the search criteria</h4>
+      </div>
+    </ng-container>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[5]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberReport.length">
+      <div class="row">
+        <div class="col-6">
+          <h5> Summary Of Active Member</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(activeMemberReport,'Summary Of Active Member')">Download</button>
+        </div>
+      </div>
+
+      <table class="table rounded table-borderless bg-light app-table">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Period</th>
+            <th>Member</th>
+            <th>Expired</th>
+            <th>Active Member</th>
+            <th>Active NonMember</th>
+            <th>Total Active Users</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of activeMemberReport; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.period}}</td>
+            <td>{{user.registeredMember}}</td>
+            <td>{{user.memberExpired}}</td>
+            <td>{{user.activeMember}}</td>
+            <td>{{user.activeNonMember}}</td>
+            <td>{{user.totalActiveUser}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeMemberReport.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[6]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberGenderList.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Active Member By Gender</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(activeMemberGenderList,'Summary Of Active Member By Gender')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th colspan="2">Active Member</th>
+            <th colspan="2">NonActive Member</th>
+            <th colspan="2">Total Active Users</th>
+            <th colspan="2">Total Trained</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Male</th>
+            <th>Female</th>
+            <th>Male</th>
+            <th>Female</th>
+            <th>Male</th>
+            <th>Female</th>
+            <th>Male</th>
+            <th>Female</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of activeMemberGenderList; index as i">
+            <td style="text-align: left !important;">{{user?.period}}</td>
+            <td>{{user?.activeMale}}</td>
+            <td>{{user?.activeFemale}}</td>
+            <td>{{user?.NonactiveMale}}</td>
+            <td>{{user?.NonactiveFemale}}</td>
+            <td>{{user?.totalActiveUserMale}}</td>
+            <td>{{user?.totalActiveUserFemale}}</td>
+            <td>{{user?.totalTrainedMale}}</td>
+            <td>{{user?.totalTrainedFemale}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeMemberGenderList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[7]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberBumiList.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Active Member By Bumi</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(activeMemberBumiList,'Summary Of Active Member By Bumi')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th colspan="2">Active Member</th>
+            <th colspan="2">NonActive Member</th>
+            <th colspan="2">Total Active Users</th>
+            <th colspan="2">Total Trained</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>Bumi</th>
+            <th>Non Bumi</th>
+            <th>Bumi</th>
+            <th>Non Bumi</th>
+            <th>Bumi</th>
+            <th>Non Bumi</th>
+            <th>Bumi</th>
+            <th>Non Bumi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of activeMemberBumiList; index as i">
+            <td style="text-align: left !important;">{{user?.period}}</td>
+            <td>{{user?.memberBumi}}</td>
+            <td>{{user?.memberNonBumi}}</td>
+            <td>{{user?.nonMemberBumi}}</td>
+            <td>{{user?.nonMemberNonBumi}}</td>
+            <td>{{user?.totalActiveUserBumi}}</td>
+            <td>{{user?.totalActiveUserNonBumi}}</td>
+            <td>{{user?.totalTrainedBumi}}</td>
+            <td>{{user?.totalTrainedNonBumi}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeMemberBumiList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[8]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberAgeList.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Active Member By Age Group</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(activeMemberAgeList,'Summary Of Active Member By Age Group')">Download</button>
+        </div>
+      </div>
+      <table class="table rounded table-borderless bg-light app-table">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th colspan="4">Active Member</th>
+            <th colspan="4">NonActive Member</th>
+            <th colspan="4">Total Active Users</th>
+          </tr>
+          <tr>
+            <th></th>
+            <th>less than 18 years old </th>
+            <th>18-35 years old</th>
+            <th>36-55 years old</th>
+            <th>>55 years old</th>
+            <th>less than 18 years old </th>
+            <th>18-35 years old</th>
+            <th>36-55 years old</th>
+            <th>>55 years old</th>
+            <th>less than 18 years old </th>
+            <th>18-35 years old</th>
+            <th>36-55 years old</th>
+            <th>>55 years old</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of activeMemberAgeList; index as i">
+            <td style="text-align: left !important;">{{user?.period}}</td>
+            <td>{{user?.activeeighteen}}</td>
+            <td>{{user?.activethirtyFive}}</td>
+            <td>{{user?.activefiftyFive}}</td>
+            <td>{{user?.activeaboveFiftyFive}}</td>
+            <td>{{user?.nonactiveeighteen}}</td>
+            <td>{{user?.nonactivethirtyFive}}</td>
+            <td>{{user?.nonactivefiftyFive}}</td>
+            <td>{{user?.nonactiveaboveFiftyFive}}</td>
+            <td>{{user?.totalusereighteen}}</td>
+            <td>{{user?.totaluserthirtyFive}}</td>
+            <td>{{user?.totaluserfiftyFive}}</td>
+            <td>{{user?.totaluseraboveFiftyFive}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="activeMemberAgeList.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="reportsArray[9]['show'] == true">
+    <div class="col-md-12 col-xs-12" *ngIf="activeMemberOccupation.length">
+      <div class="row">
+        <div class="col-6">
+          <h5>Summary Of Occupation</h5>
+        </div>
+        <div class="col-6">
+          <button type="button" class="btn btn-sm btn-primary m-2 sec"
+            (click)="downloadActiveMemberReport(activeMemberOccupation,'Summary Of Active Member By Occupation')">Download</button>
+        </div>
+      </div>
+      table
+    </div>
+    <div *ngIf="activeMemberOccupation.length == 0">
+      <h4>No records found for the search criteria</h4>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="container">
+  <div class="row ">
+    <div class="col-md-12 col-xs-12">
+
+      <table class="table rounded table-borderless bg-light app-table" *ngIf="EmplyeeDiv">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Email</th>
+            <th>Employee ID</th>
+            <th>Full Name</th>
+            <th>Phone Number</th>
+            <th>Role</th>
+            <th>Subscription ID</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of reportList; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.employeeId}}</td>
+            <td>{{user.fullName}}</td>
+            <td>{{user.phoneNumber}}</td>
+            <td>{{user.role}}</td>
+            <td>{{user.subscriptionId}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="row ">
+    <div class="col-md-12 col-xs-12">
+
+      <table class="table rounded table-borderless bg-light app-table" *ngIf="CafeDiv">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Member ID</th>
+            <th>Location</th>
+            <th>Name</th>
+            <th>Contact Number</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of cafeList; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.memeberCode}}</td>
+            <td>{{user.location.branchName}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.contactNo}}</td>
+            <td>{{user.emailId}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+  <div class="row ">
+    <div class="col-md-12 col-xs-12">
+
+      <table class="table rounded table-borderless bg-light app-table" *ngIf="TainingDiv">
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Course</th>
+            <th>CourseCode</th>
+            <th>CourseType</th>
+            <th>Duration</th>
+            <th>Fee</th>
+            <th>Enrolled</th>
+            <th>Maximum Subscription</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let user of tainingList; index as i">
+            <td>{{i+1}}</td>
+            <td>{{user.course}}</td>
+            <td>{{user.courseCode}}</td>
+            <td>
+              <ng-container *ngIf="user?.courseType == '1'">Daily</ng-container>
+              <ng-container *ngIf="user?.courseType == '2'">Weekly</ng-container>
+            </td>
+            <td>{{user.courseDuration}}</td>
+            <td>RM {{user.fee}}</td>
+            <td>{{user.enrolled}}</td>
+            <td>{{user.maximumSubscription}}</td>
+            <td><span class="text-success" *ngIf="user.status=='1'">Active</span><span class="text-danger"
+                *ngIf="user.status!='1'">Inactive</span></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+  <div class="row ">
+    <div class="col-md-12 col-xs-12">
+
+      <div *ngIf="incomeDiv">
+
+        <table class="table rounded table-borderless bg-light app-table">
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>User ID</th>
+              <th>Total Income</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let income of incomeList; index as i">
+              <td>{{i+1}}</td>
+              <td>{{income.id}}</td>
+              <td *ngIf="income.totalAmount!=0">{{income.totalAmount}}</td>
+              <td *ngIf="income.totalAmount==0">
+                {{income.browesUsage + income.gst+income.serviceCharge+income.printUsage+income.foodUsage}}</td>
+
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div> -->

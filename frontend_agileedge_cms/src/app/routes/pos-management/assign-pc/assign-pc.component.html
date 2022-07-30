@@ -1,0 +1,458 @@
+<div class="modal fade assign-pc" bsModal #assignPcModel="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <!-- 780712-85-6932 -->
+
+  <div class="modal-dialog modal-dialog-centered modal-lg" *ngIf="AssignPc">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="hideModalWindow()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-md-12 col-xs-12 text-center">
+            <img src="./assets/images/logo-colour.svg" class="img-fluid" alt="Responsive image">
+          </div>
+        </div>
+
+        <div class="col-md-12 col-xs-12">
+          <div class="form-group">
+            <div [ngClass]="selectedType === 'AssignPC' ? 'assign-pc': 'select-pc'">
+              <label class="sub-head" *ngIf="selectedType === 'AssignPC'">Select PC</label>
+              <div *ngIf="!editOption">
+                <input type="checkbox" [checked]="selectedType == 'AssignPC'" (change)="changeStatus('AssignPC')">
+                <label class="sub-head" style="padding-right: 20px;padding-left: 5px;"> Assign PC</label>
+                <input type="checkbox" [checked]="selectedType == 'StaffService'"
+                  (change)="changeStatus('StaffService')">
+                <label class="sub-head" style="padding-left: 5px;">Staff service</label>
+              </div>
+
+            </div>
+
+            <div class="d-flex flex-wrap pc-list" *ngIf="selectedType == 'AssignPC'">
+              <!-- <span *ngIf="systemList==''" class="text-danger text-12">No Systems to assign</span> -->
+              <button *ngIf="!!editAlive" class="mx-2 my-2 active border-0 rounded " type="button"
+                rel="tab1">{{systemName}}</button>
+              <div *ngFor="let item of systemList index as i">
+                <button *ngIf="!editAlive" class="mx-2 my-2 border-0 rounded " name="{{item.id}}" type="button"
+                  [class.active]="i==selectedBox" rel="tab1" (click)="onSystem(i,item)">{{item.systemId}}</button>
+              </div>
+            </div>
+            <span class="text-danger text-12" *ngIf="showError && selectedType == 'AssignPC'">System ID Field
+              required</span>
+
+          </div>
+        </div>
+
+        <form [formGroup]="posForm" *ngIf="selectedType == 'AssignPC'">
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Nric Number</label>
+                <div class="input-group mb-3">
+                  <input type="text" formControlName="userId" class="form-control" placeholder="xxxxxx-xx-xxxx"
+                    [readonly]="editAlive">
+                  <div class="input-group-append">
+                    <span class="input-group-text ext" id="basic-addon2"
+                      (click)="autoFill(posForm.value, 'posForm')">Search</span>
+                  </div>
+                </div>
+                <span *ngIf="posForm.get('userId').hasError('required') && posForm.get('userId').touched"
+                  class="text-danger text-12">Assign to Field required</span>
+                <span *ngIf="posForm.get('userId').hasError('pattern')" class="text-danger text-12">Please enter the
+                  correct NRIC format xxxxxx-xx-xxxx</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Assign to </label>
+                <input type="text" [formControlName]="'assignTo'" [(ngModel)]="assignTo" class="form-control"
+                  [readonly]="editAlive" disabled="true">
+                <span *ngIf="posForm.get('assignTo').hasError('required') && posForm.get('assignTo').touched"
+                  class="text-danger text-12">User ID Field required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <div class="d-flex justify-content-start align-items-center">
+                  <label>Add Food</label>
+                  <button class="bg-transparent border-0" (click)="onPing()">
+                    <div class="border rounded-circle p-2">
+                      <div class="circle" [class.active]="!!toggle"></div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="!!toggle" class="form-group">
+                <label>Food Option</label>
+                <ng-multiselect-dropdown [data]="foodList" formControlName="foodOption" [(ngModel)]="selectedItems"
+                  [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown>
+                <!-- <select formControlName="Food" class="custom-select form-control">
+                  <option selected value="">Choose</option>
+                  <option *ngFor="let item of foodList index as i" value={{item.name}}>{{item.name}}</option>
+                </select> -->
+                <span *ngIf="posForm.get('foodOption').hasError('required') && posForm.get('foodOption').touched"
+                  class="text-danger text-12">Food option required</span>
+                <span *ngIf="foodList==''" class="text-danger">No Food available</span>
+              </div>
+
+            </div>
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <div class="d-flex justify-content-start align-items-center">
+                  <label>Other Service</label>
+                  <button class="bg-transparent border-0" (click)="onService()">
+                    <div class="border rounded-circle p-2">
+                      <div class="circle" [class.active]="!!toggle1"></div>
+                    </div>
+                  </button>
+                </div>
+                <!-- <span *ngIf="posForm.get('userId').hasError('required') && posForm.get('userId').touched" class="text-danger text-12">Full name required</span> -->
+              </div>
+              <div *ngIf="!!toggle1" class="form-group">
+                <label>Other Option</label>
+                <div *ngFor="let items of xeroxOptionArr;index as i">
+                  <div style="display: flex;align-items: center;">
+                    <div>
+                      <select class="custom-select form-control" style="width: auto;" #t
+                        (change)="chooseOptionOtherService(t.value, i)">
+                        <option value="">Choose</option>
+                        <option *ngFor="let item of posList; index as i" [value]="item?.id"
+                          [selected]="items.id == item?.printOutType?.id">
+                          {{item?.printOutType?.printOutType}}-{{item.name}}</option>
+                      </select>
+                    </div>
+                    <div>
+
+                      <input [ngModelOptions]="{standalone: true}" type="text" (keypress)="numberOnly($event)"
+                        name="nam" [(ngModel)]="items.qty" (input)="valC($event.target.value, i)" class="form-control"
+                        placeholder="quantity">
+                    </div>
+                    <div><button class="button-service-add" (click)="addOtherService()"><i
+                          class="feather icon-plus"></i>+</button></div>
+                    <div style="padding-left: 10px;"><button class="button-service-delete"
+                        (click)="removeOtherService(i)"><i class="feather icon-minus"></i>-</button></div>
+                  </div>
+                </div>
+                <!-- </div> -->
+                <!-- <span *ngIf="printList==''" class="text-danger">No Service available</span> -->
+                <span *ngIf="posForm.get('otherSType').hasError('required') && posForm.get('otherSType').touched"
+                  class="text-danger text-12">Other services required</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <label>Duration(start time & end time)</label>
+              <div class="row">
+                <div class="col-md-6 col-xs-6">
+                  <div class="form-group">
+                    <select formControlName="hours" class="form-control" [attr.disabled]="editAlive ? '' : null">
+                      <option value="" selected>Choose Hours</option>
+                      <option *ngFor="let hour of hoursList" [value]="hour?.id" [selected]="hour == hour.id?hour:null">
+                        {{hour.value}}
+                      </option>
+                    </select>
+                    <span *ngIf="posForm.get('hours').hasError('required') && posForm.get('hours').touched"
+                      class="text-danger text-12">Hours required</span>
+                  </div>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                  <div class="form-group">
+                    <select formControlName="minutes" class="form-control" [attr.disabled]="editAlive ? '' : null">
+                      <option value="" selected>Choose Minutes</option>
+                      <option *ngFor="let minute of minutesList" [value]="minute?.id"
+                        [selected]="minute == minute.id?minute:null">
+                        {{minute.value}}
+                      </option>
+                    </select>
+                    <span *ngIf="posForm.get('minutes').hasError('required') && posForm.get('minutes').touched"
+                      class="text-danger text-12">Minutes required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Purpose</label>
+                <select formControlName="purpose" class="custom-select form-control"
+                  (change)="getvalue($event.target.value)">
+                  <option selected value="">Choose</option>
+                  <option value="Browsing">Browsing</option>
+                  <option value="Training">Training</option>
+                </select>
+                <span *ngIf="posForm.get('purpose').hasError('required') && posForm.get('purpose').touched"
+                  class="text-danger text-12">Purpose required</span>
+              </div>
+            </div>
+            <div class="col-md-6" *ngIf="show">
+              <div class="form-group">
+
+                <label>Available course</label>
+                <select formControlName="training" class="custom-select form-control">
+                  <option selected value="">Choose</option>
+                  <option *ngFor="let course of CourseList index as i" value={{course.id}}>{{course.course}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button class="btn btn-primary px-4 py-2" *ngIf="!itemid" [disabled]="!posForm.valid"
+                (click)="addPOS(posForm.value)">Create </button>
+
+
+
+              <button class="btn btn-primary px-4 py-2" *ngIf="itemid" (click)="UpdatePOS(posForm.value)">Save &
+                Continue</button>
+            </div>
+          </div>
+        </form>
+        <form [formGroup]="staffServiceForm" *ngIf="selectedType == 'StaffService'">
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Nric Number</label>
+                <div class="input-group mb-3">
+                  <input type="text" formControlName="userId" class="form-control" placeholder="xxxxxx-xx-xxxx"
+                    [readonly]="editAlive">
+                  <div class="input-group-append">
+                    <span class="input-group-text ext" id="basic-addon2"
+                      (click)="autoFill(staffServiceForm.value, 'staffServiceForm')">Search</span>
+                  </div>
+                </div>
+                <span
+                  *ngIf="staffServiceForm.get('userId').hasError('required') && staffServiceForm.get('userId').touched"
+                  class="text-danger text-12">Assign to Field required</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Assign to </label>
+                <input type="text" [formControlName]="'assignTo'" [(ngModel)]="assignTo" class="form-control"
+                  [readonly]="editAlive" disabled="true">
+                <span
+                  *ngIf="staffServiceForm.get('assignTo').hasError('required') && staffServiceForm.get('assignTo').touched"
+                  class="text-danger text-12">User ID Field required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <div class="d-flex justify-content-start align-items-center">
+                  <label>Other Service</label>
+                  <button class="bg-transparent border-0" (click)="onService()">
+                    <div class="border rounded-circle p-2">
+                      <div class="circle" [class.active]="!!toggle1"></div>
+                    </div>
+                  </button>
+                </div>
+                <!-- <span *ngIf="staffServiceForm.get('userId').hasError('required') && staffServiceForm.get('userId').touched" class="text-danger text-12">Full name required</span> -->
+              </div>
+
+              <div class="row" *ngIf="!!toggle1">
+                <div class="col-md-6 col-xs-6">
+                  <div class="form-group">
+                    <label>Other Option</label>
+                  </div>
+                  <div *ngFor="let item of staffServiceForm.get('xeroxOptionArr').controls;index as i">
+
+                    <div style="display: flex;align-items: center;padding-bottom: 10px;">
+                      <div>
+                        <select class="custom-select form-control" style="width: auto;" #t
+                          (change)="chooseStaffServiceOtherService(t.value, i)">
+                          <option value="">Choose</option>
+                          <option *ngFor="let item of posList; index as i" [value]="item?.id"
+                            [selected]="otherSType == item?.printOutType?.id">
+                            {{item?.printOutType?.printOutType}}-{{item.name}}</option>
+                        </select>
+                      </div>
+                      <div style="padding: 0px 10px 0px 10px;">
+                        <!-- <label for="endTimeId">Quantity</label> -->
+                        <!-- <div class="form-group"> -->
+                        <input type="text" style="width: auto;" (keypress)="numberOnly($event)"
+                          (input)="valStaffService($event.target.value, i)" class="form-control" name="a"
+                          placeholder="quantity">
+                      </div>
+                      <div><button class="button-service-add" (click)="addStaffService()"><i
+                            class="feather icon-plus"></i>+</button></div>
+                      <div style="padding-left: 10px;"><button class="button-service-delete"
+                          (click)="removeStaffService(i)"><i class="feather icon-minus"></i>-</button></div>
+                    </div>
+                  </div>
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+
+
+          <div class="row mt-3">
+            <div class="col-md-12 col-xs-12 text-right">
+
+              <button class="btn btn-primary px-4 py-2" *ngIf="!itemid"
+                [disabled]="toggle1? (xeroxOptionStaffServiceArr[0].qty == '' || xeroxOptionStaffServiceArr[0].id==0 ? true:false) : true"
+                (click)="staffServiceFormAdd(staffServiceForm.value)">Create</button>
+              <!-- <button class="btn btn-primary px-4 py-2" 
+                (click)="staffServiceFormAdd(staffServiceForm.value)">Create</button> -->
+              <!-- <button class="btn btn-primary px-4 py-2" *ngIf="itemid" (click)="UpdatePOS(staffServiceForm.value)">Save &
+                Continue</button> -->
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="alert  text-center  alert-dismissible m0" role="alerts" [ngClass]="alerts.sticky_nric.class"
+        *ngIf="alerts.stickyAlert_nric"> {{alerts.sticky_nric.text}}
+        <button type="button" class="closealert text-white" (click)="alerts.stickyAlert_nric=false"
+          data-dismiss="alerts" aria-label="closealert"><span aria-hidden="true"
+            class="closebutton">&times;</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="modal-dialog modal-dialog-centered modal-lg"
+    *ngIf="!AssignPc && serviceData && staffServiceList.length>0">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="hideModalWindow()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body" id="printArea">
+        <!-- <div class="row mb-4">
+          <div class="col-md-12 col-xs-12 text-center">
+            <img src="./assets/images/logo-colour.svg" class="img-fluid" alt="Responsive image">
+          </div>
+        </div> -->
+        <div class="box-shadow card border-0 mb-4">
+          <div class="card-body">
+            <div class="d-flex justify-content-between">
+              <div>
+                <div class="media" *ngIf="posList">
+                  <img class="mr-3" src="./assets/images/user.jpg">
+
+                  <div class="media-body px-3 py-2">
+                    <h5 class="mt-0">{{serviceData.name}}</h5>
+                    <label class="detals">{{serviceData.emailId}}</label>
+                    <label class="detals">{{serviceData.contactNo}}</label>
+                    <label class="detals">Location : {{serviceData.location}}</label>
+
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="px-4">
+
+                      <h4 class="mt-4 mb-0 total-hous ">Total hours</h4>
+                      <h5 class="mt-0  mb-0 hours p-2 text-center text-primary">{{posList?.hours}}hrs {{posList?.minutes}} minutes</h5>
+                  </div> -->
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-12 col-xs-12">
+          <div class="shadow-sm card border-0 mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12 col-xs-12">
+                  <table class="table table-borderless detail-tabele">
+                    <tbody>
+                      <tr>
+                        <!-- <td class="text-muted"><b>Service type</b></td> -->
+                        <td><b>Service type</b></td>
+                        <!-- <td class="text-muted"></td> -->
+                        <td><b>Quantity</b></td>
+                        <td><b>Price</b></td>
+                      </tr>
+                      <!-- <tr *ngIf="posList?.foodOption != 'null' || posList?.foodOption != ''">
+                                  <td class="text-muted">Food and beverage </td>
+                                  <td class="text-muted"><span *ngFor="let name of foodnameDetail">{{name}}</span></td>
+                                  <td>{{foodPrice | currency : 'RM' :'symbol'}}</td>
+                                </tr> -->
+                      <tr *ngFor="let service of staffServiceList">
+                        <td class="text-muted">{{service.printout_type_Id.printOutType}}-{{service.printout_Id.name}}
+                        </td>
+                        <td>{{service.qty}}</td>
+                        <td>{{service.price | currency : 'RM' :'symbol'}}</td>
+                      </tr>
+                      <!-- <tr>
+                                  <td class="text-muted">Lamination-A2</td>
+                                 
+                                  <td>6</td>
+                                  <td>{{60 | currency : 'RM' :'symbol'}}</td>
+                                </tr> 
+                                <tr>
+                                  <td class="text-muted">Zerox-A1</td>
+                                 
+                                  <td>10</td>
+                                  <td>{{80 | currency : 'RM' :'symbol'}}</td>
+                                </tr> 
+                                <tr>
+                                    <td colspan="3">
+                                        <hr class="m-0">
+                                    </td>
+    
+                                </tr> -->
+                      <tr>
+                        <td>GST</td>
+                        <td></td>
+
+                        <td>{{gstvalue | currency : 'RM' :'symbol'}}</td>
+                      </tr>
+                      <tr>
+                        <td>Service charge</td>
+                        <td></td>
+                        <td>{{ servicevalue | currency : 'RM' :'symbol'}}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                          <hr class="m-0">
+                        </td>
+
+                      </tr>
+                      <tr>
+                        <td><b>Total amount</b></td>
+                        <td></td>
+                        <td><b>{{totalAmount | currency : 'RM' :'symbol'}}</b></td>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                          <hr class="m-0">
+                        </td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="row mt-3 mb-3 mr-3">
+        <div class="col-md-12 col-xs-12 text-right">
+          <button class="btn btn-primary px-5 text-center" style="float: right;" (click)="print()">Print</button>
+        </div>
+      </div>
+
+      <div class="alert  text-center  alert-dismissible m0" role="alerts" [ngClass]="alerts.sticky_nric.class"
+        *ngIf="alerts.stickyAlert_nric"> {{alerts.sticky_nric.text}}
+        <button type="button" class="closealert text-white" (click)="alerts.stickyAlert_nric=false"
+          data-dismiss="alerts" aria-label="closealert"><span aria-hidden="true"
+            class="closebutton">&times;</span></button>
+      </div>
+    </div>
+  </div>
+  <button type="button" id="fix" style="display: none;">Fix</button>
+</div>

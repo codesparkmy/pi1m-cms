@@ -1,0 +1,73 @@
+@import "../../../shared/styles/abstracts/abstracts-dir.scss";
+
+.acount-details {
+    background: #f7f6f9;
+    padding: 1.25rem;
+    .media {
+        img {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+        }
+        .media-body {
+            h5 {
+                font-size: 20px;
+                color: $black;
+            }
+            span {
+                font-size: 18px;
+                color: $black;
+            }
+        }
+    }
+}
+.mat-form-field-infix {
+    width: 23rem !important;
+    background-color: #ddd;
+}
+.mat-field {
+    width: 31rem !important;
+    background-color: #eeee;
+    line-height: 0 !important;
+    padding: 15px;
+    // margin-top: 2.2rem;
+    height: 56px;
+}
+.trigger {
+    position: absolute;
+    top: 0;
+}
+::ng-deep .mat-select-content {
+    width: 23rem !important;
+    background-color: red;
+    font-size: 10px;
+}
+.selected-box {
+    background-color: #328d5f !important;
+    // padding: 15px 10px !important;
+    position: relative;
+    color: #fff;
+    top: 1rem;
+}
+// .form-control{
+//     background-color: #F7F6F9;
+
+// }
+ul {
+    list-style: none;
+    padding: 0;
+    li {
+        // background-color: #eeeeee;
+        border: none;
+        &.active {
+            background-color: $primary-bg !important;
+            color: $white;
+            border-radius: 4px;
+        }
+    }
+}
+.align-center {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

@@ -1,0 +1,183 @@
+@import "../../../shared/styles/abstracts/abstracts-dir.scss";
+
+.sub-head {
+    font-size: 18px;
+    font-weight: 600;
+}
+button {
+    outline: none;
+}
+.pc-list {
+    button {
+        width: 53px;
+        height: 53px;
+        background-color: $dark-grey;
+        font-weight: 500;
+        font-size: 16px;
+        text-align: center;
+        &.active {
+            background-color: $primary-bg;
+            color: $white;
+        }
+    }
+}
+.assign-pc{
+    display: flex;
+    justify-content: space-between;
+}
+.select-pc{
+    display: flex;
+    justify-content:flex-end;
+}
+.mat-select-panel {
+    z-index: 1060 !important;
+}
+.mat-form-field-infix {
+    width: 23rem !important;
+    background-color: #ddd;
+}
+.mat-field {
+    width: 23rem !important;
+    background-color: #eeee;
+    line-height: 0 !important;
+    padding: 15px;
+    // margin-top: 2.2rem;
+    height: 56px;
+}
+mat-pseudo-checkbox.mat-option-pseudo-checkbox.mat-pseudo-checkbox.ng-star-inserted.mat-pseudo-checkbox-checked {
+    background: #328d5f !important;
+}
+.trigger {
+    position: absolute;
+    top: 0;
+}
+::ng-deep .mat-select-content {
+    width: 23rem !important;
+    background-color: red;
+    font-size: 10px;
+}
+.selected-box {
+    background-color: #328d5f !important;
+    // padding: 15px 10px !important;
+    position: relative;
+    color: #fff;
+    top: 1rem;
+}
+.form-check-input:checked {
+    background-color: #328d5f !important;
+}
+.circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: #eeee;
+    &.active {
+        background-color: $primary-bg;
+    }
+}
+.sub-head {
+    font-size: 18px;
+    font-weight: 600;
+}
+button {
+    outline: none;
+}
+
+.ext {
+    text-decoration: underline;
+}
+
+.alert {
+    border-radius: 0;
+}
+
+.alert-danger {
+    background-color: #c71726;
+    color: #ffffff;
+    border: none;
+}
+
+.alert-dismissible .closealert {
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.closebutton {
+    color:white;
+}
+
+.alert-dangers[_ngcontent-gqf-c2] {
+    background-color: #c71726;
+    color: #ffffff;
+    border: none;
+}
+
+.alert[_ngcontent-gqf-c2] {
+    border-radius: 0;
+}
+
+.alert {
+    position: fixed;
+    top: 150px;
+    width: 670px;
+    transform: translateX(-50%);
+    left: 50%;
+    z-index: 1;
+}
+
+.alert-dismissible {
+    padding-right: 4rem;
+}
+
+.alert-dismissible .closealert {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.75rem 1.25rem;
+    color: inherit;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.closealert {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+}
+.button-service-add {
+    background-color: #328d5f;
+    border-color: #328d5f;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: .375rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1;
+    color: #fff;
+    border: none;
+    // background-color: #0069d9;
+    // border-color: #0062cc;
+}
+
+.button-service-delete {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    outline: none;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: .375rem 1rem;
+    font-size: 1rem;
+    line-height: 1;
+    color: #fff;
+    border: none;
+}

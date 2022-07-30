@@ -1,0 +1,19 @@
+.img-upload::after {
+    content: "+";
+    position: absolute;
+    padding: 4px 8px;
+    margin-top: 1.0rem;
+    background-color: #ddd;
+    border-radius: 100%;
+    font-size: 11px;
+  }
+.hideFile{
+  opacity: 0;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  left: 0;
+}
+.show-password {
+  margin-top: 10px;
+}

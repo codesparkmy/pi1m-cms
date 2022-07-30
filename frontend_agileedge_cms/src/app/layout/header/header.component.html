@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg navbar-light custom-header">
+  <!-- <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse"
+      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button> -->
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto d-flex align-items-center py-3 mt-lg-0">
+      <li class="nav-item p-2 ">
+        <!-- <div>
+                <img  src="./assets/icon/bell.svg"
+                >
+                <span class="bell-notify" *ngIf="notification">3</span>
+              </div> -->
+      </li>
+      <li class="nav-item  p-2">
+        <!-- <img src="./assets/icon/Group 59.svg"
+            > -->
+      </li>
+
+
+      <li class="nav-item ml-4">
+        <div class="media">
+          <span class="mr-2">
+            <button class="btn btn-sm btn-primary" [disabled]="loginDone" (click)="setLoginTime()">Clock In</button>
+          </span>
+          <span class="mr-2">
+            <button class="btn btn-sm btn-danger" (click)="setLogoutTime()">Clock Out</button>
+          </span>
+          <img *ngIf="!!updatedImg&&!!isImgUploaded" [src]="profileImg" class="image-size">
+          <img *ngIf="!updatedImg&&!isImgUploaded" src="./assets/images/user.jpg" class="image-size">
+          <img *ngIf="!!isImgUploaded&&!updatedImg" [src]="profileImg" class="image-size">
+          <div class="media-body">
+            <div class="btn-group p-3" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0 d-flex"
+                aria-controls="dropdown-basic"> {{employeeData?.fullName}}
+
+                <span class="material-icons text-dark">
+                  arrow_drop_down
+                </span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown-height"
+                role="menu" aria-labelledby="button-basic">
+                <li role=" px-2 cursor text-center" (click)="editProfile(employeeData?.id)">
+                  <button class="bg-transparent border-0">My Profile</button>
+                </li>
+                <li class="divider "></li>
+                <li role=" px-2 cursor text-center" (click)="moveToLogin()">
+                  <button class="bg-transparent border-0" (click)="moveToLogin()">Logout</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- <app-profile style="display:none" (update)='updateProfile()'></app-profile> -->

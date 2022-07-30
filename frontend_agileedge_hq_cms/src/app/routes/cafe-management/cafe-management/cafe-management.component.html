@@ -1,0 +1,169 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Cafe Management</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+    <!-- <button type="button" class="btn btn-transparent"> <img src="./assets/icon/filter.svg"
+        alt="Generic placeholder image"></button> -->
+        <input type="text" placeholder="Search" class="search-field" name="search" ngModel  (ngModelChange)="searchFilter($event)">
+
+    <button type="button" routerLink="/cafeManagement/cafe" class="btn px-4 py-2 btn-primary">Create New</button>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-md-12 col-xs-12 ">
+    <table class="table table-borderless app-table table-striped">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Branch ID</th>
+          <th>Location</th>
+          <th>Branch</th>
+          <th>Contact number</th>
+          <th>Branch Head</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let item of filterList | paginate: { itemsPerPage: 10, currentPage: p } ; let i =index">
+          <td>{{ 10 * (p - 1) + i +1}}</td>
+          <td><a (click)="cafeDetailModal.show();openCafeDetail(item.id)">{{item?.branchId}}</a></td>
+          <td>{{item?.location}}</td>
+          <td><a (click)="cafeDetailModal.show();openCafeDetail(item.id)">{{item?.branchName}}</a></td>
+          <td>{{item?.contactNumber}}</td>
+          <td>{{item?.branchHead}}</td>
+          <td>
+            <div class="btn-group edit-button" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                      aria-controls="dropdown-basic">
+                      <span class="material-icons">
+                        more_horiz
+                      </span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right"
+                  role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" (click)="editCafe(item.id)">Edit</li>
+                <li role="menuitem" (click)="deleteCafe(item.id)">Delete</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center col-md-12 col-xs-12">
+    <div class="row">
+      <div class="text-center col-md-12 col-xs-12" *ngIf="!!loader">
+        <div>
+          <div class="spinner-box my-0 mx-auto">
+            <div class="pulse-container">
+              <div class="pulse-bubble pulse-bubble-1"></div>
+              <div class="pulse-bubble pulse-bubble-2"></div>
+              <div class="pulse-bubble pulse-bubble-3"></div>
+            </div>
+          </div>
+          <p class="text-loader text-bold">Loading</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 *ngIf="filterList?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterList?.length}} entries</label>
+  </div>
+
+  <div class="col-md-6 col-xs-12 text-right" *ngIf="filterList?.length !== 0">
+    <pagination-controls (pageChange)="p = $event" responsive="true"
+    previousLabel="Previous"
+    nextLabel="Next"></pagination-controls>
+  </div>
+
+
+
+
+<div class="modal fade user-detai" bsModal #cafeDetailModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <button type="button" class="close"(click)="cafeDetailModal.hide()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="shadow-sm card border-0">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <div class="media">
+                  <!-- <img src="/assets/images/user.jpg"
+                  alt="Generic placeholder image" *ngIf="employeeData?.profilePicture == ''">
+                  <img [src]="employeeData?.profilePicture" class="image-size" *ngIf="employeeData.profilePicture != ''"> -->
+
+                  <div class="media-body">
+                    <h5 class="mt-0">{{cafeListDetail?.branchName}}</h5>
+
+                    <label class="detals">{{cafeListDetail?.branchId}}</label>
+                    <label class="detals">{{cafeListDetail?.location}}</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-xs-12 text-right">
+                <h4 class="mt-4 mb-0 px-4 edit" (click)="editCafe(cafeListDetail.id)">Edit</h4>
+                <!-- <p>Branch ID: {{cafeListDetail?.branchId}}</p> -->
+              </div>
+              <div class="col-md-12 col-xs-12">
+                <hr>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <table class="table table-borderless detail-tabele">
+                  <tbody>
+
+                    <tr>
+                      <td>ID:</td>
+                      <td>{{cafeListDetail?.id}}</td>
+                    </tr>
+                    <tr>
+                      <td>Branch Head :</td>
+                      <td>{{cafeListDetail?.branchHead}}</td>
+                    </tr>
+                    <tr>
+                      <td>Contact Number</td>
+                      <td>{{cafeListDetail?.contactNumber}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <table class="table table-borderless detail-tabele">
+                  <tbody>
+                    <tr>
+                      <td>Capacity Of Branch :</td>
+                      <td>{{cafeListDetail?.capacityOfBranch}}</td>
+                    </tr>
+                    <tr>
+                      <td>Gst Number:</td>
+                      <td>{{cafeListDetail?.gstNumber}}</td>
+                    </tr>
+                    <tr>
+                      <td>Assit Branch Head: </td>
+                      <td>{{cafeListDetail?.assitbranchHead}}</td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

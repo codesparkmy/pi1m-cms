@@ -1,0 +1,136 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">New Inventory</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+
+
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="border-0">
+      <div class="card-body">
+        <form [formGroup]="createForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Inventory Name</label>
+                <input type="text" formControlName="inventoryName" value="System" class="form-control" disabled>
+                <span
+                  *ngIf="createForm.get('inventoryName').hasError('required') && createForm.get('inventoryName').touched"
+                  class="text-danger text-12">inventory type required</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="shadow p-3">
+            <div class="row">
+
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                  <label>Device name</label>
+                  <input type="text" formControlName="deviceName" class="form-control">
+                  <span
+                    *ngIf="createForm.get('deviceName').hasError('required') && createForm.get('deviceName').touched"
+                    class="text-danger text-12">Device name required</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                  <label>System ID</label>
+                  <input type="text" formControlName="systemId" class="form-control">
+                  <span *ngIf="createForm.get('systemId').hasError('required') && createForm.get('systemId').touched"
+                    class="text-danger text-12">SystemID required</span>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                  <label>Type of system</label>
+                  <select class="form-control" formControlName="typeOfSystem" id="inputGroupSelect03">
+                    <option selected value="1">Desktop</option>
+                    <option value="2">Laptop</option>
+                  </select>
+                  <span
+                    *ngIf="createForm.get('typeOfSystem').hasError('required') && createForm.get('typeOfSystem').touched"
+                    class="text-danger text-12">Type of system required</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                  <label>Processor</label>
+                  <input type="text" formControlName="processor" class="form-control" minlength="15" maxlength="20">
+                  <span *ngIf="createForm.get('processor').hasError('required') && createForm.get('processor').touched"
+                    class="text-danger text-12">Processor required</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                  <label>Memory</label>
+                  <input type="text" formControlName="memory" class="form-control" minlength="15" maxlength="20">
+                  <span *ngIf="createForm.get('memory').hasError('required') && createForm.get('memory').touched"
+                    class="text-danger text-12">Memory required</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                  <label>Serial number</label>
+                  <input type="text" formControlName="serialNumber" class="form-control" minlength="15" maxlength="20">
+                  <span
+                    *ngIf="createForm.get('serialNumber').hasError('required') && createForm.get('serialNumber').touched"
+                    class="text-danger text-12">Serial number required</span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                  <label>Version</label>
+                  <input type="text" formControlName="version" class="form-control">
+                  <span *ngIf="createForm.get('version').hasError('required') && createForm.get('version').touched"
+                    class="text-danger text-12">Version required</span>
+                </div>
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <div class="form-group">
+                  <label>IP address</label>
+                  <input type="text" formControlName="ipAddress" class="form-control" minlength="15" maxlength="20">
+                  <span *ngIf="createForm.get('ipAddress').hasError('required') && createForm.get('ipAddress').touched"
+                    class="text-danger text-12">IP address required</span>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="row mt-5 mb-2">
+              <div class="col-md-12 col-xs-12 text-right">
+                <button class="btn btn-primary px-4 py-2" *ngIf="!itemid"
+                  (click)="addInventory(createForm.value)" [disabled]="clicked">Create New</button>
+                <button *ngIf="itemid" class="btn btn-primary px-4 py-2" (click)="updateSystem(createForm.value)">Save &
+                  continue</button>
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>

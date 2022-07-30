@@ -1,0 +1,36 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Add Training Type</h4>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="border-0">
+      <div class="card-body">
+        <form [formGroup]="categoryForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Training Type</label>
+                <input type="text" formControlName="name" value="System" class="form-control"
+                  placeholder="training type">
+                <span *ngIf="categoryForm.get('name').hasError('required') && categoryForm.get('name').touched"
+                  class="text-danger text-12">TrainingType is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 mb-2">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button class="btn btn-primary px-4 py-2" *ngIf="!prevId" (click)="addInventory(categoryForm.value)"
+                [disabled]="clicked">Create New</button>
+              <button *ngIf="prevId" class="btn btn-primary px-4 py-2" (click)="updateSystem(categoryForm.value)">Save &
+                continue</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>

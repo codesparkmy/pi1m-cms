@@ -1,0 +1,81 @@
+@import'../../../shared/styles/abstracts/abstracts-dir.scss';
+
+.sub-text{
+    font-size:16px;
+    color:#948CA1;
+    font-weight: normal;
+}
+
+p{
+    font-weight: 500;
+    font-size: 18px;
+    color: #2C2C2C;
+    opacity: 0.8;
+}
+.internet-usage{
+    font-weight: bold;
+    font-size: 64px;
+    color:$primary-bg;
+}
+
+.title{
+    font-weight: 600;
+    font-size: 24px;
+}
+.sub-title{
+    font-size: 18px;
+    font-weight: bold;
+    color:#000
+}
+.donut-title{
+    position: absolute;
+    top: 8.5rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 12px;
+    height: fit-content;
+
+}
+.bg-violet{
+    background-color: #3B3984
+}
+.bg-orange{
+    background-color: #FF9F43
+}
+.ellipse1{
+    z-index: 10;
+    top: 4rem;
+    left: 2rem;
+    right: 0;
+    bottom: 0;
+    position: absolute;height: 200px;width: 187px;
+}
+.ellipse2{
+    z-index: 5;
+    top: 4rem;
+    left: 2rem;
+    right: 0;
+    bottom: 0;
+    position: absolute;height: 200px;width: 200px;
+}
+.number{
+    position: absolute;
+    top: 9.5rem;
+    left: 8rem;
+}
+.height_details{
+  height: 344px;
+  overflow: hidden auto;
+}
+.max-center{
+  position: relative;
+  text-align: center;
+  max-width: 250px;
+  margin: 0 auto;
+}
+.height-300{
+  height: 500px;
+}
+canvas{height: 100% !important;width: 100% !important;}
+.mt-7{margin-top: 10rem;}

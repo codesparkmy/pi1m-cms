@@ -1,0 +1,131 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">New Course member</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+    <button class="btn btn-sm btn-primary" (click)="upload()">
+      <i class="feather icon-plus"></i>Upload</button>
+  </div>
+</div>
+
+<div *ngIf="!isUpload" class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="shadow card border-0">
+      <div class="card-body">
+        <form  [formGroup]="courseRegisteration" (ngSubmit)="f.form.valid && addVisitor()" #f="ngForm">
+          <span formArrayName="memberDetails">
+            <!-- loop throught units -->
+            <span *ngFor="let member of courseRegisteration['controls']['memberDetails']['controls']; let i=index">
+              <div class="row" [formGroupName]="i">
+                <div class="col-md-4 col-sm-12">
+                  <label for="startTimeId">Nric</label>
+                  <div class="input-group form-group">
+                    <input type="text" class="form-control" name="startTimeId" formControlName="nricNo"
+                      [ngClass]="{ 'is-invalid': f.submitted && f?.form?.controls?.memberDetails?.controls[i]?.controls?.nricNo?.invalid }"
+                      required>
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2" (click)="getMemberData(i)">Search</span>
+                    </div>
+                    <div *ngIf="f.submitted && f?.form?.controls?.memberDetails?.controls[i]?.controls?.nricNo?.invalid"
+                      class="invalid-feedback">
+                      <div *ngIf="f?.form?.controls?.memberDetails?.controls[i]?.controls?.nricNo?.errors?.required">
+                        Nric number is required </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <label for="endTimeId">Member Name</label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="endTimeId" formControlName="memberName" readonly
+                      [ngClass]="{ 'is-invalid': f.submitted && f?.form?.controls?.memberDetails?.controls[i]?.controls?.memberName?.invalid }"
+                      required>
+                    <div
+                      *ngIf="f.submitted && f?.form?.controls?.memberDetails?.controls[i]?.controls?.memberName?.invalid"
+                      class="invalid-feedback">
+                      <div
+                        *ngIf="f?.form?.controls?.memberDetails?.controls[i]?.controls?.memberName?.errors?.required">
+                        Member Name is required
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-12">
+                  <label for="endTimeId">Fee</label>
+                  <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">RM</span>
+                    </div>
+                    <input type="text" class="form-control" name="endTimeId" formControlName="fee" required>
+                  </div>
+                </div>
+                <div class="col-md-2 col-sm-12">
+                  <div class="form-group mt-4 pt-1">
+                    <button class="btn btn-sm btn-danger mr-2"
+                      *ngIf="courseRegisteration.controls.memberDetails.controls.length> 1" (click)="removeUnit(i)">
+                      <i class="feather icon-minus"></i>Remove
+                    </button>
+
+                    <button class="btn btn-sm btn-primary" *ngIf="i ===
+                    courseRegisteration.controls.memberDetails.controls.length-1" (click)="addUnit()">
+                      <i class="feather icon-plus"></i>Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </span>
+          </span>
+          <hr>
+          <span class="text-right">
+            <button type="submit" class="btn btn-sm btn-success" [disabled]="!courseRegisteration.valid||!isClicked">Save & Continue</button>
+          </span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isUpload" class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="shadow card border-0">
+      <div class="card-body">
+        <form>
+          <div class="row" >
+            <div class="col-md-3 col-sm-12">
+              <label for="endTimeId">File Upload</label>
+              <div class="form-group">
+                  <input type="file"  single (change)="Uploadfile($event)" accept="xlsx" class="upload_btn"/>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <span class="text-right">
+            <button class="btn btn-sm btn-success" [disabled]="!uploadFile" *ngIf="!uploadedFileResponse" (click)="saveUploadFile()">Save & Continue</button>
+          </span>
+          <span *ngIf="uploadedFileResponse">
+            <div class="row" >
+              <div class="col-md-3 col-sm-12">
+                <label class="upload-file-status">{{uploadedFileResponse['status']}}</label>
+              </div>
+            </div>
+            <table  class="table rounded table-borderless bg-light app-table" id="activeUserCafe-report">
+              <thead>
+                <tr>
+                  <th>Serial No</th>
+                  <th>Nric No</th>
+                  <th>Fees</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of uploadedFileResponse['data']; index as i">
+                  <td>{{i+1}}</td>
+                  <td>{{user[0]}}</td>
+                  <td>{{user[1]}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

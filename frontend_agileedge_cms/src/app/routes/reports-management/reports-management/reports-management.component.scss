@@ -1,0 +1,24 @@
+@import "../../../shared/styles/abstracts/abstracts-dir.scss";
+
+.role-select {
+    border-radius: 25px;
+    width: 50%;
+    color: $primary-bg;
+    border: 1px solid $primary-bg;
+}
+td {
+    text-align: right !important;
+    border: 1px solid #c4c4c4;
+}
+th {
+    text-align: center !important;
+    background-color: #eeecf2;
+    color: #000 !important;
+    border: 1px solid #c4c4c4 !important;
+    border-radius: 4px;
+}
+
+.sec {
+    justify-content: right !important;
+    float: right !important;
+}

@@ -1,0 +1,56 @@
+.custom-modalwindow {
+  top: 20%;
+  z-index: 1087;
+
+  .modal-dialog {
+    width: 478px;
+
+    .confirm-window {
+      padding-top: 32px;
+
+      .material-icons {
+        font-size: 80px;
+        color: #f8bb86;
+      }
+
+      h2.alert-message {
+        color: #575757;
+        font-size: 30px;
+        text-align: center;
+        font-weight: 600;
+        text-transform: none;
+        position: relative;
+        margin: 25px 0;
+        padding: 0;
+        line-height: 40px;
+        display: block;
+      }
+
+      .sub-message,
+      p.sub-message {
+        color: #797979;
+        font-size: 16px;
+        text-align: center;
+        font-weight: 300;
+        position: relative;
+        text-align: inherit;
+        float: none;
+        margin-bottom: 40px;
+        padding: 0;
+        line-height: normal;
+      }
+
+      .btn {
+        font-size: 14px !important;
+        min-width: 101px !important;
+        min-height: 39px !important;
+        line-height: 16px !important;
+
+        +.btn {
+          margin-left: 13px;
+        }
+      }
+
+    }
+  }
+}

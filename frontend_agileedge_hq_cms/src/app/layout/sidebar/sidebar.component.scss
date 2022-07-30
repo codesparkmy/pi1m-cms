@@ -1,0 +1,10 @@
+@import'../../shared/styles/abstracts/abstracts-dir.scss';
+#sidebar-wrapper .list-group-flush .list-group-item .active{
+    background-color: #ffffff;
+    opacity: 0.5;
+}
+#sidebar-wrapper .list-group-flush .list-group-item {
+    & .active {
+    background-color: #57559e;
+    }
+}

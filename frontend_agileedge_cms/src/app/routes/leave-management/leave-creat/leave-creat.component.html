@@ -1,0 +1,87 @@
+<div class="row mb-5">
+    <div class="col-md-12 col-xs-12">
+        <div class="shadow card border-0">
+            <div class="card-body">
+                <form [formGroup]="leaveForm">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label>From date</label>
+                                <input type="date" formControlName="fromDate" class="form-control"
+                                    (blur)="compareTwoDates()">
+                                <span
+                                    *ngIf="leaveForm.get('fromDate').hasError('required') && leaveForm.get('fromDate').touched"
+                                    class="text-danger text-12">From date required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label>To date</label>
+                                <input type="date" formControlName="toDate" class="form-control"
+                                    (blur)="compareTwoDates()">
+                                <span
+                                    *ngIf="leaveForm.get('toDate').hasError('required') && leaveForm.get('toDate').touched"
+                                    class="text-danger text-12">To date required</span>
+                            </div>
+                            <span *ngIf="error.isError" class="text-danger text-12">{{ error.errorMessage }}</span>
+
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" [(ngModel)]="locationName" [ngModelOptions]="{standalone: true}"
+                                    name="location" class="form-control" disabled>
+                                <!-- <span *ngIf="leaveForm.get('location').hasError('required') && leaveForm.get('location').touched" class="text-danger text-12">Location Field required</span> -->
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Reason</label>
+                                <select formControlName="reason" class="form-control">
+                                    <option *ngFor="let item of leaveTypeList; index as i" value={{item.id}}>
+                                        {{item?.name}}</option>
+                                </select>
+                                <span
+                                    *ngIf="leaveForm.get('reason').hasError('required') && leaveForm.get('reason').touched"
+                                    class="text-danger text-12">Leave is required</span>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6 col-xs-12">
+                            <div class="form-group">
+                                <label>Reason</label>
+                                <select class="form-control" formControlName="reason">
+                                    <option value='0'>Annual Leave</option>
+                                    <option value='1'>Emegency Leave</option>
+                                    <option value='2'>Compensate Leave</option>
+                                    <option selected value='Five Month'>Last 5 months</option>
+                                </select>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="col-md-12 col-xs-6">
+                                <div class="form-group">
+                                    <label>Reason for leave</label>
+                                    <textarea rows="2" cols="200" formControlName="reasonforLeave" class="form-control"
+                                        style="height:5rem"></textarea>
+                                    <span
+                                        *ngIf="leaveForm.get('reasonforLeave').hasError('required') && leaveForm.get('reasonforLeave').touched"
+                                        class="text-danger text-12">Reason for leave required</span>
+
+                                </div>
+                            </div>
+
+                        </div> -->
+                        <div class="row mt-3">
+                            <div class="col-md-12 col-xs-12 text-right">
+                                <button class="btn btn-primary px-5 py-2 " [disabled]="!leaveForm.valid"
+                                    (click)="addLeave(leaveForm.value)">Apply
+                                    leave</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Leave Management</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid;
+        }
+        
+        table th,
+        table thead tr {
+            background: #dedede;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <table border="1" cellspacing="5" cellpadding="4">
+            <tr>
+                <th>Employee</th>
+                <th>Location</th>
+                <th>Contact Number</th>
+                <th>Branch</th>
+                <th>Allocated leave</th>
+                <th>Leave taken </th>
+                <th>Appoved leave </th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each getreport}}
+                <tr>
+                    <td> {{this.userId.fullName}}</td>
+                    <td> {{this.location.location}}</td>
+                    <td> {{this.userId.phoneNumber}}</td>
+                    <td> {{this.location.branchName}}</td>
+                    <td> {{this.allocatedLeave}}</td>
+                    <td> {{this.takenLeave}}</td>
+                    <td> {{this.leaveStatus}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+</body>
+
+</html>

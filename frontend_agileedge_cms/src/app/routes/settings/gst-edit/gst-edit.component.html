@@ -1,0 +1,55 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">GST Edit</h4>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="border-0">
+      <div class="card-body">
+        <form [formGroup]="gstForm" #f="ngForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>GST</label>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">%</span>
+                  </div>
+                  <input type="number" formControlName="gstRate" value="System" class="form-control" min="0" max="99"
+                    placeholder="gst">
+                </div>
+                <span *ngIf="gstForm.get('gstRate').hasError('max')" class="text-danger text-12">GST cannot be
+                  greater than 99</span>
+                <span *ngIf="gstForm.get('gstRate').hasError('required') && gstForm.get('gstRate').touched"
+                  class="text-danger text-12">Gst is required</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>SST</label>
+                <div class="input-group form-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">%</span>
+                  </div>
+                  <input type="number" formControlName="sgstRate" value="System" class="form-control" min="0" max="99"
+                    placeholder="sst">
+                </div>
+                <span *ngIf="gstForm.get('sgstRate').hasError('max')" class="text-danger text-12">SST cannot be
+                  greater than 99</span>
+                <span *ngIf="gstForm.get('sgstRate').hasError('required') && gstForm.get('sgstRate').touched"
+                  class="text-danger text-12">Sst is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 mb-2">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button *ngIf="prevId" class="btn btn-primary px-4 py-2" (click)="updategst(f.value)">Update &
+                continue</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

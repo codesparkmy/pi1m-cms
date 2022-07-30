@@ -1,0 +1,27 @@
+/* assign-pc */
+
+.modal.assign-pc {
+            .modal-body {
+            .pc-list {
+                .page-item {
+                    +.page-item {
+                        margin-left: 10px;
+                        min-width  : 51.25px;
+                    }
+
+                    .page-link {
+                        background-color: #EEECF2;
+                        color           : black;
+                        font-size       : 16px;
+                        border-radius   : 2px;
+                        padding         : .65rem 1rem;
+                        text-align      : center;
+                    }
+                }
+
+            }
+        }
+    }
+
+
+

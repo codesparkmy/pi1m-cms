@@ -1,0 +1,113 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-12 col-sm-12">
+    <h4 class=" header-titel">Income Management</h4>
+  </div>
+</div>
+
+<div class="row mt-4 form-group">
+  <div class="col-md-12 col-sm-12">
+    <div class="card shadow border-0 ">
+      <div class="card-header text-center">
+        <!-- <button type="button" class="btn float-right btn-primary btn-download"><img
+          class="icon"  src="./assets/icon/download-icon.svg" /></button> -->
+        <!-- <div class="btn-group incom-tab" role="group" aria-label="Basic example">
+          <button type="button" name="btn1" [class.active]="btn=='btn1'" (click)="selected($event)" class="btn ">Revenue</button>
+          <button type="button" name="btn2" [class.active]="btn=='btn2'" (click)="selected($event)" class="btn">Income</button>
+          <button type="button" name="btn3" [class.active]="btn=='btn3'" (click)="selected($event)" class="btn">Expenses</button>
+        </div> -->
+
+      </div>
+      <div class="card-body">
+        <div class="row filters-list mb-4">
+          <div class="col-md-4 col-xs-12">
+            <!-- <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">From</span>
+              </div>
+              <input type="text" class="form-control" (click)="from.open()" (dateInput)="addStartDate('input', $event)" (dateChange)="addStartDate('change', $event)" matInput [matDatepicker]="from">
+              <mat-datepicker  #from></mat-datepicker>
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><img src="./assets/icon/calendar.svg" /></span>
+              </div>
+            </div> -->
+          </div>
+          <div class="col-md-4 col-xs-12">
+            <!-- <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">To</span>
+              </div>
+              <input type="text" class="form-control" (click)="to.open()" (dateInput)="addEndDate('input', $event)" (dateChange)="addEndDate('change', $event)" matInput [matDatepicker]="to">
+              <mat-datepicker #to></mat-datepicker>
+              <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2"><img src="./assets/icon/calendar.svg" /></span>
+              </div>
+            </div> -->
+          </div>
+          <div class="col-md-4 col-xs-12">
+            <div class="form-group">
+            <select class="form-control" [(ngModel)]="selected" (change)="onChangeMonth($event)">
+              <option value='Two Month'>Last 2 months</option>
+              <option value='Three Month'>Last 3 months</option>
+              <option value='Four Month'>Last 4 months</option>
+              <!-- <option selected value='Five Month'>Last 5 months</option> -->
+            </select>
+            </div>
+            <!-- <mat-select [(value)]="selected" (change)="onChangeMonth($event)" class="form-control">
+              <mat-option value='Two Month'>
+                Last 2 months
+              </mat-option>
+              <mat-option value='Three Month'>
+                Last 3 months
+              </mat-option>
+              <mat-option value='Four Month'>
+                Last 4 months
+              </mat-option>
+              <mat-option value='Five Month'>
+                Last 5 months
+              </mat-option>
+            </mat-select> -->
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <div class="col-md-12 col-xs-12">
+            <h4 class="text-primary">REVENUE</h4>
+          </div>
+        </div>
+
+
+        <div class="row mb-4">
+          <div class="col-md-2 col-xs-12">
+            <div class="tiles-widget">
+              <small>Current month</small>
+              <h4 class="text-primary">RM{{income}}</h4>
+            </div>
+          </div>
+          <div class="col-md-2 col-xs-12">
+            <div class="tiles-widget">
+              <small>Previous month</small>
+              <h4 class="text-primary">RM{{previouse}}</h4>
+            </div>
+          </div>
+          <div class="col-md-2 col-xs-12">
+            <div class="tiles-widget">
+              <small>Income</small>
+              <h4 class="text-primary">RM{{totleIncome}}</h4>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <canvas baseChart [chartType]="'line'" [options]="lineOptions" [datasets]="lineData.datasets" [colors]="lineColors" [labels]="lineData.labels" [legend]="false" height="80"></canvas>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>

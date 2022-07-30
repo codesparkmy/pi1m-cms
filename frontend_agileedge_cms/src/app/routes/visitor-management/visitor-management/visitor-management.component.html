@@ -1,0 +1,101 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Visitor Management</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+    <!-- <button type="button" class="btn btn-transparent">
+       <img src="./assets/icon/filter.svg"
+        >
+      </button> -->
+    <input type="text" placeholder="Search" class="search-field" name="search" ngModel
+      (ngModelChange)="searchFilter($event)">
+
+    <button type="button" routerLink="/visitorManagement/visitor" class="btn btn-primary">Create
+      New</button>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+
+    <table class="table table-borderless app-table table-striped">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Visitor ID</th>
+          <th>Name</th>
+          <th>Contact number</th>
+          <th>Membership since</th>
+          <th>Total Usage</th>
+          <!-- <th>Location</th> -->
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngFor="let item of filterList | paginate: { itemsPerPage: 10, currentPage: p };let i = index">
+          <td>{{ 10 * (p - 1) + i +1}}</td>
+          <td>{{item.id}}</td>
+          <td style="text-decoration: underline;" (click)="viewEmployee(item.id);"><a>{{item.name}}</a></td>
+          <td>{{item.contactNo}}</td>
+          <td>{{item.memebershipSince| slice:0:10}}</td>
+          <td>{{item.totalUsage}}</td>
+          <!-- <td>{{item.location}}</td> -->
+          <td>
+            <div class="btn-group edit-button" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                aria-controls="dropdown-basic">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                aria-labelledby="button-basic">
+                <li role=" px-2 cursor" (click)="editVisitor(item.id)">
+                  <button class="bg-transparent border-0">Edit</button>
+                </li>
+                <li class="divider"></li>
+                <li role=" px-2 cursor" (click)="deleteVisitor(item.id)">
+                  <button class="bg-transparent border-0">Delete</button>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+
+
+
+  <div class="text-center col-md-12 col-xs-12">
+    <div class="row">
+      <div class="text-center col-md-12 col-xs-12" *ngIf="!!loader">
+        <div>
+          <div class="spinner-box my-0 mx-auto">
+            <div class="pulse-container">
+              <div class="pulse-bubble pulse-bubble-1"></div>
+              <div class="pulse-bubble pulse-bubble-2"></div>
+              <div class="pulse-bubble pulse-bubble-3"></div>
+            </div>
+          </div>
+          <p class="text-loader text-bold">Loading</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 *ngIf="filterList?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterList?.length}} entries</label>
+  </div>
+
+  <div class="col-md-6 col-xs-12 text-right" *ngIf="filterList?.length !== 0">
+    <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="Previous" nextLabel="Next">
+    </pagination-controls>
+
+  </div>
+</div>

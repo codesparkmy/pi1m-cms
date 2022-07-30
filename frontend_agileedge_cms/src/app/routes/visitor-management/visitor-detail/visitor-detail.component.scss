@@ -1,0 +1,60 @@
+@import'../../../shared/styles/abstracts/abstracts-dir.scss';
+.media {
+    .profile {
+        width        : 66px;
+        height       : 66px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+li{
+    color:#808081;
+    &.active{
+        background-color: $primary-bg;
+        color:$white
+    }
+}
+.title{
+    font-size: 24px;
+}
+.arrow-icon{
+    width: 52px;
+    height: 52px;
+}
+.sub-title{
+    font-size: 16px;
+    color:#948CA1;
+}
+/* top-left border-radius */
+table tr:first-child th:first-child {
+    border-top-left-radius: 6px;
+  }
+
+  /* top-right border-radius */
+  table tr:first-child th:last-child {
+    border-top-right-radius: 6px;
+  }
+
+  .nav{
+      background-color:rgba(50, 141, 95, 0.08);
+      li{
+          font-size: 16px;
+      }
+  }
+  td{
+      font-size: 14px;
+  }
+  .acount-list span{
+    display: inline-block;
+    width: 130px;
+    color: #000;
+    font-weight: 500;
+  }
+img:hover{cursor: pointer;}
+
+li.tab-slider
+   {
+        width:240px;
+        height:80px;
+        font-size:16px;
+    }

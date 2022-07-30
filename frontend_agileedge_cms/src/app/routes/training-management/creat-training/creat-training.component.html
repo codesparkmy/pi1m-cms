@@ -1,0 +1,200 @@
+<div class="row mt-4 form-group">
+    <div class="col-md-6 col-sm-12">
+        <h4 class=" header-titel">New Course training</h4>
+    </div>
+    <div class="col-md-6 col-sm-12 text-right">
+
+    </div>
+</div>
+
+
+<div class="row mb-5">
+    <div class="col-md-12 col-xs-12">
+        <div class="shadow card border-0">
+            <div class="card-body">
+                <form [formGroup]="trainingForm">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Course name</label>
+                                <input type="text" formControlName="course" class="form-control">
+                                <span
+                                    *ngIf="trainingForm.get('course').hasError('required') && trainingForm.get('course').touched"
+                                    class="text-danger text-12">Course name required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Course Code</label>
+                                <input type="text" formControlName="courseCode" class="form-control">
+                                <span
+                                    *ngIf="trainingForm.get('courseCode').hasError('required') && trainingForm.get('courseCode').touched"
+                                    class="text-danger text-12">Course code required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <label>Training Duration (start time & end time)</label>
+                            <div class="row">
+                                <div class="col-md-6 col-xs-6">
+                                    <div class="form-group">
+                                        <input type="time" formControlName="startTime" class="form-control"
+                                            placeholder="start time">
+                                        <!-- <select formControlName="hours" class="form-control">
+                                            <option value="" selected>Choose Hours</option>
+                                            <option *ngFor="let hour of hoursList" [value]="hour?.id"
+                                                [selected]="hours == hour.id?hour:null">
+                                                {{hour.value}}
+                                            </option>
+                                        </select> -->
+                                        <span
+                                            *ngIf="trainingForm.get('startTime').hasError('required') && trainingForm.get('startTime').touched"
+                                            class="text-danger text-12">Hours required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-6">
+                                    <div class="form-group">
+                                        <input type="time" formControlName="endTime" class="form-control">
+                                        <!-- <select formControlName="minutes" class="form-control">
+                                            <option value="" selected>Choose Minutes</option>
+                                            <option *ngFor="let minute of minutesList" [value]="minute?.id"
+                                                [selected]="minutes == minute.id?minute:null">
+                                                {{minute.value}}
+                                            </option>
+                                        </select> -->
+                                        <span
+                                            *ngIf="trainingForm.get('endTime').hasError('required') && trainingForm.get('endTime').touched"
+                                            class="text-danger text-12">Minutes required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Fee</label>
+
+                                <div class="input-group mb-3">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">RM
+                                        </span>
+                                    </div>
+                                    <input type="text" formControlName="fee" [value]="fee" (keyup)="keyEvent($event) "
+                                        class="form-control" (keypress)="numberOnly($event)">
+
+                                </div>
+                                <span
+                                    *ngIf="trainingForm.get('fee').hasError('required') && trainingForm.get('fee').touched"
+                                    class="text-danger text-12">Fee required</span>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Enrolled</label>
+                                <input type="text" formControlName="enrolled" class="form-control"
+                                    (keypress)="numberOnly($event)">
+                                <span
+                                    *ngIf="trainingForm.get('enrolled').hasError('required') && trainingForm.get('enrolled').touched"
+                                    class="text-danger text-12">Enrolled required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Maximum subscription</label>
+                                <input type="text" formControlName="maximumSubscription" class="form-control"
+                                    (keypress)="numberOnly($event)">
+                                <span
+                                    *ngIf="trainingForm.get('maximumSubscription').hasError('required') && trainingForm.get('maximumSubscription').touched"
+                                    class="text-danger text-12">Maximum Subscription required</span>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Training Category</label>
+                                <select formControlName="courseType" class="form-control">
+                                    <option value="" selected>Choose Category</option>
+                                    <option *ngFor="let item of trainingList" [value]="item?.id"
+                                        [selected]="courseType == item.id?item:null">
+                                        {{item?.name}}
+                                    </option>
+                                </select>
+                                <span
+                                    *ngIf="trainingForm.get('courseType').hasError('required') && trainingForm.get('courseType').touched"
+                                    class="text-danger text-12">Training Type required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Trainer</label>
+                                <select formControlName="trainer" class="form-control">
+                                    <option *ngFor="let item of trainersDeList index as i" value={{item.id}}>
+                                        {{item?.fullName}}</option>
+                                </select>
+                                <span
+                                    *ngIf="trainingForm.get('trainer').hasError('required') && trainingForm.get('trainer').touched"
+                                    class="text-danger text-12">Trainer required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Maximum subscription</label>
+                                <input type="text" formControlName="maximumSubscription" class="form-control"
+                                    (keypress)="numberOnly($event)">
+                                <span
+                                    *ngIf="trainingForm.get('maximumSubscription').hasError('required') && trainingForm.get('maximumSubscription').touched"
+                                    class="text-danger text-12">Maximum Subscription required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Training date</label>
+                                <input type="date" formControlName="trainingDate" class="form-control">
+                                <span
+                                    *ngIf="trainingForm.get('trainingDate').hasError('required') && trainingForm.get('trainingDate').touched"
+                                    class="text-danger text-12">Trainig Date is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Course Target</label>
+                                <select formControlName="courseTarget" class="form-control">
+                                    <option *ngFor="let item of targetList; index as i" value={{item.id}}>
+                                        {{item?.name}}</option>
+                                </select>
+                                <span
+                                    *ngIf="trainingForm.get('courseTarget').hasError('required') && trainingForm.get('courseTarget').touched"
+                                    class="text-danger text-12">Course target is required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xs-12 text-right">
+                            <button *ngIf="!itemid" class="btn btn-primary" [disabled]="!trainingForm.valid||!isClicked"
+                                (click)="addTraining(trainingForm.value);">Save & Create</button>
+                            <button *ngIf="itemid" class="btn btn-primary"
+                                (click)="updateVisitor(trainingForm.value)">Save & Continue</button>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

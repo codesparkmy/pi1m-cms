@@ -1,0 +1,92 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Training Management</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+    <!-- <button type="button" class="btn btn-transparent"> <img src="./assets/icon/filter.svg"
+          ></button> -->
+    <input type="text" placeholder="Search" class="search-field" name="search" ngModel
+      (ngModelChange)="searchFilters($event)">
+
+    <button type="button" routerLink="/trainingManagement/create" class="btn btn-primary">Create
+      New</button>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+    <table class="table table-borderless app-table table-striped">
+      <thead>
+        <tr class="">
+          <th>S.No</th>
+          <th>Course Name</th>
+          <th>Date & Time</th>
+          <th class="text-center">Total Attendees</th>
+          <th>Training Category</th>
+          <th>Trainer</th>
+          <th>Total Registered</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filterTraining | paginate: { itemsPerPage: 10, currentPage: p };let i = index">
+          <td>{{ 10 * (p - 1) + i +1}}</td>
+          <td style="text-decoration: underline;" (click)="openDetail(item.id)"><a>{{item?.course}}</a></td>
+          <td>{{item?.trainingDate | date:'medium'}}</td>
+          <td class="text-center">{{item?.totalAttended}}</td>
+          <td>
+            <ng-container *ngIf="item?.courseType == '1'">Daily</ng-container>
+            <ng-container *ngIf="item?.courseType == '2'">Weekly</ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="item.trainer != ''">{{item.trainer?.fullName}}</ng-container>
+          </td>
+          <td>{{item?.totalRegistered}}</td>
+          <td><button (click)="addMember(item.id)" class="btn btn-primary rounded bg-transparent text-dark">Add
+              New</button></td>
+          <td>
+            <div class="btn-group edit-button" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                aria-controls="dropdown-basic">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                aria-labelledby="button-basic">
+                <li role="menuitem" (click)="editTraining(item.id)">Edit</li>
+                <li role="menuitem" (click)="deleteTraining(item.id)">Delete</li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="text-center col-md-12 col-xs-12">
+      <div *ngIf="!!loader">
+        <div class="spinner-box my-0 mx-auto">
+          <div class="pulse-container">
+            <div class="pulse-bubble pulse-bubble-1"></div>
+            <div class="pulse-bubble pulse-bubble-2"></div>
+            <div class="pulse-bubble pulse-bubble-3"></div>
+          </div>
+        </div>
+        <p class="text-loader text-bold">Loading</p>
+      </div>
+      <h4 *ngIf="filterTraining?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+        <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterTraining?.length}} entries</label>
+      </div>
+
+      <div class="col-md-6 col-xs-12 text-right" *ngIf="filterTraining?.length !== 0">
+        <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="Previous" nextLabel="Next">
+        </pagination-controls>
+      </div>
+    </div>
+
+  </div>

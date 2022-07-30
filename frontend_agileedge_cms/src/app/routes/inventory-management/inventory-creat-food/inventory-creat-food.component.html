@@ -1,0 +1,168 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">New Inventory</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+
+
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class=" border-0">
+      <div class="card-body">
+        <form [formGroup]="foodForm">
+          <div class="row">
+            <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                <label>Inventory name</label>
+
+                <select disabled class="form-control" id="hidesyplo">
+                  <option selected value="">Food & Beverage</option>
+                </select>
+
+              </div>
+            </div>
+          </div>
+          <div class="shadow rounded p-3">
+            <div class="row">
+              <div class="col-md-6 col-xs-6 p-3">
+                <div class="form-group">
+                  <label>Inventory Category </label>
+                  <select formControlName="foodInventryType" class="form-control">
+                    <option value="">Choose a category</option>
+                    <option *ngFor="let item of categoryList index as i" [value]=item.id
+                      [selected]="foodInventryType == item?.id?item:null">
+                      {{item.foodInventryType}}</option>
+                  </select>
+                  <span
+                    *ngIf="foodForm.get('foodInventryType').hasError('required') && foodForm.get('foodInventryType').touched"
+                    class="text-danger text-12">Category required</span>
+                </div>
+                <div class="form-group">
+                  <label>Food name</label>
+                  <input type="text" formControlName="name" class="form-control">
+                  <span *ngIf="foodForm.get('name').hasError('required') && foodForm.get('name').touched"
+                    class="text-danger text-12">Food name required</span>
+                </div>
+                <div class="form-group">
+                  <label>No.of.quantity</label>
+                  <input type="text" formControlName="noOfqty" class="form-control" (keypress)="numberOnly($event)">
+                  <span *ngIf="foodForm.get('noOfqty').hasError('required') && foodForm.get('noOfqty').touched"
+                    class="text-danger text-12">No.of.quantity required</span>
+                </div>
+                <div class="row">
+                  <!-- <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Wt.</label>
+                      <input type="text" formControlName="quantity" class="form-control"
+                        (keypress)="numberOnly($event)">
+                      <span *ngIf="foodForm.get('quantity').hasError('required') && foodForm.get('quantity').touched"
+                        class="text-danger text-12">Weight required</span>
+                    </div>
+                  </div> -->
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Price</label>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="basic-addon1">RM
+                          </span>
+                        </div>
+                        <input type="number" formControlName="price" class="form-control" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                      </div>
+                      <span *ngIf="foodForm.get('price').hasError('required') && foodForm.get('price').touched"
+                        class="text-danger text-12">Price required</span>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+              <div class="col p-3">
+
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-primary text-dark bg-white" (click)="visitorDetailModal.show();clear(); ">Add
+                    Category</button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Member Price</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">RM
+                      </span>
+                    </div>
+                    <input type="number" formControlName="memberprice" class="form-control"
+                    ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                  </div>
+                  <span *ngIf="foodForm.get('memberprice').hasError('required') && foodForm.get('memberprice').touched"
+                    class="text-danger text-12">Member Price required</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Non Member Price</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">RM
+                      </span>
+                    </div>
+                    <input type="number" formControlName="nonMemberprice" class="form-control"
+                    ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                  </div>
+                  <span
+                    *ngIf="foodForm.get('nonMemberprice').hasError('required') && foodForm.get('nonMemberprice').touched"
+                    class="text-danger text-12">Non Member Price required</span>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-5">
+              <div class="col-md-12 col-xs-12 text-right">
+                <button class="btn btn-primary px-4 py-2" *ngIf="!itemid" [disabled]="!foodForm.valid && !clicked"
+                  (click)="addInventory(foodForm.value)">Create New</button>
+                <button class="btn btn-primary px-4 py-2" *ngIf="itemid" [disabled]="!foodForm.valid && !clicked"
+                  (click)="UpdateFood(foodForm.value)">Save & continue</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+<div class="modal fade user-detai" bsModal #visitorDetailModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="visitorDetailModal.hide()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-header bg-primary">
+        <p class="text-bold text-white mb-0">New Category</p>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="categoryForm">
+          <div class="form-group">
+            <label>Category Name</label>
+            <input type="text" formControlName="foodInventryType" class="form-control">
+            <span
+              *ngIf="categoryForm.get('foodInventryType').hasError('required') && categoryForm.get('foodInventryType').touched"
+              class="text-danger text-12">Category name required</span>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button class="btn btn-primary px-2 py-2  m-2" [disabled]="!categoryForm.valid || clicked"
+              (click)="addCategory(categoryForm.value);visitorDetailModal.hide();">Add New</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 routerLink="/trainingManagement" class="header-titel"><img src="./assets/icon/arrow-left.svg" />Training detail
+    </h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+<div class="row mt-4 form-group">
+  <div class="col-md-8 col-sm-12">
+    <div class="shadow rounded border-0">
+      <div class="card-body py-4">
+        <div class="media d-flex">
+          <img class="mr-3" src="./assets/images/user.jpg" *ngIf="employeeData?.profilePicture == ''">
+          <img class="mr-3" *ngIf="employeeData?.profilePicture != ''" [src]="employeeData?.profilePicture">
+          <div class="media-body">
+            <h5 class="mt-0">{{trainingList?.fullName}}</h5>
+            <p class="detals mb-0">{{trainingList?.email}}</p>
+            <p class="detals mb-0">{{trainingList?.phoneNumber}}</p>
+            <p class="detals mb-0">{{trainingDetails?.location?.location}}</p>
+          </div>
+          <div class="ml-auto">
+            <button class="btn btn-primary px-4 py-2">{{trainingDetails?.course}} Trainer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-12  ">
+    <div class="shadow rounded bg-primary px-4 py-3 ">
+      <div class="row">
+        <div class="col-md-6 col-xs-6">
+          <div class="d-flex  py-2 align-items-start">
+            <div class="rounded-circle icon-bg text-center"><img class="icon-img"
+                src="./assets/icon/presentation.svg" /></div>
+            <div class="ml-2">
+              <p class="dtail-head mb-0">{{trainingDetails?.enrolled}}</p>
+              <p class="dtail-sub mb-0">Enrolled</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-6">
+          <div class="d-flex  py-2 align-items-start">
+            <div class="rounded-circle icon-bg text-center"><img class="icon-img"
+                src="./assets/icon/presentation.svg" /></div>
+            <div class="ml-2">
+              <p class="dtail-head mb-0">
+                <ng-container *ngIf="trainingDetails?.courseType == '1'">Daily</ng-container>
+                <ng-container *ngIf="trainingDetails?.courseType == '2'">Weekly</ng-container>
+              </p>
+              <p class="dtail-sub mb-0">Course type</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-xs-6">
+          <div class="d-flex  py-2 align-items-start">
+            <div class="rounded-circle icon-bg text-center"><img class="icon-img"
+                src="./assets/icon/presentation.svg" /></div>
+            <div class="ml-2">
+              <p class="dtail-head text-white mb-0">{{trainingDetails?.courseDuration}}</p>
+              <p class="dtail-sub mb-0">Course duration</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-6">
+          <div class="d-flex  py-2 align-items-start">
+            <div class="rounded-circle icon-bg text-center"><img class="icon-img"
+                src="./assets/icon/presentation.svg" /></div>
+            <div class="ml-2">
+              <p class="dtail-head mb-0">{{trainingDetails?.courseCode}}</p>
+              <p class="dtail-sub mb-0">Course ID</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="shadow card border-0">
+      <div class="card-body">
+        <table class="table table-borderless ">
+          <thead>
+            <tr>
+              <!-- <th>S.No</th> -->
+              <th>Name</th>
+              <th>NRIC No</th>
+              <th>Registered Date </th>
+              <th>Member Code</th>
+              <th>Price</th>
+              <th>Attend</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of courseList">
+              <!-- <td>{{item?.id}}</td> -->
+              <td>{{item?.memberName}}</td>
+              <td>{{item?.memberId?.nrciNo}}</td>
+              <td>{{item?.createdAt | slice:0:10}}</td>
+              <td>{{item?.memberId?.memeberCode}}</td>
+              <td>{{item?.fee | currency : ' RM ' :'symbol'}}</td>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="invalidCheck" [(ngModel)]="item.attendance" (click)="markAttend(item,$event)" required>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+
+</div>

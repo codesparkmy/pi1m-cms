@@ -1,0 +1,89 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+      <h4 class=" hform-group eader-titel">Control Bot</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+
+
+
+<div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group">
+              <label class="sub-head">Select PC</label>
+              <div class="d-flex flex-wrap pc-list">
+                <div *ngFor="let item of posList index as i">
+                  <button class="mx-2 my-2 border-0 rounded " name="{{item.id}}" type="button" [class.active]="i == selectedPC" rel="tab1" (click)="onSystem(i,item.ipAddress)">{{item.systemId}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+            <div class="row ">
+                <div class="col">
+                    <p class="sub-head">Send message</p>
+                    <div class="d-flex align-items-start form-group form-group">
+                        <button class="border-0 bg-transparent" ><img class="bg-light  rounded-circle p-3" src="./assets/icon/mail.svg"/></button>
+                        <div class="form-group px-2">
+                            <input type="text" placeholder="Type message" [(ngModel)]="message" name="message" class="form-control">
+                        </div>
+                        <button (click)="sendMessage()" class="btn btn-success mt-10">Send</button>
+                    </div>
+                </div>
+                <div class="col">
+                    <p class="sub-head">Restart</p>
+                    <div class="d-flex align-items-center ">
+                        <button class="bg-transparent border-0" (click)="onRestart()">
+                            <div class="border rounded-circle p-2"><div class="circle" [class.active]="!!toggle" ></div></div>
+                        </button>
+                        <p class="sub-head pl-2 mb-0">Restart the PC</p>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col">
+                    <p class="sub-head">Lock the PC</p>
+                    <div class="d-flex align-items-center form-group">
+                        <label class="switch">
+                            <input type="checkbox" (change)="onLockChange()">
+                             <span class="slider round"></span>
+                        </label>
+                        <div class="form-group px-2">
+                        <input type="text" placeholder="Leave comments" [(ngModel)]="lockMessage" name="lock_message" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <p class="sub-head">Ping PC</p>
+                    <div class="d-flex align-items-center">
+                        <button class="bg-transparent border-0" (click)="onPing()">
+                            <div class="border rounded-circle p-2"><div class="circle" [class.active]="!!toggle1" ></div></div>
+                        </button>
+                        <p class="pl-2 mb-0 sub-head">Ping PC</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="sub-head">Shut down</p>
+                    <div class="d-flex align-items-center form-group ">
+                        <label class="switch ">
+                            <input type="checkbox" (change)="onShutDown()">
+                 <span class="slider round"></span>
+                        </label>
+                        <div class="form-group px-2">
+                        <input type="text" placeholder="Leave comments" [(ngModel)]="shutdownMessage" name="shutdown_message" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+
+                </div>
+        </div>
+
+        </div>
+

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Employee List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid;
+        }
+        
+        table th,
+        table thead tr {
+            background: #dedede;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <table border="1" cellspacing="5" cellpadding="4">
+            <tr>
+                <th>Name</th>
+                <th>Employee Id</th>
+                <th>Subscription Id</th>
+                <th>Race ID</th>
+                <th>Gender</th>
+                <th>Religion CId</th>
+                <th>Role of the employee</th>
+                <th>Email</th>
+                <th>Position</th>
+                <th>contact Number</th>
+                <th>Branch</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each getreport}}
+                <tr>
+                    <td> {{this.fullName}}</td>
+                    <td> {{this.employeeId}}</td>
+                    <td> {{this.subscriptionId}}</td>
+                    <td> {{this.RaceId}}</td>
+                    <td> {{this.gender}}</td>
+                    <td> {{this.ReligionCId}}</td>
+                    <td> {{this.role}}</td>
+                    <td> {{this.email}}</td>
+                    <td> {{this.positionId}}</td>
+                    <td> {{this.phoneNumber}}</td>
+                    <td> {{this.branchAllocation.branchName}}</td>
+                    <td> {{this.branchAllocation.location}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Inventory Management</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+    <!-- <button type="button" class="btn btn-transparent"> <img src="./assets/icon/filter.svg"
+        alt="Generic placeholder image"></button> -->
+    <!-- <button type="button" class="btn btn-primary" routerLink="/inventoryManagement/creat">Add New
+    </button> -->
+    <input type="text" placeholder="Search" class="search-field" name="search" ngModel  (ngModelChange)="searchFilter($event)">
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+
+    <table class="table table-borderless app-table table-striped inventry-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>System ID</th>
+          <th>Specification</th>
+          <th>Device name</th>
+          <th>Service IpAddress</th>
+          <th>Inventory type</th>
+          <th>Branch</th>
+          <th>Location</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filterList | paginate: { itemsPerPage: 10, currentPage: p } ; let i = index">
+          <td>{{ 10 * (p - 1) + i +1}}</td>
+          <td>{{item?.systemId}}</td>
+          <td>{{item?.processor}} {{item.memory}}</td>
+          <td>{{item?.deviceName}}</td>
+          <td>{{item?.ipAddress}}</td>
+          <td>{{item?.inventoryType}}</td>
+          <td><ng-container *ngIf="item.locationId != ''">{{item.locationId?.branchName}}</ng-container></td>
+          <td><ng-container *ngIf="item.locationId != ''">{{item.locationId?.location}}</ng-container></td>
+          <td>
+            <div class="btn-group edit-button" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                      aria-controls="dropdown-basic">
+                      <span class="material-icons">
+                        more_horiz
+                      </span>
+              </button>
+
+            </div>
+          </td>
+         </tr>
+        </tbody>
+      </table>
+  </div>
+
+  <div class="text-center col-md-12 col-xs-12">
+    <div class="row">
+      <div class="text-center col-md-12 col-xs-12" *ngIf="!!loader">
+        <div>
+          <div class="spinner-box my-0 mx-auto">
+            <div class="pulse-container">
+              <div class="pulse-bubble pulse-bubble-1"></div>
+              <div class="pulse-bubble pulse-bubble-2"></div>
+              <div class="pulse-bubble pulse-bubble-3"></div>
+            </div>
+          </div>
+          <p class="text-loader text-bold">Loading</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 *ngIf="filterList?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterList?.length}} entries</label>
+  </div>
+
+  <div class="col-md-6 col-xs-12 text-right" *ngIf="filterList?.length !==0">
+    <pagination-controls (pageChange)="p = $event" responsive="true"
+    previousLabel="Previous"
+    nextLabel="Next"></pagination-controls>
+  </div>
+
+
+
+</div>

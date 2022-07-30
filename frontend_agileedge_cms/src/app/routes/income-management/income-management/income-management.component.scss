@@ -1,0 +1,95 @@
+@import'../../../shared/styles/abstracts/abstracts-dir.scss';
+
+.incom-tab {
+    border: none;
+
+    .btn {
+        color           : $black;
+        border          : none;
+        background-color: #F9FAFC;
+        border-radius   : 4px;
+        font-size       : 16px;
+
+        +.btn {
+            border-left: 1px solid #EEECF2;
+        }
+
+        &.active {
+            color           : $primary-bg;
+            border          : none;
+            background-color: #F9FAFC;
+            font-weight     : bold;
+            ;
+        }
+    }
+
+}
+
+.btn-download {
+    border-radius: 50%;
+    width        : 45px;
+    height       : 45px;
+    padding      : 0;
+
+    img {
+        vertical-align: baseline;
+    }
+}
+
+.filters-list {
+    .input-group {
+        .input-group-prepend {
+            .input-group-text {
+                background: transparent;
+                border    : none;
+            }
+        }
+
+        .form-control {
+            background               : transparent;
+            height                   : 47px;
+            margin-top: 0px;
+            border                   : 1px solid #d2d2d2;
+            border-right             : 0;
+            // border-radius            : 4px;
+            border-top-left-radius   : 4px;
+            border-bottom-left-radius: 4px;
+
+            &:focus {
+                box-shadow: unset;
+            }
+        }
+
+        .input-group-append {
+            .input-group-text {
+                background : transparent;
+                border     : 1px solid #d2d2d2;
+                border-left: 0;
+            }
+        }
+    }
+}
+.form-control{
+
+    height                   : 47px;
+    border                   : 1px solid #d2d2d2;
+    // border-right             : 0;
+    border-radius            : 4px;
+}
+
+.tiles-widget{
+    border-left:2px solid $primary-bg;
+    padding: 10px;
+    small{
+        color: #948CA1;
+        font-size: 16px;
+
+    }
+    h4{
+        margin-top: 5px;
+        font-size: 22px;
+    }
+}
+.icon{
+    border-bottom:2px solid #fff
+}

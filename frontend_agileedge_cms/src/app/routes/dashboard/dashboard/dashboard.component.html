@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col-12">
+    <h5 class="title">Welcome back {{employeeData?.fullName}}!</h5>
+  </div>
+</div>
+<div class="row align-items-start">
+  <div class="col-md-8 pr-0">
+    <div class="shadow p-3 rounded height-300">
+      <div class="p-2 mb-1 d-flex justify-content-between">
+        <h5 class="sub-title">Income</h5>
+        <div class="px-3 d-flex align-items-center">
+          <span class="p-2 mx-2 bg-primary"></span>
+          <p class="mb-0">Income</p>
+        </div>
+      </div>
+      <!-- <canvas baseChart [chartType]="'bar'" [options]="lineOptions" [datasets]="lineData.datasets" [colors]="lineColors" [labels]="lineData.labels" [legend]="false" height="80"></canvas> -->
+      <div class="chart-wrapper" style="display: block;height: 400px;">
+        <canvas baseChart
+        [datasets]="barChartData"
+        [labels]="barChartLabels"
+        [options]="barChartOptions"
+        [colors]="barChartColor"
+        [legend]="barChartLegend"
+        [chartType]="barChartType">
+      </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card mr-2 border-0 pt-3 pb-0 height-300">
+      <div class="d-flex flex-row-reverse">
+        <span class="material-icons pr-2">
+          <!-- more_vert -->
+        </span>
+      </div>
+      <!-- <canvas baseChart [chartType]="'doughnut'" [options]="data.datasets.data" [datasets]="lineData.datasets" [colors]="lineColors" [labels]="data.labels" [legend]="false" height="100"></canvas> -->
+      <div class="chart-wrapper pb-2 pt-0 mb-2">
+        <h6 class="donut-title text-center">Cafe Usage</h6>
+        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [options]="doughnutOptions"
+          [colors]="doughnutColor" [chartType]="doughnutChartType">
+        </canvas>
+      </div>
+      <div class="d-flex flex-wrap mb-4 px-4">
+        <div class="d-flex align-items-center my-1 mx-2"><span class="p-2 bg-primary mx-1"></span>
+          <p class="mb-0">Browsing</p>
+        </div>
+        <div class="d-flex align-items-center my-1 mx-2"><span class="p-2 bg-violet mx-1"></span>
+          <p class="mb-0">Food & Beverage</p>
+        </div>
+        <div class="d-flex align-items-center my-1 mx-2"><span class="p-2 bg-orange mx-1"></span>
+          <p class="mb-0">Service</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="row mt-3 mb-2">
+  <div class="col-md-8 pr-0">
+    <div class="shadow rounded border-0 height-300">
+      <div class="d-flex justify-content-between p-3">
+        <p class="sub-title mb-0">Training course list</p>
+
+        <span class="material-icons">
+          <!-- more_vert -->
+        </span>
+      </div>
+      <h5 class="px-3 py-3" *ngIf="TrainingList.length==''">No course available</h5>
+      <ul class="height_details">
+        <li *ngFor="let item of TrainingList | slice:0:5;" class="d-flex align-items-start">
+          <div class=" px-3 py-2 bg-primary {{item.color}} rounded-circle text-white">
+            {{item.course| slice:0:1}}
+          </div>
+          <div class="px-2">
+            <p class="mb-0">{{item?.course}}</p>
+            <p class="sub-text">{{item?.courseDuration}}</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="d-flex flex-column ">
+      <div class="shadow rounded mx-0 mb-3 border-0 height-300">
+
+        <div class=" align-items-center p-2 max-center">
+          <div class="p-4 text-center">
+            <img class="ellipse1" src="./assets/icon/Intersect.svg"><span
+              class="number">{{visitorList.length}}</span><img />
+            <img class="ellipse2" src="./assets/icon/Ellipse 3.png" />
+          </div>
+
+        </div>
+        <div class="ml-5 pl-4 py-5 text-left mt-7">
+          <p class="sub-text">Today</p>
+          <p class="mb-0">Cafe Active user</p>
+        </div>
+        <div id="container12"></div>
+      </div>
+      <!-- <div class="card mx-0 border-0 pb-4 py-3">
+        <div class="d-flex justify-content-between p-2">
+          <p class="sub-text">Today</p>
+          <div></div>
+          <span class="material-icons">
+          </span>
+        </div>
+        <div class="d-flex mb-0 align-items-start">
+          <img class="py-2 px-4" src="./assets/icon/wifi.svg">
+          <div class="p-2 px-3">
+            <h3 class="internet-usage">3Gb</h3>
+            <p>Internet usage</p>
+          </div>
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+</div>

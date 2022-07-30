@@ -1,0 +1,217 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+      <h4 class=" header-titel">POS Management</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+      <!-- <button type="button" class="btn btn-transparent"> <img src="./assets/icon/filter.svg"
+              alt="Generic placeholder image"></button> -->
+      <button type="button" class="btn btn-primary"
+      (click)="assignPcModelOpen()">Assign PC
+          </button>
+  </div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="col-md-12 col-xs-12">
+      <table class="table table-borderless app-table table-striped">
+          <thead>
+              <tr>
+                  <th>S.No</th>
+                  <th>System ID</th>
+                  <th>Availability</th>
+                  <th>Start time</th>
+                  <th>End time</th>
+                  <th>End section</th>
+                  <th></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr (click)="posDetailsModelOpen()">
+                  <td>01</td>
+                  <td>CF001</td>
+                  <td><b>Active</b></td>
+                  <td>11:00 AM</td>
+                  <td>-</td>
+                  <td>
+                      <label class="switch pos-Toggle">
+                          <input type="checkbox">
+                          <span class="slider round"></span>
+                      </label>
+                  </td>
+                  <td>
+                      <div class="dropdown">
+                          <button
+                              class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no"
+                              type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              <span class="material-icons">
+                                  more_horiz
+                              </span>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                              aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item" href="#">Delete</a>
+                              <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+
+
+              <tr data-toggle="modal" data-target="#posDetailModal">
+                  <td>02</td>
+                  <td>CF002</td>
+                  <td class="text-danger"><b>InActive</b></td>
+                  <td>11:00 AM</td>
+                  <td>-</td>
+                  <td>
+                      <label class="switch pos-Toggle">
+                          <input type="checkbox">
+                          <span class="slider round"></span>
+                      </label>
+                  </td>
+                  <td>
+                      <div class="dropdown">
+                          <button
+                              class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no"
+                              type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              <span class="material-icons">
+                                  more_horiz
+                              </span>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                              aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item" href="#">Delete</a>
+                              <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+
+
+              <tr data-toggle="modal" data-target="#posDetailModal">
+                  <td>03</td>
+                  <td>CF003</td>
+                  <td><b>Active</b></td>
+                  <td>11:00 AM</td>
+                  <td>-</td>
+                  <td>
+                      <label class="switch pos-Toggle">
+                          <input type="checkbox">
+                          <span class="slider round"></span>
+                      </label>
+                  </td>
+                  <td>
+                      <div class="dropdown">
+                          <button
+                              class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no"
+                              type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              <span class="material-icons">
+                                  more_horiz
+                              </span>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                              aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item" href="#">Delete</a>
+                              <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+
+              <tr data-toggle="modal" data-target="#posDetailModal">
+                  <td>04</td>
+                  <td>CF004</td>
+                  <td class="text-danger"><b>InActive</b></td>
+                  <td>11:00 AM</td>
+                  <td>-</td>
+                  <td>
+                      <label class="switch pos-Toggle">
+                          <input type="checkbox">
+                          <span class="slider round"></span>
+                      </label>
+                  </td>
+                  <td>
+                      <div class="dropdown">
+                          <button
+                              class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no"
+                              type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              <span class="material-icons">
+                                  more_horiz
+                              </span>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                              aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item" href="#">Delete</a>
+                              <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+
+
+
+              <tr data-toggle="modal" data-target="#posDetailModal">
+                  <td>05</td>
+                  <td>CF005</td>
+                  <td class="text-danger"><b>InActive</b></td>
+                  <td>11:00 AM</td>
+                  <td>12:30 AM</td>
+                  <td>
+                      <label class="switch pos-Toggle">
+                          <input type="checkbox">
+                          <span class="slider round"></span>
+                      </label>
+                  </td>
+                  <td>
+                      <div class="dropdown">
+                          <button
+                              class="btn dropleft btn-transparent dropdown-toggle edit-dropdown caret-no"
+                              type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                              aria-haspopup="true" aria-expanded="false">
+                              <span class="material-icons">
+                                  more_horiz
+                              </span>
+                          </button>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left"
+                              aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="#">Edit</a>
+                              <a class="dropdown-item" href="#">Delete</a>
+                              <!-- <a class="dropdown-item" href="#">Something else here</a> -->
+                          </div>
+                      </div>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  <div class="col-md-6 col-xs-12">
+      <label class="fs14">Showing 1 to 10 of 65 entries</label>
+  </div>
+
+  <div class="col-md-6 col-xs-12 text-right">
+      <nav aria-label="Page navigation example " class="float-right app-pagination">
+          <ul class="pagination">
+              <li class="page-item"><a class="page-link disabled" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link active" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+      </nav>
+  </div>
+</div>
+
+
+<app-assign-pc  *ngIf='isassignPcModel' (hide)='assignPcModelOpen()'></app-assign-pc>
+<app-pos-details  *ngIf='isposDetailsModel' (hide)='posDetailsModelOpen()'></app-pos-details>

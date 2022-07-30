@@ -1,0 +1,318 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 *ngIf="itemid" class=" header-titel">Edit Visitor Detail</h4>
+    <h4 *ngIf="!itemid" class=" header-titel">New Visitor</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+
+  </div>
+</div>
+
+
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="shadow card border-0">
+      <div class="card-body">
+        <div class="form-group text-center">
+          <label class="p-2 img-upload rounded-circle bg-light text-center position-relative">
+            <!-- <img *ngIf="!isImgUploaded" class="upload-img  rounded-circle" src="/assets/images/user.jpg"
+            width="50px" height="50px" /> --> 
+            <img *ngIf="!profilePhoto" class="upload-img  rounded-circle" src="/assets/images/user.jpg"
+            width="50px" height="50px" />
+
+            <img class="upload-img  rounded-circle" [src]="profilePhoto" width="50px" height="50px" />
+            <!-- <img width="50px" height="50px" *ngIf="profileImage != '' && !!isImgUploaded"  [src]="profileImage" class="upload-img  rounded-circle"> -->
+            <form [formGroup]="fileUploadForm">
+              <input type="file" name="pic" (change)="onFileChange($event)" accept="image/*" class="d-none" />
+
+            </form>
+
+          </label>
+        </div>
+        <form [formGroup]="visitorForm">
+          <div class="row">
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" formControlName="name" class="form-control">
+                <span *ngIf="visitorForm.get('name').hasError('required') && visitorForm.get('name').touched"
+                  class="text-danger text-12">Full name required</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Email ID</label>
+                <input type="email" formControlName="emailId" class="form-control">
+                <span *ngIf="visitorForm.get('emailId').hasError('required') && visitorForm.get('emailId').touched"
+                  class="text-danger text-12">Email ID is required</span>
+                <span *ngIf="visitorForm.get('emailId').hasError('pattern') && visitorForm.get('emailId').touched"
+                  class="text-danger text-12">Email ID must be a valid email address</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Member code</label>
+                <input type="text" formControlName="memeberCode" class="form-control" placeholder="member code"
+                  readonly>
+                <span
+                  *ngIf="visitorForm.get('memeberCode').hasError('required') && visitorForm.get('memeberCode').touched"
+                  class="text-danger text-12">Member code required</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>NRIC no</label>
+                <input type="text" formControlName="nrciNo" class="form-control" placeholder="xxxxxx-xx-xxxx"
+                  (ngModelChange)="this.userQuestionUpdate.next($event)">
+                <span *ngIf="visitorForm.get('nrciNo').hasError('required') && visitorForm.get('nrciNo').touched"
+                  class="text-danger text-12">NRIC No required</span>
+                <span *ngIf="visitorForm.get('nrciNo').hasError('pattern')" class="text-danger text-12">Not a valid NRIC
+                  number</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Date of Birth</label>
+                <input type="date" formControlName="dob" class="form-control" [max]="getToday()"
+                  (ngModelChange)="getDate($event)">
+                <span *ngIf="visitorForm.get('dob').hasError('required') && visitorForm.get('dob').touched"
+                  class="text-danger text-12">Date of Birth required</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Age</label>
+                <input type="number" formControlName="age" class="form-control" [max]="getToday()">
+                <span *ngIf="visitorForm.get('age').hasError('required') && visitorForm.get('age').touched"
+                  class="text-danger text-12">Age is required</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Gender</label>
+                <select formControlName="gender" class="form-control">
+                  <option value="" selected>Select Gender</option>
+                  <option *ngFor="let item of genderList" [value]="item?.id" [selected]="gender == item.id?item:null">
+                    {{item?.name}}
+                  </option>
+                </select>
+                <span *ngIf="visitorForm.get('gender').hasError('required') && visitorForm.get('gender').touched"
+                  class="text-danger text-12">Gender required</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Nationality</label>
+                <select formControlName="isBumi" class="form-control">
+                  <option value="" selected>Choose Nationality</option>
+                  <option *ngFor="let item of nationalityList" [value]="item?.id"
+                    [selected]="isBumi == item.id?item:null">
+                    {{item?.nationality}}
+                  </option>
+                  <!-- <option value="">Choose</option>
+                  <option value="true">Bumiputra</option>
+                  <option value="false">Others</option> -->
+                </select>
+                <span *ngIf="visitorForm.get('isBumi').hasError('required') && visitorForm.get('isBumi').touched"
+                  class="text-danger text-12">Nationality required</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Contact Number</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">+60
+                      <!-- <img src="/assets/images/iconfinder_phone_326545.svg" /> -->
+                    </span>
+                  </div>
+                  <input type="text" maxlength="15" formControlName="contactNo" class="form-control"
+                    (keypress)="numberOnly($event)">
+                </div>
+                <span *ngIf="visitorForm.get('contactNo').hasError('required') && visitorForm.get('contactNo').touched"
+                  class="text-danger text-12">Contact Number</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Marital status </label>
+                <select formControlName="martialStatus" class="form-control">
+                  <option value="" selected>Select a category </option>
+                  <!-- <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Complicated">Complicated</option>
+                  <option value="Nottosay">Prefered no to say</option> -->
+                  <option *ngFor="let item of maritalList" [value]="item?.id"
+                    [selected]="martialStatus == item.id?item:null">
+                    {{item?.name}}
+                  </option>
+                </select>
+                <span
+                  *ngIf="visitorForm.get('martialStatus').hasError('required') && visitorForm.get('martialStatus').touched"
+                  class="text-danger text-12">Marital status required</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Income Level</label>
+                <select formControlName="incomeLevel" class="form-control">
+                  <option value="" selected>Choose income level</option>
+                  <option *ngFor="let item of incomeList" [value]="item?.id"
+                    [selected]="incomeLevel == item.id?item:null">
+                    {{item?.name}}
+                  </option>
+                  <!-- <option value="1">0-50K</option>
+                  <option value="2">50K - 100K</option>
+                  <option value="3">100K - 150K</option>
+                  <option value="4">150K - 200K</option> -->
+                </select>
+                <span
+                  *ngIf="visitorForm.get('incomeLevel').hasError('required') && visitorForm.get('incomeLevel').touched"
+                  class="text-danger text-12">Income level required</span>
+              </div>
+            </div>
+            <!-- <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Membership since</label>
+                <input type="date" formControlName="memebershipSince" class="form-control" [max]="getToday()">
+                <span
+                  *ngIf="visitorForm.get('memebershipSince').hasError('required') && visitorForm.get('memebershipSince').touched"
+                  class="text-danger text-12">Membership since required</span>
+              </div>
+            </div> -->
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Subscription ID</label>
+                <input type="text" formControlName="subscriptionId" class="form-control">
+                <span
+                  *ngIf="visitorForm.get('subscriptionId').hasError('required') && visitorForm.get('subscriptionId').touched"
+                  class="text-danger text-12">Subscription ID required</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Member</label>
+                <select formControlName="isMember" class="form-control">
+                  <option value="" selected>select</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
+                </select>
+                <span *ngIf="visitorForm.get('isMember').hasError('required') && visitorForm.get('isMember').touched"
+                  class="text-danger text-12">Select Memeber</span>
+              </div>
+            </div>
+            <div class="col-md-4 col-xs-12">
+              <div class="form-group">
+                <label>Occupation</label>
+                <select formControlName="occupation" class="form-control">
+                  <option value="" selected>Choose occupation</option>
+                  <option *ngFor="let item of occupationList" [value]="item?.id"
+                    [selected]="occupation == item.id?item:null">
+                    {{item?.name}}
+                  </option>
+                </select>
+                <span
+                  *ngIf="visitorForm.get('occupation').hasError('required') && visitorForm.get('occupation').touched"
+                  class="text-danger text-12">Select occupation</span>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <h6>Correspondence</h6>
+          <div class="row">
+            <div class="col-md-3 col-xs-12">
+              <div class="form-group">
+                <label>Country</label>
+                <select formControlName="country" class="form-control"
+                  (change)="getStateForCountry($event.target.value,false)">
+                  <option value="" selected>Choose Country</option>
+                  <option *ngFor="let item of countryList" [value]="item?.id" [selected]="country == item.id?item:null">
+                    {{item?.name}}
+                  </option>
+                </select>
+                <span *ngIf="visitorForm.get('country').hasError('required') && visitorForm.get('country').touched"
+                  class="text-danger text-12">Country required</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-xs-12">
+              <div class="form-group">
+                <label>State</label>
+                <select formControlName="state" class="form-control">
+                  <option value="" selected>Choose State</option>
+                  <option *ngFor="let item of stateList" [value]="item?.id" [selected]="state == item.id?item:null">
+                    {{item?.name}}
+                  </option>
+                </select>
+                <span *ngIf="visitorForm.get('state').hasError('required') && visitorForm.get('state').touched"
+                  class="text-danger text-12">State required</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-xs-12">
+              <div class="form-group">
+                <label>City</label>
+                <input type="text" formControlName="city" class="form-control">
+                <span *ngIf="visitorForm.get('city').hasError('required') && visitorForm.get('city').touched"
+                  class="text-danger text-12">City required</span>
+              </div>
+            </div>
+            <div class="col-md-3 col-xs-12">
+              <div class="form-group">
+                <label>Postal Code</label>
+                <input type="text" formControlName="postalcode" class="form-control">
+                <span
+                  *ngIf="visitorForm.get('postalcode').hasError('maxlength')"
+                  class="text-danger text-12">Postal code should be 5 digits</span>
+                <span
+                  *ngIf="visitorForm.get('postalcode').hasError('required') && visitorForm.get('postalcode').touched"
+                  class="text-danger text-12">Postal code required</span>
+              </div>
+            </div>
+            <div class="col-md-12 col-xs-12">
+              <div class="form-group">
+                <label>Address</label>
+                <textarea name="address" formControlName="address" class="form-control" id="" cols="20"
+                  rows="4"></textarea>
+                <span *ngIf="visitorForm.get('address').hasError('required') && visitorForm.get('address').touched"
+                  class="text-danger text-12">Address required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row my-3 ">
+            <div class="col-md-12 col-xs-12 text-right">
+              <!-- <a type="button" class="btn btn-primary" href="../visitorManagement/index.html">save & Create</a> -->
+              <button type="button" *ngIf="!itemid" class="btn btn-primary" [disabled]="!visitorForm.valid||!isClicked"
+                (click)="addVisitor(visitorForm.value)">Save & Create</button>
+              <button *ngIf="itemid" class="btn btn-primary" (click)="updateVisitor(visitorForm.value)">Update &
+                Continue</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="modal fade user-detai" bsModal #visitorDetailModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-md ">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="border-0">
+          <div class="card-body px-5 text-center">
+            <img class="p-2" src="./assets/icon/tick 1.svg" />
+            <p *ngIf="!itemid" class="mb-0 modal-message ">successfully created a new Visitor</p>
+            <p *ngIf="itemid" class="mb-0 modal-message ">successfully updated Visitor</p>
+            <a class="text-primary back-text no-underline cursor d-flex align-items-start justify-content-center"
+              routerLink="/visitorManagement"><img class="back-icon" src="./assets/icon/arrow-left-green.svg">Go
+              Back</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,543 @@
+@import'../abstracts/abstracts-dir.scss';
+
+
+// buttion------------
+.btn {
+    border-radius: 20px;
+    padding      : .375rem 1rem;
+
+    &.btn-primary {
+        background-color: $primary-bg;
+        border-color    : $primary-bg;
+
+        &.focus,
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgba(50, 141, 95, .5);
+        }
+
+        &:not(:disabled):not(.disabled).active,
+        &:not(:disabled):not(.disabled):active,
+        &.hover,
+        &:hover {
+            color           : #fff;
+            background-color: $primary-bg;
+            border-color    : $primary-bg;
+        }
+    }
+
+
+}
+
+.show {
+    .btn-primary {
+        &.dropdown-toggle {
+            color           : #fff;
+            background-color: $primary-bg;
+            border-color    : $primary-bg;
+        }
+    }
+
+}
+
+
+.btn-transparent {
+    background: transparent;
+    border    : none;
+
+    &:focus,
+    &:active {
+        box-shadow: unset;
+    }
+}
+
+// dropdown------------
+.dropdown-item {
+    &:active {
+        color           : $white;
+        text-decoration : none;
+        background-color: $primary-bg;
+    }
+
+    &:focus,
+    &:hover {
+        outline         : rgba(50, 141, 95, .5);
+        background-color: unset;
+    }
+
+}
+
+
+// pagination------------
+
+.app-pagination {
+    .pagination {
+        .page-item {
+            a {
+                color    : $black;
+                font-size: 12px;
+
+                &.disabled {
+                    pointer-events: none;
+                    opacity       : 0.5;
+                }
+
+                &.active {
+                    background-color: $primary-bg;
+                    color           : $white;
+
+                }
+            }
+
+            +.page-item {
+                margin-left: 5px;
+            }
+        }
+    }
+}
+
+
+
+
+// form-control
+
+.form-group {
+    label {
+        font-size: 18px;
+        color    : #000000;
+    }
+
+    .form-control {
+        background-color: #EEEEEE;
+        border          : none;
+        height          : calc(2.5em + .75rem + 2px);
+    }
+}
+a{
+    text-decoration: none;
+}
+
+//modle window
+.modal {
+    .close {
+        color : $primary-bg;
+        border: 1px solid $primary-bg;
+        ;
+        position     : absolute;
+        border-radius: 50%;
+        width        : 30px;
+        height       : 30px;
+        padding      : 0;
+        right        : -11px;
+        top          : -16px;
+        background   : $white;
+        opacity      : unset;
+    }
+    
+    .modal-body {
+        .media {
+            img {
+                width        : 66px;
+                height       : 66px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .media-body {
+
+                h5,
+                .days-ago {
+                    font-size  : 24px;
+                    font-weight: 600;
+                }
+
+                .detals {
+                    font-size    : 16px;
+                    display      : block;
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+
+.app-table {
+    thead {
+        background-color: $primary-bg;
+        font-size       : 14px;
+
+        tr {
+            th {
+                color      : $white;
+                font-size  : 16px;
+                // border     : none;
+                font-weight: normal;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+
+                vertical-align: middle;
+                font-size: 14px;
+            }
+        }
+
+    }
+}
+table tr:first-child th:first-child {
+    border-top-left-radius: 6px;
+  }
+  
+  /* top-right border-radius */
+  table tr:first-child th:last-child {
+    border-top-right-radius: 6px;
+  }
+  span.material-icons {
+    color: #C4C4C4;
+}
+
+
+//typoscript
+
+.header-titel {
+    font-size  : 24px;
+    font-weight: 600;
+}
+
+i {
+    vertical-align: bottom;
+
+}
+
+.caret-no::after {
+    border: none;
+}
+
+.edit-dropdown {
+    color: #C4C4C4;
+}
+
+.fs14 {
+    font-size: 14px;
+}
+.fs24{
+    font-size: 24px;
+}
+.text-bold{
+    font-weight: 600;
+}
+
+
+.bg-primary {
+    background-color:  $primary-bg !important;
+}
+
+.text-primary {
+    color:  $primary-bg !important;
+}
+
+// .text-danger {
+//     D61212
+// }
+
+
+//card
+.card{
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    
+    .card-header{
+        background-color: $white;
+        border: none;
+    }
+
+}
+.mat-select-trigger {
+    height: 2em;
+}
+
+.box-shadow{
+    box-shadow: 0px 0px 10px rgba(196, 196, 196, 0.12);
+}
+//modal close button
+.x {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+button:focus {
+    outline:0 !important;
+}
+*:focus {outline:none !important}
+
+//animation
+
+  
+@keyframes pulse {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: .25;
+      transform: scale(.75);
+    }
+  }
+  
+  /* GRID STYLING */
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+ 
+  
+  .spinner-box {
+    width: 300px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+  }
+  
+  /* SPINNING CIRCLE */
+  
+  .leo-border-1 {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: rgb(63,249,220);
+    background: linear-gradient(0deg, rgba(63,249,220,0.1) 33%, rgba(63,249,220,1) 100%);
+    animation: spin3D 1.8s linear 0s infinite;
+  }
+  
+  .leo-core-1 {
+    width: 100%;
+    height: 100%;
+    background-color: #37474faa;
+    border-radius: 50%;
+  }
+  
+  .leo-border-2 {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: rgb(63,249,220);
+    background: linear-gradient(0deg, rgba(255, 171, 145,0.1) 33%, rgba(255, 171, 145,1) 100%);
+    animation: spin3D 2.2s linear 0s infinite;
+  }
+  
+  .leo-core-2 {
+    width: 100%;
+    height: 100%;
+    background-color: #ffab91aa;
+    border-radius: 50%;
+  }
+  
+  /* ALTERNATING ORBITS */
+  
+  .circle-border {
+    width: 150px;
+    height: 150px;
+    padding: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: rgb(63,249,220);
+    background: linear-gradient(0deg, rgba(63,249,220,0.1) 33%, rgba(63,249,220,1) 100%);
+    animation: spin .8s linear 0s infinite;
+  }
+  
+  .circle-core {
+    width: 100%;
+    height: 100%;
+    background-color: #37474f;
+    border-radius: 50%;
+  }
+  
+  /* X-ROTATING BOXES */
+  
+  .configure-border-1 {
+    width: 115px;
+    height: 115px;
+    padding: 3px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffab91;
+    animation: configure-clockwise 3s ease-in-out 0s infinite alternate;
+  }
+  
+  .configure-border-2 {
+    width: 115px;
+    height: 115px;
+    padding: 3px;
+    left: -115px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(63,249,220);
+    transform: rotate(45deg);
+    animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
+  }
+  
+  .configure-core {
+    width: 100%;
+    height: 100%;
+    background-color: #37474f;
+  }
+  
+  /* PULSE BUBBLES */
+  
+  .pulse-container {
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pulse-bubble {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #328d5f;
+  }
+  
+  .pulse-bubble-1 {
+      animation: pulse .4s ease 0s infinite alternate;
+  }
+  .pulse-bubble-2 {
+      animation: pulse .4s ease .2s infinite alternate;
+  }
+  .pulse-bubble-3 {
+      animation: pulse .4s ease .4s infinite alternate;
+  }
+  
+  /* SOLAR SYSTEM */
+  
+  .solar-system {
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .orbit {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #ffffffa5;
+      border-radius: 50%;
+  }
+  
+  .earth-orbit {
+      width: 165px;
+      height: 165px;
+    -webkit-animation: spin 12s linear 0s infinite;
+  }
+  
+  .venus-orbit {
+      width: 120px;
+      height: 120px;
+    -webkit-animation: spin 7.4s linear 0s infinite;
+  }
+  
+  .mercury-orbit {
+      width: 90px;
+      height: 90px;
+    -webkit-animation: spin 3s linear 0s infinite;
+  }
+  
+  .planet {
+      position: absolute;
+      top: -5px;
+    width: 10px;
+    height: 10px;
+      border-radius: 50%;
+    background-color: #3ff9dc;
+  }
+  
+  .sun {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #ffab91;
+  }
+  
+  .leo {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+  }
+  
+  .blue-orbit {
+      width: 165px;
+      height: 165px;
+    border: 1px solid #91daffa5;
+    -webkit-animation: spin3D 3s linear .2s infinite;
+  }
+  
+  .green-orbit {
+      width: 120px;
+      height: 120px;
+    border: 1px solid #91ffbfa5;
+    -webkit-animation: spin3D 2s linear 0s infinite;
+  }
+  
+  .red-orbit {
+      width: 90px;
+      height: 90px;
+    border: 1px solid #ffca91a5;
+    -webkit-animation: spin3D 1s linear 0s infinite;
+  }
+  
+  .white-orbit {
+      width: 60px;
+      height: 60px;
+    border: 2px solid #ffffff;
+    -webkit-animation: spin3D 10s linear 0s infinite;
+  }
+  
+  .w1 {
+    transform: rotate3D(1, 1, 1, 90deg)
+  }
+  
+  .w2 {
+    transform: rotate3D(1, 2, .5, 90deg)
+  }
+  
+  .w3 {
+    transform: rotate3D(.5, 1, 2, 90deg)
+  }
+  .loader{
+      position: absolute;
+      top:5rem;
+      left: 0;
+      right: 0; 
+      bottom:0;
+      margin: auto
+  }
+  .text-loader{
+    color:#328d5f
+  }

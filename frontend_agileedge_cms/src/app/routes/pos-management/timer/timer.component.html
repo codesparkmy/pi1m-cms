@@ -1,0 +1,12 @@
+<div *ngIf="value != 0;then content else other_content"></div>
+<ng-template #content>
+  <p [ngClass]="(timerValue?.hours == 0 && timerValue?.minutes<5)?'lessThan5':'lessThan10'">
+    {{ timerValue?.hours | number: "2.0" }}:{{
+      timerValue?.minutes | number: "2.0"
+    }} mins
+    <!-- :{{ timerValue?.seconds | number: "2.0" }} -->
+  </p>
+</ng-template>
+<ng-template #other_content>
+  00:00:00
+</ng-template>

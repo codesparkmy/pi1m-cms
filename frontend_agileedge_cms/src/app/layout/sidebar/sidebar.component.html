@@ -1,0 +1,18 @@
+<div class="shadow " id="sidebar-wrapper">
+  <div class="sidebar-heading text-center">
+      <img src="./assets/images/logo.png" class="img-fluid" alt="Responsive image">
+  </div>
+  <div class="list-group list-group-flush">
+      <a  [routerLink]="item.link" routerLinkActive="active" *ngFor="let item of menuItems " class="list-group-item list-group-item-action ">
+          <img [src]="item.icon" class="img-fluid" alt="Responsive image">
+          {{item.text}}</a>
+      <!-- <a  routerLink="/visitorManagement" class="list-group-item list-group-item-action ">
+          <img src="./assets/icon/user-check.svg" class="img-fluid" alt="Responsive image">
+          Visitor Management</a>
+      <a  routerLink="/trainingManagement"class="list-group-item list-group-item-action ">
+          <img src="./assets/icon/presentation.svg" class="img-fluid" alt="Responsive image">
+          Training Management</a> -->
+
+
+  </div>
+</div>

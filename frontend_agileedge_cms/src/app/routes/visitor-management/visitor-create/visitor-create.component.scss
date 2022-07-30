@@ -1,0 +1,28 @@
+.modal-message {
+    font-size: 24px;
+    color: #000;
+    font-weight: normal;
+    padding: 25px 25px;
+}
+.back-icon {
+    width: 41px;
+    height: 41px;
+}
+.no-underline {
+    text-decoration: none;
+}
+.back-text {
+    font-weight: 500;
+    font-size: 24px;
+    &::hover {
+        color: #fff;
+    }
+}
+a.text-primary:hover,
+a.text-primary:focus {
+    color: #328d5f !important;
+}
+.header-titel {
+    font-size: 24px;
+    font-weight: 600;
+}

@@ -1,0 +1,107 @@
+<div class="modal fade assign-pc" bsModal #assignPcModel="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1" role="dialog"
+  aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="hideModalWindow()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="row mb-4">
+          <div class="col-md-12 col-xs-12 text-center">
+            <img src="./assets/images/logo-colour.svg" class="img-fluid" alt="Responsive image">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12 col-xs-12">
+            <div class="form-group">
+              <label>Select PC</label>
+              <nav aria-label="Page navigation example">
+                <ul class="pagination pc-list">
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item"><a class="page-link" href="#">5</a></li>
+                  <li class="page-item"><a class="page-link" href="#">6</a></li>
+                  <li class="page-item"><a class="page-link" href="#">7</a></li>
+                  <li class="page-item"><a class="page-link" href="#">8</a></li>
+                  <li class="page-item"><a class="page-link" href="#">9</a></li>
+                  <li class="page-item"><a class="page-link" href="#">10</a></li>
+                  <li class="page-item"><a class="page-link" href="#">11</a></li>
+                  <li class="page-item"><a class="page-link" href="#">12</a></li>
+                  <li class="page-item"><a class="page-link" href="#">13</a></li>
+                  <li class="page-item"><a class="page-link" href="#">14</a></li>
+                  <!-- <li class="page-item"><a class="page-link" href="#">15</a></li> -->
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-xs-6">
+            <div class="form-group">
+              <label>Assign to</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-6">
+            <div class="form-group">
+              <label>User ID</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-xs-6">
+            <div class="form-group">
+              <label>Type of service</label>
+              <select class="custom-select form-control" id="inputGroupSelect03">
+                <option selected>Choose...</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 col-xs-6">
+            <div class="form-group">
+              <label>Purpose</label>
+              <select class="custom-select form-control" id="inputGroupSelect03">
+                <option selected>Browsing</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-xs-6">
+              <div class="form-group">
+                  <label>Duration</label>
+                  <select class="custom-select form-control" id="inputGroupSelect03">
+                      <option selected>Post paid</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                  </select>
+              </div>
+          </div>
+         
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-12 col-xs-12 text-right">
+            <a type="button" class="btn btn-primary"
+            (click)="hideModalWindow()">save & Create</a>
+        </div>
+    </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

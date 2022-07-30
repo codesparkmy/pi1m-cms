@@ -1,0 +1,23 @@
+@import'../../../shared/styles/abstracts/abstracts-dir.scss';
+
+.acount-details{
+    background: #EEEEEE;
+    padding: 1.25rem;
+    .media{
+        img{
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+        }
+        .media-body{
+            h5{
+                font-size: 20px;
+                color: $black;
+            }
+            span{
+                font-size: 18px;
+                color: $black;
+            }
+        }
+    }
+}

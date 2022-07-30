@@ -1,0 +1,77 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-12 col-sm-12">
+    <h4 class="px-2 header-titel">Welcome back {{employeeuser?.fullName}}!!</h4>
+  </div>
+</div>
+
+<div class="row mt-4 form-group">
+  <div class="col-md-12 col-sm-12">
+    <div class="card shadow border-0 ">
+      <div class="card-body">
+        <div class="row mb-3 pt-3 px-3">
+          <div class="col-md-10 col-xs-12">
+            <h4 class="text-primary title">REVENUE</h4>
+          </div>
+          <div class="col-md-2 text-center col-xs-12">
+            <!-- <button class="border-0 btn-shadow py-2 px-4 transparent text-black">SEE MORE</button> -->
+          </div>
+        </div>
+        <div class="row mb-4 px-3">
+          <div class="col-md-3 col-xs-12">
+            <div class="tiles-widget active">
+              <small>Current month</small>
+              <h4 class="text-primary">RM {{income}}</h4>
+            </div>
+          </div>
+          <div class="col-md-3 col-xs-12">
+            <div class="tiles-widget">
+              <small>Previous month</small>
+              <h4 class="text-primary">RM {{previouse}}</h4>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row px-3 py-2">
+          <div class="col-md-12">
+            <!-- <canvas baseChart [chartType]="'line'" [options]="lineOptions" [datasets]="lineData.datasets" [colors]="lineColors" [labels]="lineData.labels" [legend]="false" height="80"></canvas> -->
+
+            <!-- <canvas baseChart [chartType]="'line'" [options]="lineOptions" [datasets]="lineData.datasets" [colors]="lineColors" [labels]="lineData.labels" [legend]="false" height="80"></canvas> -->
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+    </div>
+    <div class="row my-3">
+      <div class="col-md-5">
+          <div class="border-0 rounded card text-center py-4">
+            <img class="p-0" src="./assets/icon/users-color.svg"/>
+            <h4 class="card-header pb-0">Employees</h4>
+            <p class="card-count mb-0">{{employeeData.length}}</p>
+          </div>
+      </div>
+      <div class="col-md-5">
+        <div class="border-0 rounded card text-center py-4">
+          <img class="p-0" src="./assets/icon/building.svg"/>
+          <h4 class="card-header pb-0">Branches</h4>
+          <p class="card-count mb-0">{{cafeData.length}}</p>
+        </div>
+      </div>
+      <!-- <div class="col-md-6">
+        <div class="pb-1 border-0 rounded card p-3">
+          <div class="d-flex py-1 align-items-center">
+            <div class="text-center rounded-circle bg-primary p-4"><img class="p-0" src="./assets/icon/user-check-color.svg"/></div>
+            <div class="p-3 px-4">
+              <p class="card-count active mb-0">100</p>
+              <p class="sub-text">Total Active members</p>
+            </div>
+        </div>
+        </div> -->
+
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,36 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Add Training Target</h4>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="border-0">
+      <div class="card-body">
+        <form [formGroup]="targetForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Training Target</label>
+                <input type="text" formControlName="name" value="System" class="form-control"
+                  placeholder="training target">
+                <span *ngIf="targetForm.get('name').hasError('required') && targetForm.get('name').touched"
+                  class="text-danger text-12">Name is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 mb-2">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button class="btn btn-primary px-4 py-2" *ngIf="!prevId" (click)="addInventory(targetForm.value)"
+                [disabled]="clicked">Create New</button>
+              <button *ngIf="prevId" class="btn btn-primary px-4 py-2" (click)="updateSystem(targetForm.value)">Save &
+                continue</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+</div>

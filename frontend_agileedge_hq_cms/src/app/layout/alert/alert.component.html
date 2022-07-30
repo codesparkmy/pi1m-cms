@@ -1,0 +1,11 @@
+<div class="modal fade custom-modalwindow" [config]="{backdrop: 'static'}" bsModal #alert="bs-modal" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body confirm-window text-center">
+        <h2 class="alert-message">{{model.options.title}}</h2>
+        <p class="sub-message margin-bottom">{{model.options.text}}</p>
+        <button type="button" class="btn   modelOk" *ngIf="model.options.alertType == 'confirm'" [ngClass]="model.options.buttons.confirm.className"(click)="model.onClose.next(true)">{{model.options.buttons.confirm.text}}</button>
+        <button type="button" class="btn modelOk" *ngIf="model.options.alertType == 'confirm'" [ngClass]="model.options.buttons.cancel.className" (click)="model.onClose.next(false)">{{model.options.buttons.cancel.text}}</button>
+        <button type="button" class="btn modelOk" *ngIf="model.options.alertType == 'alert'" [ngClass]="model.options.buttons.confirm.className"(click)="model.onClose.next(true)">Ok</button>
+      </div>
+    </div>

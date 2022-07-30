@@ -1,0 +1,132 @@
+<div class="row text-left">
+  <h3 class=" px-3 title d-flex align-items-center" routerLink="/visitorManagement"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 0 48 48" width="48"><path d="M0 0h48v48h-48z" fill="none"/><path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"/></svg>Visitor Detail</h3>
+</div>
+<div class="row mt-4 form-group">
+  <div class="col-md-5 ml-3 ">
+    <div class="media d-flex p-4 align-items-start rounded box-shadow">
+        <img class="rounded-circle profile mx-2" *ngIf="!isImagePresent"  src="./assets/images/user.jpg"  />
+        <img class="rounded-circle profile mx-2" *ngIf="!!isImagePresent"  [src]="profileImg"  />
+        <div class="media-body px-3">
+          <h5 class="mt-0 fs24 text-bold">{{visitorList?.name}}</h5>
+          <p class="detals mb-0">{{visitorList?.emailId}}</p>
+          <p class="detals mb-0">{{visitorList?.contactNo}}</p>
+          <p class="detals mb-0">Location : {{visitorList?.location}}</p>
+        </div>
+        <img class="my-2" width="24px" height="24px" (click)="editVisitor(visitorList?.id)" src="./assets/icon/edit-3.svg" />
+      </div>
+  </div>
+  <div class="col">
+    <div class="d-flex p-4 justify-content-between align-items-center rounded box-shadow">
+        <img class="py-4" src="./assets/icon/people 1.svg" />
+        <div class="p-2">
+            <p class="sub-title mb-0 text-right">Recent activity</p>
+            <h5 class="fs24 text-bold">{{recentActivityList}} ago</h5>
+        </div>
+    </div>
+  </div>
+  <div class="col mr-3">
+    <div class="d-flex p-4 justify-content-between rounded align-items-center box-shadow">
+        <img class="py-4" src="./assets/icon/tool 1.svg" />
+        <div class="p-2">
+            <p class="sub-title mb-0 text-right">Total hours</p>
+            <!-- <h5 class="fs24 text-bold">{{totalhoursList |number:'1.2-2'}} hrs</h5> -->
+            <h5 class="fs24 text-bold">{{totalhoursList}} hrs</h5>
+        </div>
+    </div>
+
+  </div>
+</div>
+<div class="box-shadow  mx-3 ">
+  <ul class="nav d-flex align-items-center mb-4 mt-5 d-flexrow">
+    <li class="tab-slider py-4 text-center active cursor"  [class.active]="viewMode == 'customer'" rel="tab1" (click)="viewMode ='customer'">
+        <span>SUBSCRIPTIONS</span>
+    </li>
+    <li class="tab-slider py-4 text-center cursor" selected [class.active]="viewMode == 'history'" rel="tab2" (click)="viewMode ='history'">
+        <span>HISTORY</span>
+    </li>
+    <li class="tab-slider py-4 text-center cursor" [class.active]="viewMode == 'accounts'" rel="tab3" (click)="viewMode ='accounts'">
+        <span>ACCOUNT DETAILS</span>
+    </li>
+</ul>
+
+<section class="container-fluid p-0">
+<div class="tab-slider--container slideBox" [ngSwitch]="viewMode">
+    <div id="tab1" class="tab-slider--body tab-overflow "  *ngSwitchCase="'customer'">
+        <div class="row mx-1">
+            <div class="col-md-12 col-xs-12">
+              <h5 class="text-center bg-light py-5">No data to display</h5>
+            </div>
+        </div>
+    </div>
+    <div id="tab2" class="tab-slider--body tab-overflow " selected *ngSwitchCase="'history'">
+        <div class="row mx-1">
+            <div class="col-md-12 col-xs-12">
+              <table class="table table-borderless app-table table-striped">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Branch</th>
+                    <th>Purpose</th>
+                    <th>Food&beverages</th>
+                    <th>Hours</th>
+                    <th>Bill</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-center" *ngFor="let item of posList; let i = index">
+                    <td>{{ i +1}}</td>
+                    <td>{{item?.createdAt | slice:0:10}}</td>
+                      <td>{{item?.endTime | slice: 11:16}}</td>
+                      <td>{{item.location}}</td>                      
+                      <td>{{item.purpose}}</td>
+                      <td>{{item?.Food[0].name}}</td>
+                      <!-- <ng-container *ngIf="item?.foodOption == 'null' || item?.foodOption == null"></ng-container>{{item?.foodOption.CategoryChip}} -->
+                      <td>{{item?.totalHours |number:'1.2-2'}}</td>
+                      <td>{{item?.browsePerhours*item.totalHours}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-12 col-xs-12" *ngIf="posList?.length==0">
+              <h5 class="text-center bg-light py-5">No data to display</h5>
+            </div>
+        </div>
+    </div>
+    <div id="tab3" class="tab-slider--body tab-overflow " *ngSwitchCase="'accounts'">
+          <div class="row px-4 mx-1 acount-list">
+            <div class="col-md-4">
+              <p><span>Subscription ID:</span> {{visitorList?.subscriptionId}}</p>
+              <p><span>Member code: </span>{{visitorList?.memeberCode}}</p>
+              <p><span>NRCI no: </span>{{visitorList?.nrciNo}}</p>
+            </div>
+            <div class="col-md-4">
+              <p><span>DOB:</span> {{visitorList?.dob | slice :0 :10}}</p>
+              <p><span>Gender:</span>{{visitorList?.gender}}</p>
+
+            </div>
+            <div class="col-md-4">
+              <p><span>Income Level: </span>
+                <span *ngIf="visitorList.incomeLevel=='1'">0-50K</span>
+                <span *ngIf="visitorList.incomeLevel=='2'">50K - 100K</span>
+                <span *ngIf="visitorList.incomeLevel=='3'">100K - 150K</span>
+                <span *ngIf="visitorList.incomeLevel=='4'">150K - 200K</span>
+              </p>
+              <p><span>Bumi:</span> <ng-container *ngIf="visitorList?.isBumi == '1'">Yes</ng-container><ng-container *ngIf="visitorList?.isBumi == '0'">No</ng-container></p>
+
+            </div>
+          </div>
+          <div class="px-4 d-flex justify-content-between">
+            <div ></div>
+            <div >
+              <img class="my-2" width="24px" height="24px" (click)="editVisitor(visitorList?.id)" src="./assets/icon/edit-3.svg" />
+
+            </div>
+          </div>
+        </div>
+    </div>
+</section>
+
+</div>

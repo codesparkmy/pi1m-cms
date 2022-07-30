@@ -1,0 +1,274 @@
+<div class="row mt-4 form-group">
+    <div class="col-md-6 col-sm-12">
+        <h4 class=" header-titel mx-2 px-3">{{itemid ? 'Update Employee' : 'Create Employee'}} </h4>
+    </div>
+    <div class="col-md-6 col-sm-12 text-right">
+
+    </div>
+</div>
+
+
+<div class="row mb-5 mx-2">
+    <div class="col-md-12 col-xs-12">
+        <div class="shadow card border-0">
+            <div class="card-body">
+                <form [formGroup]="employeeForm">
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input formControlName="fullName" type="text" class="form-control">
+                                <span
+                                    *ngIf="employeeForm.get('fullName').hasError('required') && employeeForm.get('fullName').touched"
+                                    class="text-danger text-12">Full name required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Employee ID</label>
+                                <input type="text" formControlName="employeeId" class="form-control">
+                                <span
+                                    *ngIf="employeeForm.get('employeeId').hasError('required') && employeeForm.get('employeeId').touched"
+                                    class="text-danger text-12">Employee ID required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>NRIC no</label>
+                                <!-- <input type="text" class="form-control" formControlName="subscriptionId"
+                                    (keypress)="numberOnly($event)"> -->
+                                <input type="text" formControlName="subscriptionId" class="form-control" placeholder="xxxxxx-xx-xxxx">    
+                                <span
+                                    *ngIf="employeeForm.get('subscriptionId').hasError('required') && employeeForm.get('subscriptionId').touched"
+                                    class="text-danger text-12">NRIC no required</span>
+                                <span *ngIf="employeeForm.get('subscriptionId').hasError('pattern')" class="text-danger text-12">Not a valid NRIC
+                                    number</span>    
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Race</label>
+                                <!-- <input type="text" class="form-control" formControlName="RaceId"
+                                    (keypress)="numberOnly($event)"> -->
+                                <select class="form-control" formControlName="RaceId">
+                                    <option value="" selected>Select Race</option>
+                                    <option value="Malay">Malay</option>
+                                    <option value="Chinese">Chinese</option>
+                                    <option value="Indian">Indian</option>
+                                    <option value="Bumiputera">Bumiputera</option>
+                                    <option value="Others">Others</option>
+                                    <!-- <option value=false>Female</option> -->
+
+                                </select>
+                                <span
+                                    *ngIf="employeeForm.get('RaceId').hasError('required') && employeeForm.get('RaceId').touched"
+                                    class="text-danger text-12">Race required</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>DOB</label>
+                                <input type="date" class="form-control" formControlName="dob" [max]="getToday()">
+                                <span
+                                    *ngIf="employeeForm.get('dob').hasError('required') && employeeForm.get('dob').touched"
+                                    class="text-danger text-12">DOB required</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select class="form-control" formControlName="gender">
+                                    <option value="" selected>Select Gender</option>
+                                    <option value="true">Male</option>
+                                    <option value="false">Female</option>
+                                    <!-- <option value=false>Female</option> -->
+
+                                </select>
+                                <span
+                                    *ngIf="employeeForm.get('gender').hasError('required') && employeeForm.get('gender').touched"
+                                    class="text-danger text-12">Gender required</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <!-- <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Religion CID</label>
+                                <input type="text" class="form-control" formControlName="ReligionCId"
+                                    (keypress)="numberOnly($event)">
+                                <span
+                                    *ngIf="employeeForm.get('ReligionCId').hasError('required') && employeeForm.get('ReligionCId').touched"
+                                    class="text-danger text-12">Religion CID required</span>
+
+                            </div>
+                        </div> -->
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Contact No</label>
+                                <div class="input-group mb-3">
+
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1">+60
+                                        </span>
+                                    </div>
+                                    <input type="phonenumber" class="form-control" formControlName="phoneNumber"
+                                        (keypress)="numberOnly($event)" minlength="10" maxlength="12">
+
+                                </div>
+                                <span
+                                    *ngIf="employeeForm.get('phoneNumber').hasError('required') && employeeForm.get('phoneNumber').touched"
+                                    class="text-danger text-12">Contact Number required</span>
+                                <span *ngIf="employeeForm.get('phoneNumber').hasError('minLength')"
+                                    class="text-danger text-12">Contact Number must be at lease 10 to 12 numbers</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Job Category </label>
+                                <input type="text" class="form-control" formControlName="jobCategory">
+                                <span
+                                    *ngIf="employeeForm.get('jobCategory').hasError('required') && employeeForm.get('jobCategory').touched"
+                                    class="text-danger text-12">Job Category required</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Position</label>
+                                <select formControlName="positionId" class="form-control">
+                                    <option value="" selected>Choose Role</option>
+                                    <option *ngFor="let item of roleList" [value]="item?.id"
+                                        [selected]="positionId == item.id?item:null">
+                                        {{item?.name}}
+                                    </option>
+                                </select>
+                                <!-- <select formControlName="positionId" class="form-control">
+                                    <option value="0">None</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Employee">Employee</option>
+                                </select> -->
+                                <span
+                                    *ngIf="employeeForm.get('positionId').hasError('required') && employeeForm.get('positionId').touched"
+                                    class="text-danger text-12">Position required</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Joining Date</label>
+                                <input type="date" class="form-control" formControlName="joiningDate"
+                                    [min]="getToday()">
+                                <span
+                                    *ngIf="employeeForm.get('joiningDate').hasError('required') && employeeForm.get('joiningDate').touched"
+                                    class="text-danger text-12">Joining Date required</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Branch allocation</label>
+                                <select formControlName="branchAllocation" class="form-control">
+                                    <option value="0">None</option>
+                                    <option *ngFor="let item of cafeData index as i" value={{item.id}}>
+                                        {{item?.branchName}}</option>
+                                </select>
+
+                                <span
+                                    *ngIf="employeeForm.get('branchAllocation').hasError('required') && employeeForm.get('branchAllocation').touched"
+                                    class="text-danger text-12">Branch allocation required</span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Nationality</label>
+                                <input type="text" class="form-control" formControlName="nationality">
+                                <span
+                                    *ngIf="employeeForm.get('nationality').hasError('required') && employeeForm.get('nationality').touched"
+                                    class="text-danger text-12">Nationality required</span>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Total obtain leave</label>
+                                <input type="number" class="form-control" formControlName="totalObtain"
+                                    ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01">
+                                <span
+                                    *ngIf="employeeForm.get('totalObtain').hasError('required') && employeeForm.get('totalObtain').touched"
+                                    class="text-danger text-12">Total obtain required</span>
+                                <span
+                                    *ngIf="employeeForm.get('totalObtain').hasError('pattern') && employeeForm.get('totalObtain').touched"
+                                    class="text-danger text-12">Total obtain must be number or decimal value.</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-6">
+                            <div class="form-group">
+                                <label>Email ID</label>
+                                <input type="email" class="form-control" formControlName="email">
+                                <span
+                                    *ngIf="employeeForm.get('email').hasError('required') && employeeForm.get('email').touched"
+                                    class="text-danger text-12">Email ID required</span>
+                                <span
+                                    *ngIf="employeeForm.get('email').hasError('pattern') && employeeForm.get('email').touched"
+                                    class="text-danger text-12">Email must be a valid email address</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-xs-6" *ngIf="!itemid">
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" class="form-control" formControlName="password"
+                                    id="passwordInput">
+                                <div class="show-password">
+                                    <input type="checkbox" (click)="showPassword()"> Show Password
+                                </div>
+                                <span
+                                    *ngIf="employeeForm.get('password').hasError('required') && employeeForm.get('password').touched"
+                                    class="text-danger text-12">Password required</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12 col-xs-12 text-right">
+                            <!-- <a type="button" class="btn btn-primary" href="../empoyeeManagement/index.html">Create New</a> -->
+                            <button *ngIf="!itemid" class="btn btn-primary px-5 py-2" [disabled]="!employeeForm.valid"
+                                (click)="addEmployee(employeeForm.value)">Create New</button>
+                            <button *ngIf="itemid" class="btn btn-primary"
+                                (click)="updateEmployee(employeeForm.value);">Save & Continue</button>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>

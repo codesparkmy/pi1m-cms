@@ -1,0 +1,231 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Employee Management</h4>
+  </div>
+  <div class="col-md-6 col-sm-12 text-right">
+    <!-- <button type="button" class="btn btn-transparent"> <img src="./assets/icon/filter.svg"
+        alt="Generic placeholder image"></button> -->
+    <input type="text" placeholder="Search" class="search-field" name="search" ngModel
+      (ngModelChange)="searchFilter($event)">
+
+    <button type="button" routerLink="/employeeManagement/employee" class="btn btn-primary">New Employee</button>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col-md-12 col-xs-12 ">
+    <table class="table table-borderless app-table table-striped">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Name</th>
+          <th>Employee ID</th>
+          <th>Email</th>
+          <th>Position</th>
+          <th>Contact number</th>
+          <th>Branch</th>
+          <th>Location</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of filterList | paginate: { itemsPerPage: 10, currentPage: p } ; let i = index">
+          <!-- <tr *ngFor="let item of courseList; index as i"> -->
+          <td>{{ 10 * (p - 1) + i +1}}</td>
+          <td (click)="viewEmployee(item.id);visitorDetailModal.show()"><a>{{item.fullName}}</a></td>
+
+          <td>{{item.employeeId}}</td>
+          <td>{{item?.email}}</td>
+          <td>{{item?.positionId.name}}</td>
+          <td>{{item?.phoneNumber}}</td>
+          <td>
+            <ng-container *ngIf="item?.branchAllocation != '' && item?.branchAllocation != null">
+              {{item?.branchAllocation.branchName}}</ng-container>
+          </td>
+          <td>
+            <ng-container *ngIf="item?.branchAllocation != '' && item?.branchAllocation != null">
+              {{item?.branchAllocation.location}}</ng-container>
+          </td>
+          <td>
+            <div class="btn-group edit-button" dropdown>
+              <button id="button-basic" dropdownToggle type="button" class=" bg-transparent border-0"
+                aria-controls="dropdown-basic">
+                <span class="material-icons">
+                  more_horiz
+                </span>
+              </button>
+              <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu"
+                aria-labelledby="button-basic">
+                <li role=" px-2 cursor" (click)="editEmployee(item.id)">
+                  <button class="bg-transparent border-0">Edit</button>
+                </li>
+                <li class="divider"></li>
+                <li role=" px-2 cursor" (click)="deleteEmployee(item.id)">
+                  <button class="bg-transparent border-0">Delete</button>
+                </li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+  <div class="text-center col-md-12 col-xs-12">
+    <div class="row">
+      <div class="text-center col-md-12 col-xs-12">
+        <div *ngIf="!!loader">
+          <div class="spinner-box my-0 mx-auto">
+            <div class="pulse-container">
+              <div class="pulse-bubble pulse-bubble-1"></div>
+              <div class="pulse-bubble pulse-bubble-2"></div>
+              <div class="pulse-bubble pulse-bubble-3"></div>
+            </div>
+          </div>
+          <p class="text-loader text-bold">Loading</p>
+        </div>
+        <h4 *ngIf="filterList?.length==0" class="p-5 text-dark text-center">No data to display</h4>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-xs-12">
+    <label class="fs14">Showing {{10 * (p - 1) + i }} to {{10 * p}} of {{filterList?.length}} entries</label>
+  </div>
+
+  <div class="col-md-6 col-xs-12 text-right" *ngIf="filterList?.length !==0">
+    <pagination-controls (pageChange)="p = $event" responsive="true" previousLabel="Previous" nextLabel="Next">
+    </pagination-controls>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade user-detai" bsModal #visitorDetailModal="bs-modal" [config]="{backdrop: 'static'}" tabindex="-1"
+  role="dialog" aria-labelledby="dialog-static-name">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <button type="button" class="close" (click)="visitorDetailModal.hide()">
+        <span aria-hidden="true" class="x">&times;</span>
+      </button>
+      <div class="modal-body">
+        <div class="shadow-sm card border-0">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <div class="media">
+                  <!-- <img src="/assets/images/user.jpg"
+                  alt="Generic placeholder image" *ngIf="employeeloginData?.profilePicture == ''" />
+                  <img [src]="employeeloginData?.profilePicture" class="image-size" *ngIf="employeeloginData.profilePicture != ''" /> -->
+
+                  <!-- <div class="media-body">
+                    <h5 class="mt-0">{{viewEmployeeData?.fullName}}</h5>
+
+                    <label class="detals">{{viewEmployeeData?.email}}</label>
+                    <label class="detals">{{viewEmployeeData?.phoneNumber}}</label>
+                    <label class="detals">{{viewEmployeeData?.citizenShip}}</label>
+                  </div> -->
+                </div>
+                <h5>View User</h5>
+              </div>
+              <div class="col-md-6 col-xs-12 text-right">
+                <button class="btn btn-sm btn-primary" type="button" (click)="resetPassword(viewEmployeeData?.id)">Reset Password</button>
+                <h4 class="mt-4 mb-0 px-4 edit" (click)="editEmployee(viewEmployeeData.id)">Edit</h4>
+                <!-- <h5 class="mt-0  mb-0 days-ago">{{viewEmployeeData.lastActivityDate}} days ago</h5> -->
+              </div>
+              <div class="col-md-12 col-xs-12">
+                <hr>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 col-xs-6">
+                <!-- <p>Login ID: {{viewEmployeeData?.id}}</p>
+                <div class="d-flex">
+                  <p>Subscription ID:</p><span class="px-2">{{viewEmployeeData?.subscriptionId}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Employee ID:</p><span class="px-2">{{viewEmployeeData?.employeeId}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Race ID:</p><span class="px-2">{{viewEmployeeData?.RaceId}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>DOB :</p><span class="px-2">{{viewEmployeeData?.dob | slice:0:10}}</span>
+                </div> -->
+                <p>User Name: {{viewEmployeeData?.fullName}}</p>
+                <div class="d-flex">
+                  <p>Last Name:</p><span class="px-2">{{viewEmployeeData?.lastName}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>First Name :</p><span class="px-2">{{viewEmployeeData?.firstName}}</span>
+                </div>
+                <!-- <div class="d-flex"><p>IsBumi :</p><span class="px-2">Lorem Ipsum</span></div> -->
+              </div>
+              <div class="col-md-6 col-xs-6">
+                <div class="d-flex">
+                  <p>Status:</p><span class="px-2">{{viewEmployeeData?.userstatus == true?'Active':'Inactive'}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Role:</p><span class="px-2">{{viewEmployeeData?.role}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Email:</p><span class="px-2">{{viewEmployeeData?.email}}</span>
+                </div>
+                <!-- <p>Password: {{viewEmployeeData.id}}</p> -->
+                <!-- <div class="d-flex">
+                  <p>Gender</p><span class="px-2">
+                    <ng-container *ngIf="viewEmployeeData?.gender == '1'">Male</ng-container>
+                    <ng-container *ngIf="viewEmployeeData?.gender == '2'">Female</ng-container>
+                  </span>
+                </div>
+                <div class="d-flex">
+                  <p>Religion CId:</p><span class="px-2">{{viewEmployeeData?.ReligionCId}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Branch:</p><span class="px-2"
+                    *ngIf="viewEmployeeData?.branchAllocation != '' || viewEmployeeData?.branchAllocation != 'null'">{{viewEmployeeData?.branchAllocation.branchName}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Role of the employee:</p><span class="px-2">{{viewEmployeeData?.role}}</span>
+                </div>
+                <div class="d-flex">
+                  <p>Location:</p><span class="px-2"
+                    *ngIf="viewEmployeeData?.branchAllocation != '' || viewEmployeeData?.branchAllocation != 'null'">{{viewEmployeeData?.branchAllocation.location}}</span>
+                </div> -->
+
+                <!-- <div class="form-group">
+                  <label class="">Lock user</label>
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+
+                </div> -->
+              </div>
+            </div>
+            <hr>
+            <fieldset>
+              <h6>Data Information</h6>
+              <div class="row">
+                <div class="col-md-6 col-xs-6">
+                  <p>Created By: {{viewEmployeeData?.createdBy}} {{viewEmployeeData?.createdAt | date:'short'}}</p>
+                </div>
+                <div class="col-md-6 col-xs-6">
+                  <p>Updated By: {{viewEmployeeData?.modifiedBy}} {{viewEmployeeData?.updatedAt | date:'short'}}</p>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="text-right py-3 ">
+          <!-- <button class="btn btn-primary px-4 py-2">Save the Changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

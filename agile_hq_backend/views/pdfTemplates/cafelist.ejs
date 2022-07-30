@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Cafe List</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid;
+        }
+        
+        table th,
+        table thead tr {
+            background: #dedede;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <table border="1" cellspacing="5" cellpadding="4">
+            <tr>
+                <th>Branch Name</th>
+                <th>Branch Head</th>
+                <th>Assit Branch</th>
+                <th>contact Number</th>
+                <th>capacity Of Branch</th>
+                <th>gst Number</th>
+                <th>Location</th>
+            </tr>
+            </thead>
+            <tbody>
+                {{#each getreport}}
+                <tr>
+                    <td> {{this.branchName}}</td>
+                    <td> {{this.branchHead}}</td>
+                    <td> {{this.assitbranchHead}}</td>
+                    <td> {{this.contactNumber}}</td>
+                    <td> {{this.capacityOfBranch}}</td>
+                    <td> {{this.gstNumber}}</td>
+                    <td> {{this.location}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+</body>
+
+</html>

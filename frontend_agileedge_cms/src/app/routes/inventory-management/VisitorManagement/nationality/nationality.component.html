@@ -1,0 +1,34 @@
+<div class="row mt-4 form-group">
+  <div class="col-md-6 col-sm-12">
+    <h4 class=" header-titel">Add Nationality</h4>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-md-12 col-xs-12">
+    <div class="border-0">
+      <div class="card-body">
+        <form [formGroup]="nationalityForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" formControlName="nationality" value="System" class="form-control"
+                  placeholder="nation">
+                <span *ngIf="nationalityForm.get('nationality').hasError('required') && nationalityForm.get('nationality').touched"
+                  class="text-danger text-12">TrainingType is required</span>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-5 mb-2">
+            <div class="col-md-12 col-xs-12 text-right">
+              <button class="btn btn-primary px-4 py-2" *ngIf="!prevId" (click)="addInventory(nationalityForm.value)"
+                [disabled]="clicked">Create New</button>
+              <button *ngIf="prevId" class="btn btn-primary px-4 py-2" (click)="updateSystem(nationalityForm.value)">Save &
+                continue</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
