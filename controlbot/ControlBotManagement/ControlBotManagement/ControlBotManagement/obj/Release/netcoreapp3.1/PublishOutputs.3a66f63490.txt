@@ -1,0 +1,8 @@
+E:\doodleblue\ControlBot\ControlBotManagement\ControlBotManagement\obj\Release\netcoreapp3.1\PubTmp\Out\ControlBotManagement.exe
+E:\doodleblue\ControlBot\ControlBotManagement\ControlBotManagement\obj\Release\netcoreapp3.1\PubTmp\Out\appsettings.Development.json
+E:\doodleblue\ControlBot\ControlBotManagement\ControlBotManagement\obj\Release\netcoreapp3.1\PubTmp\Out\appsettings.json
+E:\doodleblue\ControlBot\ControlBotManagement\ControlBotManagement\obj\Release\netcoreapp3.1\PubTmp\Out\ControlBotManagement.dll
+E:\doodleblue\ControlBot\ControlBotManagement\ControlBotManagement\obj\Release\netcoreapp3.1\PubTmp\Out\ControlBotManagement.deps.json
+E:\doodleblue\ControlBot\ControlBotManagement\ControlBotManagement\obj\Release\netcoreapp3.1\PubTmp\Out\ControlBotManagement.runtimeconfig.json
+E:\doodleblue\ControlBot\ControlBotManagement\ControlBotManagement\obj\Release\netcoreapp3.1\PubTmp\Out\ControlBotManagement.pdb
+E:\doodleblue\ControlBot\ControlBotManagement\ControlBotManagement\obj\Release\netcoreapp3.1\PubTmp\Out\Newtonsoft.Json.dll

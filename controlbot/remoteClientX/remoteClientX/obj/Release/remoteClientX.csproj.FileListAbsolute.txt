@@ -1,0 +1,7 @@
+D:\Doodleblue_cafe\remoteClientX\remoteClientX\obj\Release\remoteClientX.csproj.AssemblyReference.cache
+D:\Doodleblue_cafe\remoteClientX\remoteClientX\obj\Release\remoteClientX.Form1.resources
+D:\Doodleblue_cafe\remoteClientX\remoteClientX\obj\Release\remoteClientX.Properties.Resources.resources
+D:\Doodleblue_cafe\remoteClientX\remoteClientX\obj\Release\remoteClientX.csproj.GenerateResource.cache
+D:\Doodleblue_cafe\remoteClientX\remoteClientX\obj\Release\remoteClientX.csproj.CoreCompileInputs.cache
+D:\Doodleblue_cafe\remoteClientX\remoteClientX\obj\Release\remoteClientX.exe
+D:\Doodleblue_cafe\remoteClientX\remoteClientX\obj\Release\remoteClientX.pdb
